@@ -1,0 +1,129 @@
+$color-toolbar: #212529;
+$color-toolbar-border: #212529;
+$color-button: #e9ecef;
+$color-button-border: #ced4da;
+$color-button-text: #212529;
+$color-tooltip: #000;
+$color-tooltip-text: #fff;
+$color-editor: #fff;
+
+.wysiwyg-editor {
+	background-color: $color-toolbar;
+	border: 1px solid $color-toolbar-border;
+	border-radius: 0.25rem;
+	padding: 5px;
+}
+
+.wysiwyg-editor-toolbar {
+	background-color: $color-toolbar;
+}
+
+.wysiwyg-editor-btn {
+	background-color: $color-button;
+	border: 1px solid $color-button-border;
+	border-radius: 0.25rem;
+	color: $color-button-text;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 1rem;
+	font-weight: 900;
+	line-height: 1.5;
+	padding: 0.375rem 0.75rem;
+	text-align: center;
+	text-decoration: none;
+	user-select: none;
+	vertical-align: middle;
+}
+
+.wysiwyg-editor-btn-group {
+	display: inline-flex;
+	position: relative;
+	vertical-align: middle;
+
+	&:not(:first-child) {
+		margin-left: 10px;
+	}
+
+	:not(:first-child) {
+		margin-left: -1px;
+	}
+
+	.wysiwyg-editor-btn:not(:last-child) {
+		border-bottom-right-radius: 0;
+		border-top-right-radius: 0;
+	}
+
+	.wysiwyg-editor-btn:not(:first-child) {
+		border-bottom-left-radius: 0;
+		border-top-left-radius: 0;
+	}
+}
+
+.wysiwyg-editor-btn-nbsp {
+	&::before {
+		content: "\0020";
+		display: block;
+		height: 16px;
+		width: 12px;
+	}
+}
+
+.wysiwyg-editor-tooltip {
+	background: $color-tooltip;
+	border-radius: 4px;
+	color: $color-tooltip-text;
+	font-size: 13px;
+	font-weight: bold;
+	padding: 4px 8px;
+
+	.arrow,
+	.arrow::before {
+		background: inherit;
+		height: 8px;
+		position: absolute;
+		width: 8px;
+	}
+
+	.arrow {
+		visibility: hidden;
+	}
+
+	.arrow::before {
+		content: "";
+		transform: rotate(45deg);
+		visibility: visible;
+	}
+
+	&[data-popper-placement^="top"] > .arrow {
+		bottom: -4px;
+	}
+
+	&[data-popper-placement^="bottom"] > .arrow {
+		top: -4px;
+	}
+
+	&[data-popper-placement^="left"] > .arrow {
+		right: -4px;
+	}
+
+	&[data-popper-placement^="right"] > .arrow {
+		left: -4px;
+	}
+}
+
+.wysiwyg-editor-editing-area {
+	background-color: $color-editor;
+	border-radius: 0.25rem;
+	margin-top: 5px;
+	padding: 5px;
+}
+
+.wysiwyg-editor-visual,
+.wysiwyg-editor-code {
+	height: 100%;
+	overflow: auto;
+}
+
+.wysiwyg-editor-hidden {
+	display: none;
+}
