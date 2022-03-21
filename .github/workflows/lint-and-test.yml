@@ -1,0 +1,52 @@
+name: Lints & Tests
+
+on:
+  push:
+    branches-ignore:
+      - renovate/*
+    tags-ignore:
+      - '**'
+
+jobs:
+  lint:
+    name: Lints JS/SASS
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: ''
+
+      - name: Install
+        run: npm install --legacy-peer-deps
+
+      - name: ESLint
+        run: npx eslint "src/**/*.js"
+
+      - name: Stylelint
+        run: npx stylelint "src/css/*.scss"
+
+  tests:
+    name: Tests
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: ''
+
+      - name: Install
+        run: npm install --legacy-peer-deps
+
+      - name: AVA Tests
+        run: npx ava

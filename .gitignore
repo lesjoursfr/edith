@@ -1,0 +1,5 @@
+# Node.JS dependencies
+node_modules/
+
+# Compiled files
+build/
