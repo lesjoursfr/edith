@@ -2,16 +2,19 @@
 	"search.exclude": {
 		"**/.git/**": true,
 		"**/node_modules/**": true,
+		"**/.yarn/**": true,
 		"**/build/**": true
 	},
 	"files.exclude": {
 		"**/.git/**": true,
 		"**/node_modules/**": true,
+		"**/.yarn/**": true,
 		"**/build/**": true
 	},
 	"files.watcherExclude": {
 		"**/.git/**": true,
 		"**/node_modules/**": true,
+		"**/.yarn/**": true,
 		"**/build/**": true
 	},
 	"eslint.format.enable": true,
