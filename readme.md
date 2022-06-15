@@ -9,7 +9,7 @@ Simple WYSIWYG editor.
 
 To work this library needs :
 
--   [CodeMirror](https://www.npmjs.com/package/codemirror) **5.x**
+-   [CodeMirror](https://www.npmjs.com/package/codemirror) **6.x**
 -   [Popper](https://www.npmjs.com/package/@popperjs/core) **2.x**
 
 # How to use
