@@ -9,7 +9,7 @@
 		"url": "https://github.com/lesjoursfr/wysiwyg-editor/issues"
 	},
 	"engines": {
-		"node": ">=v16.15.0"
+		"node": ">=v18.3.0"
 	},
 	"browserslist": [
 		"Chrome >= 60",
