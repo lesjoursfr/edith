@@ -1,5 +1,5 @@
-# Yarn lockfile
-yarn.lock
+# Generated files
+build/
 
 # Yarn & node.js dependencies
 node_modules/
@@ -11,5 +11,12 @@ node_modules/
 !.yarn/sdks
 !.yarn/versions
 
-# Compiled files
-build/
+# Yarn lockfile
+yarn.lock
+
+# OS X
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+.~lock.*
