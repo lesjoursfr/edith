@@ -3,8 +3,8 @@ import {
   isRangeRemovable,
   moveCursorInsideNode,
   moveCursorAfterNode,
-  selectNodeContents
-} from './range.js';
+  selectNodeContents,
+} from "./range.js";
 import {
   hasTagName,
   createNodeWith,
@@ -15,10 +15,10 @@ import {
   removeCommentNodes,
   resetAttributesTo,
   replaceNodeStyleByTag,
-  trimTag
-} from './dom.js';
+  trimTag,
+} from "./dom.js";
 
-function insertTagAtCaret (tag, options) {
+function insertTagAtCaret(tag, options) {
   // Get the caret position
   const { range } = getSelection();
 
@@ -26,10 +26,10 @@ function insertTagAtCaret (tag, options) {
   const node = document.createElement(tag);
 
   // Add a zero-width char or the word "lien" to create a valid cursor position inside the element
-  if (tag === 'a') {
-    node.textContent = options.textContent || 'lien';
+  if (tag === "a") {
+    node.textContent = options.textContent || "lien";
   } else {
-    node.innerHTML = '&#x200b;';
+    node.innerHTML = "&#x200b;";
   }
 
   // Insert the tag at the cursor position
@@ -39,15 +39,15 @@ function insertTagAtCaret (tag, options) {
   moveCursorInsideNode(node);
 
   // Add an extra space after the tag if it's a link
-  if (tag === 'a') {
-    node.insertAdjacentText('afterend', ' ');
+  if (tag === "a") {
+    node.insertAdjacentText("afterend", " ");
   }
 
   // Return the inserted tag
   return node;
-};
+}
 
-export function replaceSelectionByHtml (html) {
+export function replaceSelectionByHtml(html) {
   // Get the caret position
   const { range } = getSelection();
 
@@ -63,7 +63,7 @@ export function replaceSelectionByHtml (html) {
   // Range.createContextualFragment() would be useful here but is
   // only relatively recently standardized and is not supported in
   // some browsers (IE9, for one)
-  const el = createNodeWith('div', { innerHTML: html });
+  const el = createNodeWith("div", { innerHTML: html });
   const frag = document.createDocumentFragment();
   frag.append(...el.childNodes);
   const lastNode = frag.childNodes[frag.childNodes.length - 1];
@@ -71,9 +71,9 @@ export function replaceSelectionByHtml (html) {
 
   // Preserve the selection
   moveCursorAfterNode(lastNode);
-};
+}
 
-export function wrapInsideTag (tag, options = {}) {
+export function wrapInsideTag(tag, options = {}) {
   // Get the caret position
   const { sel, range } = getSelection();
 
@@ -137,11 +137,11 @@ export function wrapInsideTag (tag, options = {}) {
   // We have replaced something
   // Normalize the Node & that's it. We don't have to return something
   range.commonAncestorContainer.normalize();
-};
+}
 
-export function wrapInsideLink (text, href, targetBlank) {
+export function wrapInsideLink(text, href, targetBlank) {
   // Wrap the selection inside a link
-  const tag = wrapInsideTag('a', { textContent: text });
+  const tag = wrapInsideTag("a", { textContent: text });
 
   // Check if we have a tag
   if (tag === undefined) {
@@ -149,18 +149,18 @@ export function wrapInsideLink (text, href, targetBlank) {
   }
 
   // Add an href Attribute
-  tag.setAttribute('href', href);
+  tag.setAttribute("href", href);
 
   // Create a target="_blank" attribute if required
   if (targetBlank === true) {
-    tag.setAttribute('target', '_blank');
+    tag.setAttribute("target", "_blank");
   }
 
   // Return the tag
   return tag;
-};
+}
 
-export function clearSelectionStyle () {
+export function clearSelectionStyle() {
   // Get the caret position
   const { sel, range } = getSelection();
 
@@ -179,21 +179,21 @@ export function clearSelectionStyle () {
   }
 }
 
-export function cleanDomContent (root, style) {
+export function cleanDomContent(root, style) {
   // Iterate through children
   for (let el of [...root.children]) {
     // Check if the span is a wysiwyg-nbsp
-    if (hasTagName(el, 'span') && el.classList.contains('wysiwyg-nbsp')) {
+    if (hasTagName(el, "span") && el.classList.contains("wysiwyg-nbsp")) {
       // Ensure that we have a clean element
-      resetAttributesTo(el, { class: 'wysiwyg-nbsp', contenteditable: 'false' });
-      el.innerHTML = '¶';
+      resetAttributesTo(el, { class: "wysiwyg-nbsp", contenteditable: "false" });
+      el.innerHTML = "¶";
 
       // Stop processing the element
       return true;
     }
 
     // Check if there is a style attribute on the current node
-    if (el.hasAttribute('style')) {
+    if (el.hasAttribute("style")) {
       // Replace the style attribute by tags
       el = replaceNodeStyleByTag(el);
     }
@@ -202,13 +202,13 @@ export function cleanDomContent (root, style) {
     if (style[el.tagName]) {
       el = replaceNodeWith(
         el,
-        createNodeWith('span', { attributes: { style: el.getAttribute('style') || '' }, innerHTML: el.innerHTML })
+        createNodeWith("span", { attributes: { style: el.getAttribute("style") || "" }, innerHTML: el.innerHTML })
       );
     }
 
     // Save the Current Style Tag
     const newTags = { ...style };
-    if (hasTagName(el, ['b', 'i', 'q', 'u', 's'])) {
+    if (hasTagName(el, ["b", "i", "q", "u", "s"])) {
       newTags[el.tagName] = true;
     }
 
@@ -216,28 +216,32 @@ export function cleanDomContent (root, style) {
     cleanDomContent(el, newTags);
 
     // Keep only href & target attributes for <a> tags
-    if (hasTagName(el, 'a')) {
+    if (hasTagName(el, "a")) {
       const linkAttributes = {};
-      if (el.hasAttribute('href')) { linkAttributes.href = el.getAttribute('href'); }
-      if (el.hasAttribute('target')) { linkAttributes.target = el.getAttribute('target'); }
+      if (el.hasAttribute("href")) {
+        linkAttributes.href = el.getAttribute("href");
+      }
+      if (el.hasAttribute("target")) {
+        linkAttributes.target = el.getAttribute("target");
+      }
       resetAttributesTo(el, linkAttributes);
       return;
     }
 
     // Remove all tag attributes for tags in the allowed list
-    if (hasTagName(el, ['b', 'i', 'q', 'u', 's', 'br'])) {
+    if (hasTagName(el, ["b", "i", "q", "u", "s", "br"])) {
       resetAttributesTo(el, {});
       return;
     }
 
     // Remove useless tags
-    if (hasTagName(el, ['style', 'meta', 'link'])) {
+    if (hasTagName(el, ["style", "meta", "link"])) {
       el.remove();
       return;
     }
 
     // Check if it's a <p> tag
-    if (hasTagName(el, 'p')) {
+    if (hasTagName(el, "p")) {
       // Check if the element contains text
       if (el.textContent.trim().length === 0) {
         // Remove the node
@@ -249,7 +253,7 @@ export function cleanDomContent (root, style) {
       resetAttributesTo(el, {});
 
       // Remove leading & trailing <br>
-      trimTag(el, 'br');
+      trimTag(el, "br");
 
       // Return
       return;
@@ -260,9 +264,9 @@ export function cleanDomContent (root, style) {
   }
 }
 
-export function cleanPastedHtml (html, style) {
+export function cleanPastedHtml(html, style) {
   // Create a new div with the HTML content
-  const result = document.createElement('div');
+  const result = document.createElement("div");
   result.innerHTML = html;
 
   // Clean the HTML content
@@ -275,11 +279,10 @@ export function cleanPastedHtml (html, style) {
   // Fix extra stuff in the HTML code :
   //  - Clean spaces
   //  - Merge siblings tags
-  result.innerHTML = result
-    .innerHTML
-    .replace(/\s*&nbsp;\s*/g, ' ')
-    .replace(/\s+/g, ' ')
-    .replace(/(<\/b>[\n\r\s]*<b>|<\/i>[\n\r\s]*<i>|<\/u>[\n\r\s]*<u>|<\/s>[\n\r\s]*<s>)/g, ' ');
+  result.innerHTML = result.innerHTML
+    .replace(/\s*&nbsp;\s*/g, " ")
+    .replace(/\s+/g, " ")
+    .replace(/(<\/b>[\n\r\s]*<b>|<\/i>[\n\r\s]*<i>|<\/u>[\n\r\s]*<u>|<\/s>[\n\r\s]*<s>)/g, " ");
 
   // Clean comment nodes
   removeCommentNodes(result);

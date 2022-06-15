@@ -1,4 +1,4 @@
-export function getSelection () {
+export function getSelection() {
   let sel, range;
   if (window.getSelection) {
     sel = window.getSelection();
@@ -10,19 +10,19 @@ export function getSelection () {
   }
 
   return { sel, range };
-};
+}
 
-export function restoreSelection (selection) {
+export function restoreSelection(selection) {
   const sel = window.getSelection();
   sel.removeAllRanges();
   sel.addRange(selection.range);
-};
-
-export function isRangeRemovable (range) {
-  return (range.collapsed !== false) || (range.startContainer.parentNode === range.endContainer.parentNode);
 }
 
-export function moveCursorInsideNode (target) {
+export function isRangeRemovable(range) {
+  return range.collapsed !== false || range.startContainer.parentNode === range.endContainer.parentNode;
+}
+
+export function moveCursorInsideNode(target) {
   const range = document.createRange();
   const sel = window.getSelection();
   range.setStart(target, 1);
@@ -31,7 +31,7 @@ export function moveCursorInsideNode (target) {
   sel.addRange(range);
 }
 
-export function moveCursorAfterNode (target) {
+export function moveCursorAfterNode(target) {
   const range = document.createRange();
   const sel = window.getSelection();
   range.setStartAfter(target);
@@ -40,7 +40,7 @@ export function moveCursorAfterNode (target) {
   sel.addRange(range);
 }
 
-export function selectNodeContents (target) {
+export function selectNodeContents(target) {
   const range = document.createRange();
   const sel = window.getSelection();
   range.selectNodeContents(target);

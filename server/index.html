@@ -1,59 +1,55 @@
 <!DOCTYPE html>
-<html lang="fr" style="height: 4000px;">
+<html lang="fr" style="height: 4000px">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>WYSIWYG Editor</title>
 
-<head>
-	<meta charset="UTF-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<meta name=viewport content="width=device-width, initial-scale=1">
-	<title>WYSIWYG Editor</title>
+		<link rel="stylesheet" href="/fontawesome/css/all.min.css" />
+		<link rel="stylesheet" href="/codemirror/lib/codemirror.css" />
+		<link rel="stylesheet" href="wysiwyg-editor.css" />
+		<script type="text/javascript" src="/popperjs/popper.min.js"></script>
+		<script type="text/javascript" src="/codemirror/lib/codemirror.js"></script>
+		<script type="text/javascript" src="/codemirror/mode/xml/xml.js"></script>
+		<script type="text/javascript" src="/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+		<script type="text/javascript" src="/codemirror/addon/fold/xml-fold.js"></script>
+		<script type="text/javascript" src="/codemirror/addon/edit/matchtags.js"></script>
+		<script type="text/javascript" src="/codemirror/addon/edit/closetag.js"></script>
+		<script type="text/javascript" src="/codemirror/addon/edit/trailingspace.js"></script>
+		<script type="text/javascript" src="wysiwyg-editor.js"></script>
+	</head>
 
-	<link rel="stylesheet" href="/fontawesome/css/all.min.css">
-	<link rel="stylesheet" href="/codemirror/lib/codemirror.css">
-	<link rel="stylesheet" href="wysiwyg-editor.css" />
-	<script type="text/javascript" src="/popperjs/popper.min.js"></script>
-	<script type="text/javascript" src="/codemirror/lib/codemirror.js"></script>
-	<script type="text/javascript" src="/codemirror/mode/xml/xml.js"></script>
-	<script type="text/javascript" src="/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-	<script type="text/javascript" src="/codemirror/addon/fold/xml-fold.js"></script>
-	<script type="text/javascript" src="/codemirror/addon/edit/matchtags.js"></script>
-	<script type="text/javascript" src="/codemirror/addon/edit/closetag.js"></script>
-	<script type="text/javascript" src="/codemirror/addon/edit/trailingspace.js"></script>
-	<script type="text/javascript" src="wysiwyg-editor.js"></script>
-</head>
+	<body>
+		<div id="editor"></div>
 
-<body>
-	<div id="editor"></div>
-
-	<script type="text/javascript">
-		/* Initialize the WYSIWYG Editor */
-		WYSIWYGEditor.createWYSIWYGEditor(document.querySelector("#editor"), {
-			height: 200,
-			toolbar: [
-				['style', [
-					'bold', 'italic', 'underline', 'strikethrough', 'subscript', 'superscript', 'nbsp', 'clear'
-				]],
-				['insert', [
-					'link'
-				]],
-				['misc', [
-					'codeview'
-				]]
-			],
-			initialContent: "<b>Lorem ipsum dolor sit amet</b>, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <i>Ut enim ad minim veniam</i>, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-			codeMirrorOptions: {
-				lineWrapping: true,
-				lineNumbers: true,
-				mode: 'text/html',
-				inputStyle: 'contenteditable',
-				readOnly: false,
-				showTrailingSpace: true,
-				autoCloseTags: true,
-				matchTags: {
-					bothTags: true
-				}
-			}
-		});
-	</script>
-</body>
-
+		<script type="text/javascript">
+			/* Initialize the WYSIWYG Editor */
+			WYSIWYGEditor.createWYSIWYGEditor(document.querySelector("#editor"), {
+				height: 200,
+				toolbar: [
+					[
+						"style",
+						["bold", "italic", "underline", "strikethrough", "subscript", "superscript", "nbsp", "clear"],
+					],
+					["insert", ["link"]],
+					["misc", ["codeview"]],
+				],
+				initialContent:
+					"<b>Lorem ipsum dolor sit amet</b>, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <i>Ut enim ad minim veniam</i>, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+				codeMirrorOptions: {
+					lineWrapping: true,
+					lineNumbers: true,
+					mode: "text/html",
+					inputStyle: "contenteditable",
+					readOnly: false,
+					showTrailingSpace: true,
+					autoCloseTags: true,
+					matchTags: {
+						bothTags: true,
+					},
+				},
+			});
+		</script>
+	</body>
 </html>

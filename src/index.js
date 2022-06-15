@@ -1,6 +1,6 @@
-import { WYSIWYGEditorEditor } from './ui/editor.js';
-import { WYSIWYGEditorButton, WYSIWYGEditorButtons } from './ui/button.js';
-import './css/main.scss';
+import { WYSIWYGEditorEditor } from "./ui/editor.js";
+import { WYSIWYGEditorButton, WYSIWYGEditorButtons } from "./ui/button.js";
+import "./css/main.scss";
 
 /*
  * Represents an editor
@@ -8,24 +8,24 @@ import './css/main.scss';
  * @param {HTMLElement} element - The <input> element to add the Wysiwyg to.
  * @param {Object} options - Options for the editor.
  */
-function WYSIWYGEditor (element, options) {
+function WYSIWYGEditor(element, options) {
   // Render the editor in the element
   this.element = element;
-  this.element.classList.add('wysiwyg-editor');
+  this.element.classList.add("wysiwyg-editor");
 
   // Create the toolbar
-  this.toolbar = document.createElement('div');
-  this.toolbar.setAttribute('class', 'wysiwyg-editor-toolbar');
+  this.toolbar = document.createElement("div");
+  this.toolbar.setAttribute("class", "wysiwyg-editor-toolbar");
   this.element.append(this.toolbar);
 
   // Create buttons
   options.buttons = options.buttons || {};
-  options.toolbar = options.toolbar || [['style', ['bold', 'italic', 'underline', 'strikethrough']]];
+  options.toolbar = options.toolbar || [["style", ["bold", "italic", "underline", "strikethrough"]]];
   for (const { 0: group, 1: buttons } of options.toolbar) {
     // Create the button group
-    const btnGroup = document.createElement('div');
-    btnGroup.setAttribute('id', group);
-    btnGroup.setAttribute('class', 'wysiwyg-editor-btn-group');
+    const btnGroup = document.createElement("div");
+    btnGroup.setAttribute("id", group);
+    btnGroup.setAttribute("class", "wysiwyg-editor-btn-group");
     this.toolbar.append(btnGroup);
 
     // Add buttons
@@ -41,8 +41,8 @@ function WYSIWYGEditor (element, options) {
   this.element.append(this.editor.render());
 
   // Create the modals
-  this.modals = document.createElement('div');
-  this.modals.setAttribute('class', 'wysiwyg-editor-modals');
+  this.modals = document.createElement("div");
+  this.modals.setAttribute("class", "wysiwyg-editor-modals");
   this.element.append(this.modals);
 }
 
@@ -58,7 +58,7 @@ WYSIWYGEditor.prototype.trigger = function (type, payload = null) {
   this.element.dispatchEvent(new CustomEvent(type, { detail: payload }));
 };
 
-function createWYSIWYGEditor (element, options) {
+function createWYSIWYGEditor(element, options) {
   return new WYSIWYGEditor(element, options);
 }
 

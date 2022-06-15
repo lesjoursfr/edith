@@ -19,10 +19,7 @@
 		"selector-no-qualifying-type": [
 			true,
 			{
-				"ignore": [
-					"attribute",
-					"class"
-				]
+				"ignore": ["attribute", "class"]
 			}
 		],
 		"max-nesting-depth": 4
