@@ -11,9 +11,9 @@ import { hasTagName } from "../core/dom.js";
 import { EditorModes } from "../core/mode.js";
 import { Events } from "../core/event.js";
 import { getSelection, restoreSelection } from "../core/range.js";
-import { WYSIWYGEditorModal, createInputModalField, createCheckboxModalField } from "./modal.js";
+import { EdithModal, createInputModalField, createCheckboxModalField } from "./modal.js";
 
-function WYSIWYGEditorEditor(ctx, options) {
+function EdithEditor(ctx, options) {
   this.ctx = ctx;
   this.content = options.initialContent || "";
   this.height = options.height || 80;
@@ -22,22 +22,22 @@ function WYSIWYGEditorEditor(ctx, options) {
   this.codeMirror = null;
 }
 
-WYSIWYGEditorEditor.prototype.render = function () {
+EdithEditor.prototype.render = function () {
   // Create a wrapper for the editor
   const editorWrapper = document.createElement("div");
-  editorWrapper.setAttribute("class", "wysiwyg-editor-editing-area");
+  editorWrapper.setAttribute("class", "edith-editing-area");
   editorWrapper.setAttribute("style", `height: ${this.height}px`);
 
   // Create the visual editor
   this.editors.visual = document.createElement("div");
-  this.editors.visual.setAttribute("class", "wysiwyg-editor-visual");
+  this.editors.visual.setAttribute("class", "edith-visual");
   this.editors.visual.setAttribute("contenteditable", "true");
   this.editors.visual.innerHTML = this.content;
   editorWrapper.append(this.editors.visual);
 
   // Create the code editor
   this.editors.code = document.createElement("div");
-  this.editors.code.setAttribute("class", "wysiwyg-editor-code wysiwyg-editor-hidden");
+  this.editors.code.setAttribute("class", "edith-code edith-hidden");
   editorWrapper.append(this.editors.code);
 
   // Bind events
@@ -51,24 +51,24 @@ WYSIWYGEditorEditor.prototype.render = function () {
   return editorWrapper;
 };
 
-WYSIWYGEditorEditor.prototype.wrapInsideTag = function (tag) {
+EdithEditor.prototype.wrapInsideTag = function (tag) {
   wrapInsideTag(tag);
 };
 
-WYSIWYGEditorEditor.prototype.replaceByHtml = function (html) {
+EdithEditor.prototype.replaceByHtml = function (html) {
   replaceSelectionByHtml(html);
 };
 
-WYSIWYGEditorEditor.prototype.clearStyle = function () {
+EdithEditor.prototype.clearStyle = function () {
   clearSelectionStyle();
 };
 
-WYSIWYGEditorEditor.prototype.insertLink = function () {
+EdithEditor.prototype.insertLink = function () {
   // Get the caret position
   const { sel, range } = getSelection();
 
   // Show the modal
-  const modal = new WYSIWYGEditorModal(this.ctx, {
+  const modal = new EdithModal(this.ctx, {
     title: "Insérer un lien",
     fields: [
       createInputModalField("Texte à afficher", "text", range.toString()),
@@ -92,17 +92,17 @@ WYSIWYGEditorEditor.prototype.insertLink = function () {
   modal.show();
 };
 
-WYSIWYGEditorEditor.prototype.toggleCodeView = function () {
+EdithEditor.prototype.toggleCodeView = function () {
   // Check the current mode
   if (this.mode === EditorModes.Visual) {
     // Switch mode
     this.mode = EditorModes.Code;
 
     // Hide the visual editor
-    this.editors.visual.classList.add("wysiwyg-editor-hidden");
+    this.editors.visual.classList.add("edith-hidden");
 
     // Display the code editor
-    this.editors.code.classList.remove("wysiwyg-editor-hidden");
+    this.editors.code.classList.remove("edith-hidden");
     const codeMirrorEl = document.createElement("div");
     this.editors.code.append(codeMirrorEl);
     this.codeMirror = new EditorView({
@@ -115,10 +115,10 @@ WYSIWYGEditorEditor.prototype.toggleCodeView = function () {
     this.mode = EditorModes.Visual;
 
     // Hide the code editor
-    this.editors.code.classList.add("wysiwyg-editor-hidden");
+    this.editors.code.classList.add("edith-hidden");
 
     // Display the visual editor
-    this.editors.visual.classList.remove("wysiwyg-editor-hidden");
+    this.editors.visual.classList.remove("edith-hidden");
     this.editors.visual.innerHTML = this.codeMirror.state.doc
       .toJSON()
       .map((line) => line.trim())
@@ -132,7 +132,7 @@ WYSIWYGEditorEditor.prototype.toggleCodeView = function () {
   this.ctx.trigger(Events.modeChanged, { mode: this.mode });
 };
 
-WYSIWYGEditorEditor.prototype.onKeyEvent = function (e) {
+EdithEditor.prototype.onKeyEvent = function (e) {
   // Check if a Meta key is pressed
   const prevent = e.metaKey || e.ctrlKey ? this._processKeyEventWithMeta(e) : this._processKeyEvent(e);
 
@@ -143,7 +143,7 @@ WYSIWYGEditorEditor.prototype.onKeyEvent = function (e) {
   }
 };
 
-WYSIWYGEditorEditor.prototype._processKeyEvent = function (e) {
+EdithEditor.prototype._processKeyEvent = function (e) {
   // Check the key code
   switch (e.keyCode) {
     // Enter : 13
@@ -161,7 +161,7 @@ WYSIWYGEditorEditor.prototype._processKeyEvent = function (e) {
   return false;
 };
 
-WYSIWYGEditorEditor.prototype._processKeyEventWithMeta = function (e) {
+EdithEditor.prototype._processKeyEventWithMeta = function (e) {
   // Check the key code
   switch (e.keyCode) {
     // Space : 32
@@ -179,7 +179,7 @@ WYSIWYGEditorEditor.prototype._processKeyEventWithMeta = function (e) {
   return false;
 };
 
-WYSIWYGEditorEditor.prototype.onPasteEvent = function (e) {
+EdithEditor.prototype.onPasteEvent = function (e) {
   // Prevent default
   e.preventDefault();
   e.stopPropagation();
@@ -208,7 +208,7 @@ WYSIWYGEditorEditor.prototype.onPasteEvent = function (e) {
   // Detect style blocs in parents
   let dest = sel.anchorNode;
   const style = { B: false, I: false, U: false, S: false, Q: false };
-  while (!dest.parentNode.classList.contains("wysiwyg-editor-visual")) {
+  while (!dest.parentNode.classList.contains("edith-visual")) {
     // Get the parent
     dest = dest.parentNode;
 
@@ -242,4 +242,4 @@ WYSIWYGEditorEditor.prototype.onPasteEvent = function (e) {
   range.insertNode(frag);
 };
 
-export { WYSIWYGEditorEditor };
+export { EdithEditor };

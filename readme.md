@@ -1,34 +1,34 @@
-[![NPM version](https://badge.fury.io/js/wysiwyg-editor.svg)](http://badge.fury.io/js/wysiwyg-editor)
-[![Build Status](https://travis-ci.org/lesjoursfr/wysiwyg-editor.svg?branch=master)](https://travis-ci.org/lesjoursfr/wysiwyg-editor)
+[![npm version](https://badge.fury.io/js/@lesjoursfr%2Fedith.svg)](https://badge.fury.io/js/@lesjoursfr%2Fedith)
+[![Build Status](https://travis-ci.org/lesjoursfr/edith.svg?branch=master)](https://travis-ci.org/lesjoursfr/edith)
 
-# wysiwyg-editor.js
+# edith.js
 
-Simple WYSIWYG editor.
+Edith, simple WYSIWYG editor.
 
 # Requirements
 
 To work this library needs :
 
--   [CodeMirror](https://www.npmjs.com/package/codemirror) **6.x**
--   [Popper](https://www.npmjs.com/package/@popperjs/core) **2.x**
+-   [codemirror](https://www.npmjs.com/package/codemirror) **6.x**
+-   [@codemirror/lang-html](https://www.npmjs.com/package/@codemirror/lang-html) **6.x**
+-   [@popperjs/core](https://www.npmjs.com/package/@popperjs/core) **2.x**
+-   [@fortawesome/fontawesome-free](https://www.npmjs.com/package/@fortawesome/fontawesome-free) **6.x**
 
 # How to use
 
-```html
-<link rel="stylesheet" href="wysiwyg-editor.css" />
-<script type="text/javascript" src="wysiwyg-editor.js"></script>
-<script type="text/javascript">
-	/* Initialize the WYSIWYG Editor */
-	WYSIWYGEditor.createWYSIWYGEditor(document.querySelector("#editor"), {
-		height: 200,
-		toolbar: [
-			["style", ["bold", "italic", "underline", "strikethrough", "subscript", "superscript", "nbsp", "clear"]],
-			/*** Other toolbar blocs ***/
-		],
-		buttons: {
-			/*** Extra buttons for the toolbar ***/
-		},
-		initialContent: "Optional initial content",
-	});
-</script>
+```javascript
+import { Edith } from "@lesjoursfr/edith";
+
+/* Initialize the WYSIWYG Editor */
+new Edith(document.querySelector("#editor"), {
+	height: 200,
+	toolbar: [
+		["style", ["bold", "italic", "underline", "strikethrough", "subscript", "superscript", "nbsp", "clear"]],
+		/*** Other toolbar blocs ***/
+	],
+	buttons: {
+		/*** Extra buttons for the toolbar ***/
+	},
+	initialContent: "Optional initial content",
+});
 ```

@@ -1,12 +1,12 @@
 {
-	"name": "@lesjoursfr/wysiwyg-editor",
+	"name": "@lesjoursfr/edith",
 	"version": "1.0.0",
 	"description": "Simple WYSIWYG editor.",
 	"license": "MIT",
-	"repository": "lesjoursfr/wysiwyg-editor",
-	"homepage": "https://github.com/lesjoursfr/wysiwyg-editor#readme",
+	"repository": "lesjoursfr/edith",
+	"homepage": "https://github.com/lesjoursfr/edith#readme",
 	"bugs": {
-		"url": "https://github.com/lesjoursfr/wysiwyg-editor/issues"
+		"url": "https://github.com/lesjoursfr/edith/issues"
 	},
 	"engines": {
 		"node": ">=v18.3.0"

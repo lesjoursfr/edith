@@ -1,5 +1,5 @@
-import { WYSIWYGEditorEditor } from "./ui/editor.js";
-import { WYSIWYGEditorButton, WYSIWYGEditorButtons } from "./ui/button.js";
+import { EdithEditor } from "./ui/editor.js";
+import { EdithButton, EdithButtons } from "./ui/button.js";
 import "./css/main.scss";
 
 /*
@@ -8,14 +8,14 @@ import "./css/main.scss";
  * @param {HTMLElement} element - The <input> element to add the Wysiwyg to.
  * @param {Object} options - Options for the editor.
  */
-function WYSIWYGEditor(element, options) {
+function Edith(element, options) {
   // Render the editor in the element
   this.element = element;
-  this.element.classList.add("wysiwyg-editor");
+  this.element.classList.add("edith");
 
   // Create the toolbar
   this.toolbar = document.createElement("div");
-  this.toolbar.setAttribute("class", "wysiwyg-editor-toolbar");
+  this.toolbar.setAttribute("class", "edith-toolbar");
   this.element.append(this.toolbar);
 
   // Create buttons
@@ -25,41 +25,37 @@ function WYSIWYGEditor(element, options) {
     // Create the button group
     const btnGroup = document.createElement("div");
     btnGroup.setAttribute("id", group);
-    btnGroup.setAttribute("class", "wysiwyg-editor-btn-group");
+    btnGroup.setAttribute("class", "edith-btn-group");
     this.toolbar.append(btnGroup);
 
     // Add buttons
     for (const buttonId of buttons) {
       // Render the button
-      const button = options.buttons[buttonId] || WYSIWYGEditorButtons[buttonId];
+      const button = options.buttons[buttonId] || EdithButtons[buttonId];
       btnGroup.append(button(this).render());
     }
   }
 
   // Create the editor
-  this.editor = new WYSIWYGEditorEditor(this, options);
+  this.editor = new EdithEditor(this, options);
   this.element.append(this.editor.render());
 
   // Create the modals
   this.modals = document.createElement("div");
-  this.modals.setAttribute("class", "wysiwyg-editor-modals");
+  this.modals.setAttribute("class", "edith-modals");
   this.element.append(this.modals);
 }
 
-WYSIWYGEditor.prototype.on = function (type, listener, options) {
+Edith.prototype.on = function (type, listener, options) {
   this.element.addEventListener(type, listener, options);
 };
 
-WYSIWYGEditor.prototype.off = function (type, listener, options) {
+Edith.prototype.off = function (type, listener, options) {
   this.element.removeEventListener(type, listener, options);
 };
 
-WYSIWYGEditor.prototype.trigger = function (type, payload = null) {
+Edith.prototype.trigger = function (type, payload = null) {
   this.element.dispatchEvent(new CustomEvent(type, { detail: payload }));
 };
 
-function createWYSIWYGEditor(element, options) {
-  return new WYSIWYGEditor(element, options);
-}
-
-export { createWYSIWYGEditor, WYSIWYGEditorButton };
+export { Edith, EdithButton };

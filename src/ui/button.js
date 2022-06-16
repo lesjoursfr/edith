@@ -37,7 +37,7 @@ function onButtonClick(context, kind, event) {
   }
 }
 
-function WYSIWYGEditorButton(ctx, options) {
+function EdithButton(ctx, options) {
   this.ctx = ctx;
   this.icon = options.icon;
   this.title = options.title;
@@ -45,7 +45,7 @@ function WYSIWYGEditorButton(ctx, options) {
   this.showOnCodeView = options.showOnCodeView === true;
 }
 
-WYSIWYGEditorButton.prototype.click = function (event) {
+EdithButton.prototype.click = function (event) {
   event.preventDefault();
   if (typeof this.onclick === "string") {
     onButtonClick(this.ctx, this.onclick, event);
@@ -54,14 +54,14 @@ WYSIWYGEditorButton.prototype.click = function (event) {
   }
 };
 
-WYSIWYGEditorButton.prototype.showTooltip = function () {
+EdithButton.prototype.showTooltip = function () {
   if (this.popper !== undefined) {
     return;
   }
 
   // Add the tooltip content to the DOM
   this.popperEl = document.createElement("div");
-  this.popperEl.setAttribute("class", "wysiwyg-editor-tooltip");
+  this.popperEl.setAttribute("class", "edith-tooltip");
   this.popperEl.textContent = this.title;
   const arrowEl = document.createElement("div");
   arrowEl.setAttribute("class", "arrow");
@@ -89,7 +89,7 @@ WYSIWYGEditorButton.prototype.showTooltip = function () {
   });
 };
 
-WYSIWYGEditorButton.prototype.hideTooltip = function () {
+EdithButton.prototype.hideTooltip = function () {
   if (this.popper === undefined) {
     return;
   }
@@ -102,7 +102,7 @@ WYSIWYGEditorButton.prototype.hideTooltip = function () {
   this.popperEl.remove();
 };
 
-WYSIWYGEditorButton.prototype.onEditorModeChange = function (event) {
+EdithButton.prototype.onEditorModeChange = function (event) {
   if (event.detail.mode === EditorModes.Code) {
     this.el.setAttribute("disabled", "disabled");
   } else {
@@ -110,10 +110,10 @@ WYSIWYGEditorButton.prototype.onEditorModeChange = function (event) {
   }
 };
 
-WYSIWYGEditorButton.prototype.render = function () {
+EdithButton.prototype.render = function () {
   // Create the button
   this.el = document.createElement("button");
-  this.el.setAttribute("class", `wysiwyg-editor-btn ${this.icon}`);
+  this.el.setAttribute("class", `edith-btn ${this.icon}`);
   this.el.setAttribute("type", "button");
 
   // Bind events
@@ -130,63 +130,63 @@ WYSIWYGEditorButton.prototype.render = function () {
   return this.el;
 };
 
-const WYSIWYGEditorButtons = {
+const EdithButtons = {
   bold: (context) =>
-    new WYSIWYGEditorButton(context, {
+    new EdithButton(context, {
       icon: "fa-solid fa-bold",
       title: "Gras",
       onclick: "bold",
     }),
   italic: (context) =>
-    new WYSIWYGEditorButton(context, {
+    new EdithButton(context, {
       icon: "fa-solid fa-italic",
       title: "Italique",
       onclick: "italic",
     }),
   underline: (context) =>
-    new WYSIWYGEditorButton(context, {
+    new EdithButton(context, {
       icon: "fa-solid fa-underline",
       title: "Souligner",
       onclick: "underline",
     }),
   strikethrough: (context) =>
-    new WYSIWYGEditorButton(context, {
+    new EdithButton(context, {
       icon: "fa-solid fa-strikethrough",
       title: "Barrer",
       onclick: "strikethrough",
     }),
   subscript: (context) =>
-    new WYSIWYGEditorButton(context, {
+    new EdithButton(context, {
       icon: "fa-solid fa-subscript",
       title: "Indice",
       onclick: "subscript",
     }),
   superscript: (context) =>
-    new WYSIWYGEditorButton(context, {
+    new EdithButton(context, {
       icon: "fa-solid fa-superscript",
       title: "Exposant",
       onclick: "superscript",
     }),
   nbsp: (context) =>
-    new WYSIWYGEditorButton(context, {
-      icon: "wysiwyg-editor-btn-nbsp",
+    new EdithButton(context, {
+      icon: "edith-btn-nbsp",
       title: "Ajouter une espace insécable",
       onclick: "nbsp",
     }),
   clear: (context) =>
-    new WYSIWYGEditorButton(context, {
+    new EdithButton(context, {
       icon: "fa-solid fa-eraser",
       title: "Effacer la mise en forme",
       onclick: "clear",
     }),
   link: (context) =>
-    new WYSIWYGEditorButton(context, {
+    new EdithButton(context, {
       icon: "fa-solid fa-link",
       title: "Lien",
       onclick: "link",
     }),
   codeview: (context) =>
-    new WYSIWYGEditorButton(context, {
+    new EdithButton(context, {
       icon: "fa-solid fa-code",
       title: "Afficher le code HTML",
       onclick: "codeview",
@@ -194,4 +194,4 @@ const WYSIWYGEditorButtons = {
     }),
 };
 
-export { WYSIWYGEditorButton, WYSIWYGEditorButtons };
+export { EdithButton, EdithButtons };

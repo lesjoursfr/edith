@@ -35,8 +35,8 @@ export default {
   },
   output: {
     path: resolve("./build"),
-    filename: "wysiwyg-editor.js",
-    library: "WYSIWYGEditor",
+    filename: "edith.js",
+    library: "Edith",
     libraryTarget: "umd",
   },
   target: "browserslist",
@@ -76,7 +76,7 @@ export default {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "wysiwyg-editor.css",
+      filename: "edith.css",
     }),
   ],
 };

@@ -1,16 +1,16 @@
-const WYSIWYGEditorModalFieldType = Object.freeze({
+const EdithModalFieldType = Object.freeze({
   input: 1,
   checkbox: 2,
 });
 
-function WYSIWYGEditorModal(ctx, options) {
+function EdithModal(ctx, options) {
   this.ctx = ctx;
   this.title = options.title;
   this.fields = options.fields || [];
   this.callback = options.callback;
 }
 
-WYSIWYGEditorModal.prototype.cancel = function (event) {
+EdithModal.prototype.cancel = function (event) {
   event.preventDefault();
 
   // Call the callback with a null value
@@ -20,7 +20,7 @@ WYSIWYGEditorModal.prototype.cancel = function (event) {
   this.close();
 };
 
-WYSIWYGEditorModal.prototype.submit = function (event) {
+EdithModal.prototype.submit = function (event) {
   event.preventDefault();
 
   // Call the callback with the input & checkboxes values
@@ -34,33 +34,33 @@ WYSIWYGEditorModal.prototype.submit = function (event) {
   this.close();
 };
 
-WYSIWYGEditorModal.prototype.close = function () {
+EdithModal.prototype.close = function () {
   // Remove the element from the dom
   this.el.remove();
 };
 
-WYSIWYGEditorModal.prototype.show = function () {
+EdithModal.prototype.show = function () {
   // Create the modal
   this.el = document.createElement("div");
-  this.el.setAttribute("class", "wysiwyg-editor-modal");
+  this.el.setAttribute("class", "edith-modal");
 
   // Create the header
   const header = document.createElement("div");
-  header.setAttribute("class", "wysiwyg-editor-modal-header");
+  header.setAttribute("class", "edith-modal-header");
   const title = document.createElement("span");
-  title.setAttribute("class", "wysiwyg-editor-modal-title");
+  title.setAttribute("class", "edith-modal-title");
   title.textContent = this.title;
   header.append(title);
 
   // Create the content
   const content = document.createElement("div");
-  content.setAttribute("class", "wysiwyg-editor-modal-content");
+  content.setAttribute("class", "edith-modal-content");
   for (const field of this.fields) {
     switch (field.fieldType) {
-      case WYSIWYGEditorModalFieldType.input:
+      case EdithModalFieldType.input:
         content.append(renderInputModalField(field));
         break;
-      case WYSIWYGEditorModalFieldType.checkbox:
+      case EdithModalFieldType.checkbox:
         content.append(renderCheckboxModalField(field));
         break;
       default:
@@ -70,14 +70,14 @@ WYSIWYGEditorModal.prototype.show = function () {
 
   // Create the footer
   const footer = document.createElement("div");
-  footer.setAttribute("class", "wysiwyg-editor-modal-footer");
+  footer.setAttribute("class", "edith-modal-footer");
   const cancel = document.createElement("button");
-  cancel.setAttribute("class", "wysiwyg-editor-modal-cancel");
+  cancel.setAttribute("class", "edith-modal-cancel");
   cancel.setAttribute("type", "button");
   cancel.textContent = "Annuler";
   footer.append(cancel);
   const submit = document.createElement("button");
-  submit.setAttribute("class", "wysiwyg-editor-modal-submit");
+  submit.setAttribute("class", "edith-modal-submit");
   submit.setAttribute("type", "button");
   submit.textContent = "Valider";
   footer.append(submit);
@@ -100,7 +100,7 @@ WYSIWYGEditorModal.prototype.show = function () {
 
 function createInputModalField(label, name, initialValue = null) {
   return {
-    fieldType: WYSIWYGEditorModalFieldType.input,
+    fieldType: EdithModalFieldType.input,
     label,
     name,
     initialValue,
@@ -109,7 +109,7 @@ function createInputModalField(label, name, initialValue = null) {
 
 function renderInputModalField(field) {
   const el = document.createElement("div");
-  el.setAttribute("class", "wysiwyg-editor-modal-input");
+  el.setAttribute("class", "edith-modal-input");
   const label = document.createElement("label");
   label.textContent = field.label;
   const input = document.createElement("input");
@@ -125,7 +125,7 @@ function renderInputModalField(field) {
 
 function createCheckboxModalField(label, name, initialState = false) {
   return {
-    fieldType: WYSIWYGEditorModalFieldType.checkbox,
+    fieldType: EdithModalFieldType.checkbox,
     label,
     name,
     initialState,
@@ -134,7 +134,7 @@ function createCheckboxModalField(label, name, initialState = false) {
 
 function renderCheckboxModalField(field) {
   const el = document.createElement("div");
-  el.setAttribute("class", "wysiwyg-editor-modal-checkbox");
+  el.setAttribute("class", "edith-modal-checkbox");
   const label = document.createElement("label");
   label.textContent = field.label;
   const input = document.createElement("input");
@@ -148,4 +148,4 @@ function renderCheckboxModalField(field) {
   return el;
 }
 
-export { WYSIWYGEditorModal, createInputModalField, createCheckboxModalField };
+export { EdithModal, createInputModalField, createCheckboxModalField };

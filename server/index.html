@@ -7,10 +7,10 @@
 		<title>WYSIWYG Editor</title>
 
 		<link rel="stylesheet" href="/fontawesome/css/all.min.css" />
-		<link rel="stylesheet" href="wysiwyg-editor.css" />
+		<link rel="stylesheet" href="edith.css" />
 		<script type="text/javascript" src="/popperjs/popper.min.js"></script>
 		<script type="text/javascript" src="/dependencies/codemirror.js"></script>
-		<script type="text/javascript" src="wysiwyg-editor.js"></script>
+		<script type="text/javascript" src="edith.js"></script>
 	</head>
 
 	<body>
@@ -18,7 +18,7 @@
 
 		<script type="text/javascript">
 			/* Initialize the WYSIWYG Editor */
-			WYSIWYGEditor.createWYSIWYGEditor(document.querySelector("#editor"), {
+			new Edith.Edith(document.querySelector("#editor"), {
 				height: 200,
 				toolbar: [
 					[
