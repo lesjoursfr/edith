@@ -1,7 +1,7 @@
 [![npm version](https://badge.fury.io/js/@lesjoursfr%2Fedith.svg)](https://badge.fury.io/js/@lesjoursfr%2Fedith)
 [![Build Status](https://travis-ci.org/lesjoursfr/edith.svg?branch=master)](https://travis-ci.org/lesjoursfr/edith)
 
-# edith.js
+# @lesjoursfr/edith
 
 Edith, simple WYSIWYG editor.
 
