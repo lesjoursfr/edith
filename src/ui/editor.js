@@ -51,6 +51,36 @@ EdithEditor.prototype.render = function () {
   return editorWrapper;
 };
 
+EdithEditor.prototype.setContent = function (content) {
+  // Check the current mode
+  if (this.mode === EditorModes.Visual) {
+    // Update the visual editor content
+    this.editors.visual.innerHTML = content;
+  } else {
+    // Update the code editor content
+    this.codeMirror.dispatch({
+      changes: { from: 0, to: this.codeMirror.state.doc.length, insert: content },
+    });
+  }
+};
+
+EdithEditor.prototype.getContent = function () {
+  // Check the current mode
+  if (this.mode === EditorModes.Visual) {
+    // Return the visual editor content
+    return this.editors.visual.innerHTML;
+  } else {
+    // Return the code editor content
+    this.editors.code.classList.add("edith-hidden");
+
+    // Display the visual editor
+    return this.codeMirror.state.doc
+      .toJSON()
+      .map((line) => line.trim())
+      .join("\n");
+  }
+};
+
 EdithEditor.prototype.wrapInsideTag = function (tag) {
   wrapInsideTag(tag);
 };
@@ -240,6 +270,19 @@ EdithEditor.prototype.onPasteEvent = function (e) {
   const frag = document.createDocumentFragment();
   frag.append(...contents.childNodes);
   range.insertNode(frag);
+};
+
+EdithEditor.prototype.destroy = function () {
+  // Check the current mode
+  if (this.mode === EditorModes.Visual) {
+    // Remove the visual editor
+    this.editors.visual.remove();
+  } else {
+    // Remove the code editor
+    this.codeMirror.destroy();
+    this.codeMirror = null;
+    this.editors.code.remove();
+  }
 };
 
 export { EdithEditor };

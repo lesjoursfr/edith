@@ -2,7 +2,7 @@
 .vscode
 .yarn
 node_modules
-build
+server
 .editorconfig
 .eslintignore
 .eslintrc.cjs

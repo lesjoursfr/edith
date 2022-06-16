@@ -31,9 +31,8 @@
 		"lint-sass": "stylelint **/*.scss --fix",
 		"format": "prettier --write .",
 		"test": "npx ava",
-		"builddeps": "webpack --mode production --config deps/codemirror.webpack.js --progress",
-		"server": "webpack serve --mode development --config editor.webpack.js --hot --open",
-		"build": "webpack --mode production --config editor.webpack.js --progress"
+		"builddeps": "webpack --mode production --config server/deps/codemirror.webpack.js --progress",
+		"server": "webpack serve --mode development --config server/editor.webpack.js --hot --open"
 	},
 	"files": [
 		"src/**/*"

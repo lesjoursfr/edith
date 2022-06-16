@@ -2,7 +2,7 @@ import { resolve } from "path";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
 export default {
-  entry: "./src/index.js",
+  entry: "./server/index.js",
   devServer: {
     host: "127.0.0.1",
     port: 8084,
@@ -20,8 +20,8 @@ export default {
         watch: false,
       },
       {
-        directory: resolve("./build/dependencies"),
-        publicPath: "/dependencies",
+        directory: resolve("./server/builds"),
+        publicPath: "/builds",
         serveIndex: false,
         watch: false,
       },

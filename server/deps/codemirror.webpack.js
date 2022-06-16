@@ -1,9 +1,9 @@
 import { resolve } from "path";
 
 export default {
-  entry: "./deps/codemirror.js",
+  entry: "./server/deps/codemirror.js",
   output: {
-    path: resolve("./build/dependencies"),
+    path: resolve("./server/builds"),
     filename: "codemirror.js",
     library: {
       name: "CodeMirror",

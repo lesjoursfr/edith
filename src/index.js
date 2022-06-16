@@ -1,6 +1,5 @@
 import { EdithEditor } from "./ui/editor.js";
 import { EdithButton, EdithButtons } from "./ui/button.js";
-import "./css/main.scss";
 
 /*
  * Represents an editor
@@ -56,6 +55,32 @@ Edith.prototype.off = function (type, listener, options) {
 
 Edith.prototype.trigger = function (type, payload = null) {
   this.element.dispatchEvent(new CustomEvent(type, { detail: payload }));
+};
+
+Edith.prototype.setContent = function (content) {
+  this.editor.setContent(content);
+};
+
+Edith.prototype.getContent = function () {
+  return this.editor.getContent();
+};
+
+Edith.prototype.destroy = function () {
+  // Delete the modals
+  this.modals.remove();
+  this.modals = undefined;
+
+  // Delete the editor
+  this.editor.destroy();
+  this.editor = undefined;
+
+  // Delete the toolbar
+  this.toolbar.remove();
+  this.toolbar = undefined;
+
+  // Clean the main element
+  this.element.classList.remove("edith");
+  this.element = undefined;
 };
 
 export { Edith, EdithButton };
