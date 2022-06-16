@@ -20,8 +20,8 @@ export default {
         watch: false,
       },
       {
-        directory: resolve("./node_modules/codemirror"),
-        publicPath: "/codemirror",
+        directory: resolve("./build/dependencies"),
+        publicPath: "/dependencies",
         serveIndex: false,
         watch: false,
       },
@@ -48,6 +48,12 @@ export default {
       amd: "Popper",
     },
     codemirror: {
+      root: "CodeMirror",
+      commonjs: "CodeMirror",
+      commonjs2: "CodeMirror",
+      amd: "CodeMirror",
+    },
+    "@codemirror/lang-html": {
       root: "CodeMirror",
       commonjs: "CodeMirror",
       commonjs2: "CodeMirror",

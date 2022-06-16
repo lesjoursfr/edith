@@ -1,4 +1,5 @@
-import CodeMirror from "codemirror";
+import { EditorView, basicSetup } from "codemirror";
+import { html } from "@codemirror/lang-html";
 import {
   wrapInsideTag,
   replaceSelectionByHtml,
@@ -12,19 +13,10 @@ import { Events } from "../core/event.js";
 import { getSelection, restoreSelection } from "../core/range.js";
 import { WYSIWYGEditorModal, createInputModalField, createCheckboxModalField } from "./modal.js";
 
-const CodeMirrorDefaults = Object.freeze({
-  lineWrapping: true,
-  lineNumbers: true,
-  mode: "text/html",
-  inputStyle: "contenteditable",
-  readOnly: false,
-});
-
 function WYSIWYGEditorEditor(ctx, options) {
   this.ctx = ctx;
   this.content = options.initialContent || "";
   this.height = options.height || 80;
-  this.codeMirrorOptions = Object.assign({}, CodeMirrorDefaults, options.codeMirrorOptions);
   this.mode = EditorModes.Visual;
   this.editors = {};
   this.codeMirror = null;
@@ -113,8 +105,11 @@ WYSIWYGEditorEditor.prototype.toggleCodeView = function () {
     this.editors.code.classList.remove("wysiwyg-editor-hidden");
     const codeMirrorEl = document.createElement("div");
     this.editors.code.append(codeMirrorEl);
-    this.codeMirror = new CodeMirror(codeMirrorEl, this.codeMirrorOptions);
-    this.codeMirror.setValue(this.editors.visual.innerHTML);
+    this.codeMirror = new EditorView({
+      doc: this.editors.visual.innerHTML,
+      extensions: [basicSetup, EditorView.lineWrapping, html({ matchClosingTags: true, autoCloseTags: true })],
+      parent: codeMirrorEl,
+    });
   } else {
     // Switch mode
     this.mode = EditorModes.Visual;
@@ -124,7 +119,11 @@ WYSIWYGEditorEditor.prototype.toggleCodeView = function () {
 
     // Display the visual editor
     this.editors.visual.classList.remove("wysiwyg-editor-hidden");
-    this.editors.visual.innerHTML = this.codeMirror.getValue();
+    this.editors.visual.innerHTML = this.codeMirror.state.doc
+      .toJSON()
+      .map((line) => line.trim())
+      .join("\n");
+    this.codeMirror.destroy();
     this.codeMirror = null;
     this.editors.code.innerHTML = "";
   }

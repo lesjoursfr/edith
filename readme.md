@@ -29,9 +29,6 @@ To work this library needs :
 			/*** Extra buttons for the toolbar ***/
 		},
 		initialContent: "Optional initial content",
-		codeMirrorOptions: {
-			/*** CodeMirror options ***/
-		},
 	});
 </script>
 ```
