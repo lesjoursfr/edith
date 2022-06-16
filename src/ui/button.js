@@ -23,7 +23,7 @@ function onButtonClick(context, kind, event) {
       context.editor.wrapInsideTag("sup");
       break;
     case "nbsp":
-      context.editor.replaceByHtml('<span class="wysiwyg-nbsp" contenteditable="false">¶</span>');
+      context.editor.replaceByHtml('<span class="edith-nbsp" contenteditable="false">¶</span>');
       break;
     case "clear":
       context.editor.clearStyle();

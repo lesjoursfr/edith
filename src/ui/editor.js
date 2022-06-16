@@ -20,6 +20,9 @@ function EdithEditor(ctx, options) {
   this.mode = EditorModes.Visual;
   this.editors = {};
   this.codeMirror = null;
+
+  // Replace &nbsp; by the string we use as a visual return
+  this.content = this.content.replace(/&nbsp;/g, '<span class="edith-nbsp" contenteditable="false">¶</span>');
 }
 
 EdithEditor.prototype.render = function () {
@@ -52,6 +55,9 @@ EdithEditor.prototype.render = function () {
 };
 
 EdithEditor.prototype.setContent = function (content) {
+  // Replace &nbsp; by the string we use as a visual return
+  content = content.replace(/&nbsp;/g, '<span class="edith-nbsp" contenteditable="false">¶</span>');
+
   // Check the current mode
   if (this.mode === EditorModes.Visual) {
     // Update the visual editor content
@@ -65,20 +71,26 @@ EdithEditor.prototype.setContent = function (content) {
 };
 
 EdithEditor.prototype.getContent = function () {
-  // Check the current mode
-  if (this.mode === EditorModes.Visual) {
-    // Return the visual editor content
-    return this.editors.visual.innerHTML;
-  } else {
-    // Return the code editor content
-    this.editors.code.classList.add("edith-hidden");
+  // Get the visual editor content or the code editor content
+  const code =
+    this.mode === EditorModes.Visual
+      ? this.editors.visual.innerHTML
+      : this.codeMirror.state.doc
+          .toJSON()
+          .map((line) => line.trim())
+          .join("\n");
 
-    // Display the visual editor
-    return this.codeMirror.state.doc
-      .toJSON()
-      .map((line) => line.trim())
-      .join("\n");
+  // Check if there is something in the editor
+  if (code === "<p><br></p>") {
+    return "";
   }
+
+  // Return clean code
+  return code
+    .replace(/<\/p>\s*<p>/gi, "<br>")
+    .replace(/(<p>|<\/p>)/gi, "")
+    .replace(/<span[^>]+class="edith-nbsp"[^>]*>[^<]*<\/span>/gi, "&nbsp;")
+    .replace(/(?:<br\s?\/?>)+$/gi, "");
 };
 
 EdithEditor.prototype.wrapInsideTag = function (tag) {
@@ -198,7 +210,7 @@ EdithEditor.prototype._processKeyEventWithMeta = function (e) {
     case 32:
       if (e.type === "keydown") {
         // Insert a non-breaking space
-        replaceSelectionByHtml('<span class="wysiwyg-nbsp" contenteditable="false">¶</span>');
+        replaceSelectionByHtml('<span class="edith-nbsp" contenteditable="false">¶</span>');
       }
 
       // Return true

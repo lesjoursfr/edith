@@ -182,10 +182,10 @@ export function clearSelectionStyle() {
 export function cleanDomContent(root, style) {
   // Iterate through children
   for (let el of [...root.children]) {
-    // Check if the span is a wysiwyg-nbsp
-    if (hasTagName(el, "span") && el.classList.contains("wysiwyg-nbsp")) {
+    // Check if the span is an edith-nbsp
+    if (hasTagName(el, "span") && el.classList.contains("edith-nbsp")) {
       // Ensure that we have a clean element
-      resetAttributesTo(el, { class: "wysiwyg-nbsp", contenteditable: "false" });
+      resetAttributesTo(el, { class: "edith-nbsp", contenteditable: "false" });
       el.innerHTML = "¶";
 
       // Stop processing the element
