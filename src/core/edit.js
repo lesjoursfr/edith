@@ -1,5 +1,6 @@
 import { getSelection, moveCursorInsideNode, moveCursorAfterNode, selectNodeContents } from "./range.js";
 import {
+  hasClass,
   hasTagName,
   cleanDomContent,
   createNodeWith,
@@ -9,10 +10,32 @@ import {
   removeCommentNodes,
 } from "./dom.js";
 
-function insertTagAtCaret(tag, options) {
-  // Get the caret position
-  const { range } = getSelection();
+function splitNodeAtCaret(range, node) {
+  // Get the node's parent
+  const parent = node.parentNode;
 
+  // Clone the current range & move the starting point to the beginning of the parent's node
+  const beforeCaret = range.cloneRange();
+  beforeCaret.setStart(parent, 0);
+
+  // Extract the content before the caret
+  const frag = beforeCaret.extractContents();
+
+  // Add a TextNode
+  const textNode = document.createTextNode("\u200B");
+  frag.append(textNode);
+
+  // Add back the content into the node's parent
+  parent.prepend(frag);
+
+  // Move the cursor in the created TextNode
+  moveCursorInsideNode(textNode);
+
+  // Return the inserted TextNode
+  return textNode;
+}
+
+function insertTagAtCaret(range, tag, options) {
   // Create the tag
   const node = document.createElement(tag);
 
@@ -20,19 +43,19 @@ function insertTagAtCaret(tag, options) {
   if (tag === "a") {
     node.textContent = options.textContent || "lien";
   } else {
-    node.innerHTML = "&#x200b;";
+    node.innerHTML = "\u200B";
   }
 
   // Insert the tag at the cursor position
   range.insertNode(node);
 
-  // Move the cursor inside the created tag
-  moveCursorInsideNode(node);
-
   // Add an extra space after the tag if it's a link
   if (tag === "a") {
     node.insertAdjacentText("afterend", " ");
   }
+
+  // Move the cursor inside the created tag
+  moveCursorInsideNode(node);
 
   // Return the inserted tag
   return node;
@@ -65,22 +88,26 @@ export function wrapInsideTag(tag, options = {}) {
   // Get the caret position
   const { sel, range } = getSelection();
 
-  // Check if there is a selection
-  if (range && range.collapsed) {
-    // Check if the parent element has the same tag name
-    const parent = sel.anchorNode.parentNode;
-    if (hasTagName(parent, tag)) {
-      // Unwrap the parent node
-      unwrapNode(parent);
+  // Check if the user has selected something
+  if (range === undefined) return false;
 
-      // We have replaced something
-      // Normalize the Node & that's it. We don't have to return something
-      range.commonAncestorContainer.normalize();
-      return;
+  // Check if the range is collapsed
+  if (range.collapsed) {
+    // Check if a parent element has the same tag name
+    let parent = sel.anchorNode.parentNode;
+    while (!hasClass(parent, "edith-visual")) {
+      if (hasTagName(parent, tag)) {
+        // One of the parent has the same tag name
+        // Split the parent at the caret & insert a TextNode
+        return splitNodeAtCaret(range, parent);
+      }
+
+      // Take the parent
+      parent = parent.parentNode;
     }
 
-    // We can insert an empty node a the caret
-    return insertTagAtCaret(tag, options);
+    // We just have to insert a new Node at the caret position
+    return insertTagAtCaret(range, tag, options);
   }
 
   // There is a Selection
