@@ -1,5 +1,5 @@
 # Generated files
-build/
+server/builds/
 
 # Yarn & node.js dependencies
 package.json

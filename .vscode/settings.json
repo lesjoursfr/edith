@@ -3,19 +3,19 @@
 		"**/.git/**": true,
 		"**/node_modules/**": true,
 		"**/.yarn/**": true,
-		"**/build/**": true
+		"**/server/builds/**": true
 	},
 	"files.exclude": {
 		"**/.git/**": true,
 		"**/node_modules/**": true,
 		"**/.yarn/**": true,
-		"**/build/**": true
+		"**/server/builds/**": true
 	},
 	"files.watcherExclude": {
 		"**/.git/**": true,
 		"**/node_modules/**": true,
 		"**/.yarn/**": true,
-		"**/build/**": true
+		"**/server/builds/**": true
 	},
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"editor.codeActionsOnSave": {
