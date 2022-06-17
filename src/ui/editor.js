@@ -7,7 +7,7 @@ import {
   clearSelectionStyle,
   cleanPastedHtml,
 } from "../core/edit.js";
-import { hasTagName } from "../core/dom.js";
+import { hasClass, hasTagName } from "../core/dom.js";
 import { EditorModes } from "../core/mode.js";
 import { Events } from "../core/event.js";
 import { getSelection, restoreSelection } from "../core/range.js";
@@ -252,7 +252,7 @@ EdithEditor.prototype.onPasteEvent = function (e) {
     // Detect style blocs in parents
     let dest = sel.anchorNode;
     const style = { B: false, I: false, U: false, S: false, Q: false };
-    while (!dest.parentNode.classList.contains("edith-visual")) {
+    while (!hasClass(dest.parentNode, "edith-visual")) {
       // Get the parent
       dest = dest.parentNode;
 

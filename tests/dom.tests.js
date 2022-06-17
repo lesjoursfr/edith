@@ -1,6 +1,7 @@
 import test from "ava";
 import { JSDOM } from "jsdom";
 import {
+  hasClass,
   hasTagName,
   cleanDomContent,
   createNodeWith,
@@ -22,6 +23,13 @@ test("core.dom.hasTagName", (t) => {
   t.false(hasTagName(dom.window.document.querySelector("p"), ["i", "u"]));
   t.true(hasTagName(dom.window.document.querySelector("p"), "p"));
   t.true(hasTagName(dom.window.document.querySelector("p"), ["i", "u", "p"]));
+});
+
+test("core.dom.hasClass", (t) => {
+  const dom = new JSDOM('<!DOCTYPE html><p class="bar">Hello world</p>');
+
+  t.false(hasClass(dom.window.document.querySelector("p"), "foo"));
+  t.true(hasClass(dom.window.document.querySelector("p"), "bar"));
 });
 
 test("core.dom.createNodeWith", (t) => {

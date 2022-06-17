@@ -10,6 +10,14 @@ export function hasTagName(node, tags) {
   return tags.some((tag) => node.tagName === tag.toUpperCase());
 }
 
+export function hasClass(node, className) {
+  if (node.nodeType !== Node.ELEMENT_NODE) {
+    return false;
+  }
+
+  return node.classList.contains(className);
+}
+
 export function createNodeWith(tag, { innerHTML, textContent, attributes } = {}) {
   const node = document.createElement(tag);
 
@@ -150,7 +158,7 @@ export function cleanDomContent(root, style) {
   // Iterate through children
   for (let el of [...root.children]) {
     // Check if the span is an edith-nbsp
-    if (hasTagName(el, "span") && el.classList.contains("edith-nbsp")) {
+    if (hasTagName(el, "span") && hasClass(el, "edith-nbsp")) {
       // Ensure that we have a clean element
       resetAttributesTo(el, { class: "edith-nbsp", contenteditable: "false" });
       el.innerHTML = "¶";
