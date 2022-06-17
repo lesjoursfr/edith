@@ -2,6 +2,7 @@ import test from "ava";
 import { JSDOM } from "jsdom";
 import {
   hasTagName,
+  cleanDomContent,
   createNodeWith,
   replaceNodeWith,
   unwrapNode,
@@ -125,4 +126,13 @@ test("core.dom.trimTag", (t) => {
 
   trimTag(dom.window.document.body, "div");
   t.is(dom.window.document.body.innerHTML, "<p>Hello world</p><div></div><span>Simple text</span>");
+});
+
+test("core.dom.cleanDomContent", (t) => {
+  const dom = new JSDOM(
+    '<!DOCTYPE html><div><span style="color: rgb(33, 37, 41); font-weight: bold; font-style: normal;">Bold text</span>,<span style="color: rgb(33, 37, 41); font-style: normal; font-weight: 400;"> simple span</span> & <span style="color: rgb(33, 37, 41); font-weight: normal; font-style: italic; ">Italic text</span></div>'
+  );
+
+  cleanDomContent(dom.window.document.body, { B: true, I: false, U: false, S: false, Q: false });
+  t.is(dom.window.document.body.innerHTML, "Bold text, simple span &amp; <i>Italic text</i>");
 });

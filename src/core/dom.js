@@ -145,3 +145,87 @@ export function trimTag(node, tag) {
     children[children.length - 1].remove();
   }
 }
+
+export function cleanDomContent(root, style) {
+  // Iterate through children
+  for (let el of [...root.children]) {
+    // Check if the span is an edith-nbsp
+    if (hasTagName(el, "span") && el.classList.contains("edith-nbsp")) {
+      // Ensure that we have a clean element
+      resetAttributesTo(el, { class: "edith-nbsp", contenteditable: "false" });
+      el.innerHTML = "¶";
+
+      continue;
+    }
+
+    // Check if there is a style attribute on the current node
+    if (el.hasAttribute("style")) {
+      // Replace the style attribute by tags
+      el = replaceNodeStyleByTag(el);
+    }
+
+    // Check if the Tag Match a Parent Tag
+    if (style[el.tagName]) {
+      el = replaceNodeWith(
+        el,
+        createNodeWith("span", { attributes: { style: el.getAttribute("style") || "" }, innerHTML: el.innerHTML })
+      );
+    }
+
+    // Save the Current Style Tag
+    const newTags = { ...style };
+    if (hasTagName(el, ["b", "i", "q", "u", "s"])) {
+      newTags[el.tagName] = true;
+    }
+
+    // Clean Children
+    cleanDomContent(el, newTags);
+
+    // Keep only href & target attributes for <a> tags
+    if (hasTagName(el, "a")) {
+      const linkAttributes = {};
+      if (el.hasAttribute("href")) {
+        linkAttributes.href = el.getAttribute("href");
+      }
+      if (el.hasAttribute("target")) {
+        linkAttributes.target = el.getAttribute("target");
+      }
+      resetAttributesTo(el, linkAttributes);
+      continue;
+    }
+
+    // Remove all tag attributes for tags in the allowed list
+    if (hasTagName(el, ["b", "i", "q", "u", "s", "br"])) {
+      resetAttributesTo(el, {});
+      continue;
+    }
+
+    // Remove useless tags
+    if (hasTagName(el, ["style", "meta", "link"])) {
+      el.remove();
+      continue;
+    }
+
+    // Check if it's a <p> tag
+    if (hasTagName(el, "p")) {
+      // Check if the element contains text
+      if (el.textContent.trim().length === 0) {
+        // Remove the node
+        el.remove();
+        continue;
+      }
+
+      // Remove all tag attributes
+      resetAttributesTo(el, {});
+
+      // Remove leading & trailing <br>
+      trimTag(el, "br");
+
+      // Return
+      continue;
+    }
+
+    // Unwrap the node
+    unwrapNode(el);
+  }
+}
