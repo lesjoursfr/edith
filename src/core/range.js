@@ -10,10 +10,6 @@ export function restoreSelection(selection) {
   sel.addRange(selection.range);
 }
 
-export function isRangeRemovable(range) {
-  return range.collapsed !== false || range.startContainer.parentNode === range.endContainer.parentNode;
-}
-
 export function moveCursorInsideNode(target) {
   const range = document.createRange();
   const sel = window.getSelection();

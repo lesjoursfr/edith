@@ -1,6 +1,5 @@
 import {
   getSelection,
-  isRangeRemovable,
   moveCursorInsideNode,
   moveCursorAfterNode,
   selectNodeContents,
@@ -49,24 +48,21 @@ function insertTagAtCaret(tag, options) {
 
 export function replaceSelectionByHtml(html) {
   // Get the caret position
-  const { range } = getSelection();
+  const { sel, range } = getSelection();
 
-  // Check if we can remove the selection
-  if (!isRangeRemovable(range)) {
-    // Don't Process the Event
-    return;
-  }
+  // Check if the user has selected something
+  if (range === undefined) return false;
 
-  // Remove the selection from the DOM
-  range.deleteContents();
-
-  // Range.createContextualFragment() would be useful here but is
-  // only relatively recently standardized and is not supported in
-  // some browsers (IE9, for one)
-  const el = createNodeWith("div", { innerHTML: html });
+  // Create the fragment to insert
   const frag = document.createDocumentFragment();
+
+  // Create the nodes to insert
+  const el = createNodeWith("div", { innerHTML: html });
   frag.append(...el.childNodes);
   const lastNode = frag.childNodes[frag.childNodes.length - 1];
+
+  // Replace the current selection by the pasted content
+  sel.deleteFromDocument();
   range.insertNode(frag);
 
   // Preserve the selection

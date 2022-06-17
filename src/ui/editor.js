@@ -109,6 +109,9 @@ EdithEditor.prototype.insertLink = function () {
   // Get the caret position
   const { sel, range } = getSelection();
 
+  // Check if the user has selected something
+  if (range === undefined) return false;
+
   // Show the modal
   const modal = new EdithModal(this.ctx, {
     title: "Insérer un lien",
@@ -229,6 +232,9 @@ EdithEditor.prototype.onPasteEvent = function (e) {
   // Get the caret position
   const { sel, range } = getSelection();
 
+  // Check if the user has selected something
+  if (range === undefined) return false;
+
   // Create the fragment to insert
   const frag = document.createDocumentFragment();
 
@@ -275,9 +281,8 @@ EdithEditor.prototype.onPasteEvent = function (e) {
   }
 
   // Replace the current selection by the pasted content
-  if (!sel.rangeCount) return false;
   sel.deleteFromDocument();
-  sel.getRangeAt(0).insertNode(frag);
+  range.insertNode(frag);
 };
 
 EdithEditor.prototype.destroy = function () {
