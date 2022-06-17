@@ -1,9 +1,4 @@
-import {
-  getSelection,
-  moveCursorInsideNode,
-  moveCursorAfterNode,
-  selectNodeContents,
-} from "./range.js";
+import { getSelection, moveCursorInsideNode, moveCursorAfterNode, selectNodeContents } from "./range.js";
 import {
   hasTagName,
   createNodeWith,
