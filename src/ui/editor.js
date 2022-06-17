@@ -191,14 +191,10 @@ EdithEditor.prototype.onKeyEvent = function (e) {
 EdithEditor.prototype._processKeyEvent = function (e) {
   // Check the key code
   switch (e.keyCode) {
-    // Enter : 13
-    case 13:
+    case 13: // Enter : 13
       if (e.type === "keydown") {
-        // Insert a line break
-        replaceSelectionByHtml("<br />");
+        replaceSelectionByHtml("<br />"); // Insert a line break
       }
-
-      // Return true
       return true;
   }
 
@@ -209,14 +205,16 @@ EdithEditor.prototype._processKeyEvent = function (e) {
 EdithEditor.prototype._processKeyEventWithMeta = function (e) {
   // Check the key code
   switch (e.keyCode) {
-    // Space : 32
-    case 32:
+    case 13: // Enter : 13
       if (e.type === "keydown") {
-        // Insert a non-breaking space
-        replaceSelectionByHtml('<span class="edith-nbsp" contenteditable="false">¶</span>');
+        replaceSelectionByHtml("<br />"); // Insert a line break
       }
+      return true;
 
-      // Return true
+    case 32: // Space : 32
+      if (e.type === "keydown") {
+        replaceSelectionByHtml('<span class="edith-nbsp" contenteditable="false">¶</span>'); // Insert a non-breaking space
+      }
       return true;
   }
 
