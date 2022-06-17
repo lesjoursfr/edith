@@ -229,59 +229,55 @@ EdithEditor.prototype.onPasteEvent = function (e) {
   // Get the caret position
   const { sel, range } = getSelection();
 
+  // Create the fragment to insert
+  const frag = document.createDocumentFragment();
+
   // Check if we try to paste HTML content
   if (!e.clipboardData.types.includes("text/html")) {
-    // Get the content as a plain text
-    const text = e.clipboardData.getData("text/plain").replace(/[\r\n]+/g, "<br />");
+    // Get the content as a plain text & split it by lines
+    const lines = e.clipboardData.getData("text/plain").split(/[\r\n]+/g);
 
-    // Check if the user want to replace the selection
-    if (range && !range.collapsed && range.commonAncestorContainer.nodeType === Node.TEXT_NODE) {
-      // Delete the Current Selection
-      range.deleteContents();
+    // Add the content as text nodes with a <br> node between each line
+    for (let i = 0; i < lines.length - 1; i++) {
+      if (frag.length !== 0) {
+        frag.append(document.createElement("br"));
+      }
+      frag.append(document.createTextNode(lines[i]));
+    }
+  } else {
+    // Detect style blocs in parents
+    let dest = sel.anchorNode;
+    const style = { B: false, I: false, U: false, S: false, Q: false };
+    while (!dest.parentNode.classList.contains("edith-visual")) {
+      // Get the parent
+      dest = dest.parentNode;
+
+      // Check if it's a style tag
+      if (hasTagName(dest, ["b", "i", "u", "s", "q"])) {
+        // Update the style
+        style[dest.tagName] = true;
+      }
     }
 
-    // Insert the text
-    range.insertNode(document.createTextNode(text));
+    // We have HTML content
+    let html = e.clipboardData.getData("text/html").replace(/[\r\n]+/g, " ");
 
-    // Nothing more to do
-    return;
-  }
-
-  // Detect style blocs in parents
-  let dest = sel.anchorNode;
-  const style = { B: false, I: false, U: false, S: false, Q: false };
-  while (!dest.parentNode.classList.contains("edith-visual")) {
-    // Get the parent
-    dest = dest.parentNode;
-
-    // Check if it's a style tag
-    if (hasTagName(dest, ["b", "i", "u", "s", "q"])) {
-      // Update the style
-      style[dest.tagName] = true;
+    // Wrap the HTML content into <html><body></body></html>
+    if (!/^<html>\s*<body>/.test(html)) {
+      html = "<html><body>" + html + "</body></html>";
     }
+
+    // Clean the content
+    const contents = cleanPastedHtml(html, style);
+
+    // Add the content to the frgament
+    frag.append(...contents.childNodes);
   }
 
-  // We have HTML content
-  let html = e.clipboardData.getData("text/html").replace(/[\r\n]+/g, " ");
-
-  // Wrap the HTML Content into <html><body></body></html>
-  if (!/^<html>\s*<body>/.test(html)) {
-    html = "<html><body>" + html + "</body></html>";
-  }
-
-  // Clean the Content
-  const contents = cleanPastedHtml(html, style);
-
-  // Check if the user want to replace the selection
-  if (range && !range.collapsed && range.commonAncestorContainer.nodeType === Node.TEXT_NODE) {
-    // Delete the Current Selection
-    range.deleteContents();
-  }
-
-  // Paste the Content into the Editor Content
-  const frag = document.createDocumentFragment();
-  frag.append(...contents.childNodes);
-  range.insertNode(frag);
+  // Replace the current selection by the pasted content
+  if (!sel.rangeCount) return false;
+  sel.deleteFromDocument();
+  sel.getRangeAt(0).insertNode(frag);
 };
 
 EdithEditor.prototype.destroy = function () {
