@@ -1,15 +1,7 @@
 export function getSelection() {
-  let sel, range;
-  if (window.getSelection) {
-    sel = window.getSelection();
-    if (sel.getRangeAt && sel.rangeCount) {
-      range = sel.getRangeAt(0);
-    }
-  } else if (document.selection) {
-    range = document.selection.createRange();
-  }
+  const sel = window.getSelection();
 
-  return { sel, range };
+  return { sel, range: sel.rangeCount ? sel.getRangeAt(0) : undefined };
 }
 
 export function restoreSelection(selection) {
