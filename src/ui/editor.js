@@ -1,5 +1,6 @@
 import { EditorView, basicSetup } from "codemirror";
 import { html } from "@codemirror/lang-html";
+import { hasClass, hasTagName } from "../core/dom.js";
 import {
   wrapInsideTag,
   replaceSelectionByHtml,
@@ -7,10 +8,11 @@ import {
   clearSelectionStyle,
   cleanPastedHtml,
 } from "../core/edit.js";
-import { hasClass, hasTagName } from "../core/dom.js";
-import { EditorModes } from "../core/mode.js";
 import { Events } from "../core/event.js";
+import { History } from "../core/history.js";
+import { EditorModes } from "../core/mode.js";
 import { getSelection, restoreSelection } from "../core/range.js";
+import { throttle } from "../core/throttle.js";
 import { EdithModal, createInputModalField, createCheckboxModalField } from "./modal.js";
 
 function EdithEditor(ctx, options) {
@@ -20,6 +22,8 @@ function EdithEditor(ctx, options) {
   this.mode = EditorModes.Visual;
   this.editors = {};
   this.codeMirror = null;
+  this.history = new History();
+  this.throttledSnapshots = throttle(() => this.takeSnapshot(), 3000, { leading: false, trailing: true });
 
   // Replace &nbsp; by the string we use as a visual return
   this.content = this.content.replace(/&nbsp;/g, '<span class="edith-nbsp" contenteditable="false">¶</span>');
@@ -94,16 +98,27 @@ EdithEditor.prototype.getContent = function () {
     .replace(/(?:<br\s?\/?>)+$/gi, "");
 };
 
+EdithEditor.prototype.takeSnapshot = function () {
+  this.history.push(this.editors.visual.innerHTML);
+};
+
+EdithEditor.prototype.restoreSnapshot = function () {
+  this.editors.visual.innerHTML = this.history.pop();
+};
+
 EdithEditor.prototype.wrapInsideTag = function (tag) {
   wrapInsideTag(tag);
+  this.takeSnapshot();
 };
 
 EdithEditor.prototype.replaceByHtml = function (html) {
   replaceSelectionByHtml(html);
+  this.takeSnapshot();
 };
 
 EdithEditor.prototype.clearStyle = function () {
   clearSelectionStyle();
+  this.takeSnapshot();
 };
 
 EdithEditor.prototype.insertLink = function () {
@@ -194,10 +209,13 @@ EdithEditor.prototype._processKeyEvent = function (e) {
   switch (e.keyCode) {
     case 13: // Enter : 13
       if (e.type === "keydown") {
-        replaceSelectionByHtml("<br />"); // Insert a line break
+        this.replaceByHtml("<br />"); // Insert a line break
       }
       return true;
   }
+
+  // Save the editor content
+  this.throttledSnapshots();
 
   // Return false
   return false;
@@ -208,37 +226,43 @@ EdithEditor.prototype._processKeyEventWithMeta = function (e) {
   switch (e.keyCode) {
     case 13: // Enter : 13
       if (e.type === "keydown") {
-        replaceSelectionByHtml("<br />"); // Insert a line break
+        this.replaceByHtml("<br />"); // Insert a line break
       }
       return true;
 
     case 32: // Space : 32
       if (e.type === "keydown") {
-        replaceSelectionByHtml('<span class="edith-nbsp" contenteditable="false">¶</span>'); // Insert a non-breaking space
+        this.replaceByHtml('<span class="edith-nbsp" contenteditable="false">¶</span>'); // Insert a non-breaking space
       }
       return true;
 
     case 66: // b : 66
       if (e.type === "keydown") {
-        wrapInsideTag("b"); // Toggle bold
+        this.wrapInsideTag("b"); // Toggle bold
       }
       return true;
 
     case 73: // i : 73
       if (e.type === "keydown") {
-        wrapInsideTag("i"); // Toggle italic
+        this.wrapInsideTag("i"); // Toggle italic
       }
       return true;
 
     case 85: // u : 85
       if (e.type === "keydown") {
-        wrapInsideTag("u"); // Toggle underline
+        this.wrapInsideTag("u"); // Toggle underline
       }
       return true;
 
     case 83: // s : 83
       if (e.type === "keydown") {
-        wrapInsideTag("s"); // Toggle strikethrough
+        this.wrapInsideTag("s"); // Toggle strikethrough
+      }
+      return true;
+
+    case 90: // z : 90
+      if (e.type === "keydown") {
+        this.restoreSnapshot(); // Undo
       }
       return true;
   }
