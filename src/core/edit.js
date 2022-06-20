@@ -10,6 +10,12 @@ import {
   removeCommentNodes,
 } from "./dom.js";
 
+/**
+ * Split the node at the caret position.
+ * @param {Range} range the caret position
+ * @param {Node} node the node to split
+ * @returns {Text} the created text node with the caret inside
+ */
 function splitNodeAtCaret(range, node) {
   // Get the node's parent
   const parent = node.parentNode;
@@ -35,6 +41,14 @@ function splitNodeAtCaret(range, node) {
   return textNode;
 }
 
+/**
+ * Create a node at the caret position.
+ * @param {Range} range the caret position
+ * @param {string} tag the tag name of the node
+ * @param {object} options optional parameters
+ * @param {string} options.textContent the text content of the node
+ * @returns {Text} the created node with the caret inside
+ */
 function insertTagAtCaret(range, tag, options) {
   // Create the tag
   const node = document.createElement(tag);
@@ -61,6 +75,10 @@ function insertTagAtCaret(range, tag, options) {
   return node;
 }
 
+/**
+ * Replace the current selection by the given HTML code.
+ * @param {string} html the HTML code
+ */
 export function replaceSelectionByHtml(html) {
   // Get the caret position
   const { sel, range } = getSelection();
@@ -84,6 +102,13 @@ export function replaceSelectionByHtml(html) {
   moveCursorAfterNode(lastNode);
 }
 
+/**
+ * Wrap the current selection inside a new node.
+ * @param {string} tag the tag name of the node
+ * @param {object} options optional parameters
+ * @param {string} options.textContent the text content of the node
+ * @returns the created node
+ */
 export function wrapInsideTag(tag, options = {}) {
   // Get the caret position
   const { sel, range } = getSelection();
@@ -154,6 +179,13 @@ export function wrapInsideTag(tag, options = {}) {
   range.commonAncestorContainer.normalize();
 }
 
+/**
+ * Wrap the current selection inside a link.
+ * @param {string} text the text of the link
+ * @param {string} href the href of the link
+ * @param {boolean} targetBlank add target="_blank" attribute or not
+ * @returns the created node
+ */
 export function wrapInsideLink(text, href, targetBlank) {
   // Wrap the selection inside a link
   const tag = wrapInsideTag("a", { textContent: text });
@@ -175,6 +207,9 @@ export function wrapInsideLink(text, href, targetBlank) {
   return tag;
 }
 
+/**
+ * Clear the style in the current selection.
+ */
 export function clearSelectionStyle() {
   // Get the caret position
   const { sel, range } = getSelection();
@@ -194,6 +229,12 @@ export function clearSelectionStyle() {
   }
 }
 
+/**
+ * Clean the given HTML code.
+ * @param {string} html the HTML code to clean
+ * @param {object} style active styles
+ * @returns the cleaned HTML code
+ */
 export function cleanPastedHtml(html, style) {
   // Create a new div with the HTML content
   const result = document.createElement("div");

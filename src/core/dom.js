@@ -1,3 +1,9 @@
+/**
+ * Check if the node has the given tag name, or if its tag name is in the given list.
+ * @param {Node} node the element to check
+ * @param {(string|Array)} tags a tag name or a list of tag name
+ * @returns {boolean} true if the node has the given tag name
+ */
 export function hasTagName(node, tags) {
   if (node.nodeType !== Node.ELEMENT_NODE) {
     return false;
@@ -10,6 +16,12 @@ export function hasTagName(node, tags) {
   return tags.some((tag) => node.tagName === tag.toUpperCase());
 }
 
+/**
+ * Check if the node has the given class name.
+ * @param {Node} node the element to check
+ * @param {(string|Array)} className a class name
+ * @returns {boolean} true if the node has the given class name
+ */
 export function hasClass(node, className) {
   if (node.nodeType !== Node.ELEMENT_NODE) {
     return false;
@@ -18,6 +30,15 @@ export function hasClass(node, className) {
   return node.classList.contains(className);
 }
 
+/**
+ * Create a new node.
+ * @param {string} tag the tag name of the node
+ * @param {object} options optional parameters
+ * @param {string} options.innerHTML the HTML code of the node
+ * @param {string} options.textContent the text content of the node
+ * @param {object} options.attributes attributes of the node
+ * @returns {Node} the created node
+ */
 export function createNodeWith(tag, { innerHTML, textContent, attributes } = {}) {
   const node = document.createElement(tag);
 
@@ -38,23 +59,44 @@ export function createNodeWith(tag, { innerHTML, textContent, attributes } = {})
   return node;
 }
 
+/**
+ * Replace a node.
+ * @param {Node} node the node to replace
+ * @param {Node} replacement the new node
+ * @returns {Node} the new node
+ */
 export function replaceNodeWith(node, replacement) {
   node.replaceWith(replacement);
   return replacement;
 }
 
+/**
+ * Replace the node by its child nodes.
+ * @param {Node} node the node to replace
+ * @returns {Array} its child nodes
+ */
 export function unwrapNode(node) {
   const newNodes = node.childNodes;
   node.replaceWith(...newNodes);
   return newNodes;
 }
 
+/**
+ * Replace the node by its text content.
+ * @param {Node} node the node to replace
+ * @returns {Text} the created Text node
+ */
 export function textifyNode(node) {
   const newNode = document.createTextNode(node.textContent);
   node.replaceWith(newNode);
   return newNode;
 }
 
+/**
+ * Remove all node's child nodes that pass the test implemented by the provided function.
+ * @param {Node} node the node to process
+ * @param {Function} callbackFn the predicate
+ */
 export function removeNodes(node, callbackFn) {
   for (const el of [...node.childNodes]) {
     if (callbackFn(el)) {
@@ -63,14 +105,27 @@ export function removeNodes(node, callbackFn) {
   }
 }
 
+/**
+ * Remove all node's child nodes that are empty text nodes.
+ * @param {Node} node the node to process
+ */
 export function removeEmptyTextNodes(node) {
   removeNodes(node, (el) => el.nodeType === Node.TEXT_NODE && el.textContent.trim().length === 0);
 }
 
+/**
+ * Remove all node's child nodes that are comment nodes.
+ * @param {Node} node the node to process
+ */
 export function removeCommentNodes(node) {
   removeNodes(node, (el) => el.nodeType === Node.COMMENT_NODE);
 }
 
+/**
+ * Reset all node's attributes to the given list.
+ * @param {Node} node the node
+ * @param {object} targetAttributes the requested node's attributes
+ */
 export function resetAttributesTo(node, targetAttributes) {
   for (const name of node.getAttributeNames()) {
     if (targetAttributes[name] === undefined) {
@@ -82,6 +137,11 @@ export function resetAttributesTo(node, targetAttributes) {
   }
 }
 
+/**
+ * Replace the node's style attribute by some regular nodes (<b>, <i>, <u> or <s>).
+ * @param {Node} node the node to process
+ * @returns {Node} the new node
+ */
 export function replaceNodeStyleByTag(node) {
   // Get the style
   const styleAttr = node.getAttribute("style") || "";
@@ -139,21 +199,31 @@ export function replaceNodeStyleByTag(node) {
   return node;
 }
 
+/**
+ * Remove all leading & trailing node's child nodes that match the given tag.
+ * @param {Node} node the node to process
+ * @param {string} tag the tag
+ */
 export function trimTag(node, tag) {
   // Children
   const children = node.childNodes;
 
-  // Remove Leading BR
+  // Remove Leading
   while (children.length > 0 && hasTagName(children[0], tag)) {
     children[0].remove();
   }
 
-  // Remove Trailing BR
+  // Remove Trailing
   while (children.length > 0 && hasTagName(children[children.length - 1], tag)) {
     children[children.length - 1].remove();
   }
 }
 
+/**
+ * Clean the DOM content of the node
+ * @param {Node} root the node to process
+ * @param {object} style active styles for the root
+ */
 export function cleanDomContent(root, style) {
   // Iterate through children
   for (let el of [...root.children]) {
