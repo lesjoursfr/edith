@@ -58,6 +58,14 @@ EdithEditor.prototype.render = function () {
   return editorWrapper;
 };
 
+EdithEditor.prototype.getVisualEditorElement = function () {
+  return this.editors.visual;
+};
+
+EdithEditor.prototype.getCodeEditorElement = function () {
+  return this.editors.code;
+};
+
 EdithEditor.prototype.setContent = function (content) {
   // Replace &nbsp; by the string we use as a visual return
   content = content.replace(/&nbsp;/g, '<span class="edith-nbsp" contenteditable="false">¶</span>');
