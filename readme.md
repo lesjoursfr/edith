@@ -1,5 +1,5 @@
 [![npm version](https://badge.fury.io/js/@lesjoursfr%2Fedith.svg)](https://badge.fury.io/js/@lesjoursfr%2Fedith)
-[![Build Status](https://travis-ci.org/lesjoursfr/edith.svg?branch=master)](https://travis-ci.org/lesjoursfr/edith)
+[![QC Checks](https://github.com/lesjoursfr/edith/actions/workflows/quality-control.yml/badge.svg)](https://github.com/lesjoursfr/edith/actions/workflows/quality-control.yml)
 
 # @lesjoursfr/edith
 
