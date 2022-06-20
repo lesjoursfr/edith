@@ -1,12 +1,15 @@
 {
 	"name": "@lesjoursfr/edith",
-	"version": "1.0.0",
+	"version": "0.1.0",
 	"description": "Simple WYSIWYG editor.",
 	"license": "MIT",
 	"repository": "lesjoursfr/edith",
 	"homepage": "https://github.com/lesjoursfr/edith#readme",
 	"bugs": {
 		"url": "https://github.com/lesjoursfr/edith/issues"
+	},
+	"publishConfig": {
+		"access": "public"
 	},
 	"engines": {
 		"node": ">=v18.3.0"
