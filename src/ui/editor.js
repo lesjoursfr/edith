@@ -11,7 +11,7 @@ import {
 import { Events } from "../core/event.js";
 import { History } from "../core/history.js";
 import { EditorModes } from "../core/mode.js";
-import { getSelection, restoreSelection } from "../core/range.js";
+import { getSelection, restoreSelection, isSelectionInsideNode } from "../core/range.js";
 import { throttle } from "../core/throttle.js";
 import { EdithModal, createInputModalField, createCheckboxModalField } from "./modal.js";
 
@@ -115,13 +115,17 @@ EdithEditor.prototype.restoreSnapshot = function () {
 };
 
 EdithEditor.prototype.wrapInsideTag = function (tag) {
-  wrapInsideTag(tag);
-  this.takeSnapshot();
+  if (isSelectionInsideNode(this.editors.visual)) {
+    wrapInsideTag(tag);
+    this.takeSnapshot();
+  }
 };
 
 EdithEditor.prototype.replaceByHtml = function (html) {
-  replaceSelectionByHtml(html);
-  this.takeSnapshot();
+  if (isSelectionInsideNode(this.editors.visual)) {
+    replaceSelectionByHtml(html);
+    this.takeSnapshot();
+  }
 };
 
 EdithEditor.prototype.clearStyle = function () {

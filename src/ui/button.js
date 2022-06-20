@@ -46,7 +46,10 @@ function EdithButton(ctx, options) {
 }
 
 EdithButton.prototype.click = function (event) {
+  // Prevent default
   event.preventDefault();
+
+  // Check if the onclick attribute is a internal function ID or a custom function
   if (typeof this.onclick === "string") {
     onButtonClick(this.ctx, this.onclick, event);
   } else {

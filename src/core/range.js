@@ -62,3 +62,13 @@ export function selectNodeContents(target) {
   sel.removeAllRanges();
   sel.addRange(range);
 }
+
+/**
+ * Check if the current selection is inside the given node.
+ * @param {Node} node the targeted node
+ * @returns {boolean} true if the selection is inside
+ */
+export function isSelectionInsideNode(node) {
+  const { range } = getSelection();
+  return node.contains(range.startContainer) && node.contains(range.endContainer);
+}
