@@ -217,6 +217,30 @@ EdithEditor.prototype._processKeyEventWithMeta = function (e) {
         replaceSelectionByHtml('<span class="edith-nbsp" contenteditable="false">¶</span>'); // Insert a non-breaking space
       }
       return true;
+
+    case 66: // b : 66
+      if (e.type === "keydown") {
+        wrapInsideTag("b"); // Toggle bold
+      }
+      return true;
+
+    case 73: // i : 73
+      if (e.type === "keydown") {
+        wrapInsideTag("i"); // Toggle italic
+      }
+      return true;
+
+    case 85: // u : 85
+      if (e.type === "keydown") {
+        wrapInsideTag("u"); // Toggle underline
+      }
+      return true;
+
+    case 83: // s : 83
+      if (e.type === "keydown") {
+        wrapInsideTag("s"); // Toggle strikethrough
+      }
+      return true;
   }
 
   // Return false
