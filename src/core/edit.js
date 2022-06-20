@@ -107,7 +107,7 @@ export function replaceSelectionByHtml(html) {
  * @param {string} tag the tag name of the node
  * @param {object} options optional parameters
  * @param {string} options.textContent the text content of the node
- * @returns the created node
+ * @returns {Node} the created node or the root node
  */
 export function wrapInsideTag(tag, options = {}) {
   // Get the caret position
@@ -135,48 +135,40 @@ export function wrapInsideTag(tag, options = {}) {
     return insertTagAtCaret(range, tag, options);
   }
 
-  // There is a Selection
-  // Try to remove similar tags inside
+  // There is a selection
+  // Check if a parent element has the same tag name
+  let parent = range.commonAncestorContainer;
+  while (!hasClass(parent, "edith-visual")) {
+    if (hasTagName(parent, tag)) {
+      // One of the parent has the same tag name : unwrap it
+      return unwrapNode(parent);
+    }
+
+    // Take the parent
+    parent = parent.parentNode;
+  }
+
+  // Try to replace all elements with the same tag name in the selection
   let replaced = false;
-  if (range.commonAncestorContainer.nodeType === Node.TEXT_NODE) {
-    // The commonAncestorContainer is a TEXT Node
-    // Check if the parent element has the same tag name
-    if (hasTagName(range.commonAncestorContainer.parentNode, tag)) {
-      // Unwrap the parent node
-      unwrapNode(range.commonAncestorContainer.parentNode);
+  for (const el of [...parent.getElementsByTagName(tag)]) {
+    // Check if the the Element Intersect the Selection
+    if (sel.containsNode(el, true)) {
+      unwrapNode(el);
       replaced = true;
     }
-  } else if (hasTagName(range.commonAncestorContainer, tag)) {
-    // The commonAncestorContainer element has the same tag name
-    // Unwrap the parent node
-    unwrapNode(range.commonAncestorContainer);
-    replaced = true;
-  } else {
-    // Try to replace all elements with the same tag name in the selection
-    for (const el of [...range.commonAncestorContainer.getElementsByTagName(tag)]) {
-      // Check if the the Element Intersect the Selection
-      if (sel.containsNode(el, true)) {
-        unwrapNode(el);
-        replaced = true;
-      }
-    }
+  }
+  if (replaced) {
+    parent.normalize();
+    return parent;
   }
 
-  // Check if we have replaced something
-  if (!replaced) {
-    // Nothing was replaced
-    // Wrap the selection inside the given tag
-    const node = document.createElement(tag);
-    range.surroundContents(node);
-
-    // Select & return the created tag
-    selectNodeContents(node);
-    return node;
-  }
-
-  // We have replaced something
-  // Normalize the Node & that's it. We don't have to return something
-  range.commonAncestorContainer.normalize();
+  // Nothing was replaced
+  // Wrap the selection inside the given tag
+  const node = document.createElement(tag);
+  node.appendChild(range.extractContents());
+  range.insertNode(node);
+  selectNodeContents(node);
+  return node;
 }
 
 /**
