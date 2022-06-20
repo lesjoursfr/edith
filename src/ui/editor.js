@@ -87,6 +87,7 @@ EdithEditor.prototype.getContent = function () {
 
   // Return clean code
   return code
+    .replace(/\u200B/gi, "")
     .replace(/<\/p>\s*<p>/gi, "<br>")
     .replace(/(<p>|<\/p>)/gi, "")
     .replace(/<span[^>]+class="edith-nbsp"[^>]*>[^<]*<\/span>/gi, "&nbsp;")
