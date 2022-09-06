@@ -19,6 +19,7 @@ function EdithEditor(ctx, options) {
   this.ctx = ctx;
   this.content = options.initialContent || "";
   this.height = options.height || 80;
+  this.resizable = options.resizable || false;
   this.mode = EditorModes.Visual;
   this.editors = {};
   this.codeMirror = null;
@@ -33,7 +34,10 @@ EdithEditor.prototype.render = function () {
   // Create a wrapper for the editor
   const editorWrapper = document.createElement("div");
   editorWrapper.setAttribute("class", "edith-editing-area");
-  editorWrapper.setAttribute("style", `height: ${this.height}px`);
+  editorWrapper.setAttribute(
+    "style",
+    this.resizable ? `min-height: ${this.height}px; resize: vertical` : `height: ${this.height}px`
+  );
 
   // Create the visual editor
   this.editors.visual = document.createElement("div");
