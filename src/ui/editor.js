@@ -317,15 +317,15 @@ EdithEditor.prototype.onPasteEvent = function (e) {
     // Detect style blocs in parents
     let dest = sel.anchorNode;
     const style = { B: false, I: false, U: false, S: false, Q: false };
-    while (!hasClass(dest.parentNode, "edith-visual")) {
-      // Get the parent
-      dest = dest.parentNode;
-
+    while (dest !== null && !hasClass(dest, "edith-visual")) {
       // Check if it's a style tag
       if (hasTagName(dest, ["b", "i", "u", "s", "q"])) {
         // Update the style
         style[dest.tagName] = true;
       }
+
+      // Get the parent
+      dest = dest.parentNode;
     }
 
     // We have HTML content
