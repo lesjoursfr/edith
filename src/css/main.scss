@@ -167,6 +167,7 @@ $color-modal-submit-border: #0d6efd;
 	position: fixed;
 	top: 20%;
 	width: 400px;
+	z-index: 10;
 
 	.edith-modal-header {
 		border-bottom: 1px solid $color-modal-border;
