@@ -45,8 +45,8 @@
 		"editor"
 	],
 	"devDependencies": {
-		"@babel/core": "^7.19.3",
-		"@babel/preset-env": "^7.19.3",
+		"@babel/core": "^7.19.6",
+		"@babel/preset-env": "^7.19.4",
 		"@codemirror/lang-html": "^6.1.2",
 		"@fortawesome/fontawesome-free": "^6.2.0",
 		"@popperjs/core": "^2.11.6",
@@ -54,20 +54,20 @@
 		"babel-loader": "^8.2.5",
 		"codemirror": "^6.0.1",
 		"css-loader": "^6.7.1",
-		"eslint": "^8.24.0",
+		"eslint": "^8.26.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-config-standard": "^17.0.0",
 		"eslint-plugin-import": "^2.26.0",
 		"eslint-plugin-n": "^15.3.0",
-		"eslint-plugin-promise": "^6.0.1",
-		"jsdom": "^20.0.0",
+		"eslint-plugin-promise": "^6.1.1",
+		"jsdom": "^20.0.1",
 		"mini-css-extract-plugin": "^2.6.1",
-		"postcss": "^8.4.17",
+		"postcss": "^8.4.18",
 		"prettier": "^2.7.1",
 		"sass": "^1.55.0",
-		"sass-loader": "^13.0.2",
+		"sass-loader": "^13.1.0",
 		"style-loader": "^3.3.1",
-		"stylelint": "^14.13.0",
+		"stylelint": "^14.14.0",
 		"stylelint-config-prettier": "^9.0.3",
 		"stylelint-config-sass-guidelines": "^9.0.1",
 		"webpack": "^5.74.0",
@@ -80,5 +80,5 @@
 		"@popperjs/core": "^2.11.6",
 		"codemirror": "^6.0.1"
 	},
-	"packageManager": "yarn@3.2.3"
+	"packageManager": "yarn@3.2.4"
 }
