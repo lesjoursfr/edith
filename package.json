@@ -60,7 +60,7 @@
 		"eslint-plugin-import": "^2.26.0",
 		"eslint-plugin-n": "^15.6.0",
 		"eslint-plugin-promise": "^6.1.1",
-		"jsdom": "^20.0.3",
+		"jsdom": "^21.0.0",
 		"mini-css-extract-plugin": "^2.7.2",
 		"postcss": "^8.4.20",
 		"prettier": "^2.8.1",
