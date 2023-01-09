@@ -101,8 +101,17 @@ EdithEditor.prototype.getContent = function () {
     return "";
   }
 
+  // Remove empty tags
+  const placeholder = document.createElement("div");
+  placeholder.innerHTML = code;
+  for (const el of [...placeholder.children]) {
+    if (el.textContent.length === 0) {
+      el.remove();
+    }
+  }
+
   // Return clean code
-  return code
+  return placeholder.innerHTML
     .replace(/\u200B/gi, "")
     .replace(/<\/p>\s*<p>/gi, "<br>")
     .replace(/(<p>|<\/p>)/gi, "")

@@ -167,6 +167,15 @@ export function wrapInsideTag(tag, options = {}) {
   const node = document.createElement(tag);
   node.appendChild(range.extractContents());
   range.insertNode(node);
+
+  // Remove empty tags
+  for (const el of [...parent.children]) {
+    if (el.textContent.length === 0) {
+      el.remove();
+    }
+  }
+
+  // Return the node
   selectNodeContents(node);
   return node;
 }
