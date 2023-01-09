@@ -1,6 +1,6 @@
 import { EditorView, basicSetup } from "codemirror";
 import { html } from "@codemirror/lang-html";
-import { hasClass, hasTagName } from "../core/dom.js";
+import { hasClass, hasTagName, createNodeWith, removeNodes } from "../core/dom.js";
 import {
   wrapInsideTag,
   replaceSelectionByHtml,
@@ -102,13 +102,8 @@ EdithEditor.prototype.getContent = function () {
   }
 
   // Remove empty tags
-  const placeholder = document.createElement("div");
-  placeholder.innerHTML = code;
-  for (const el of [...placeholder.children]) {
-    if (el.textContent.length === 0) {
-      el.remove();
-    }
-  }
+  const placeholder = createNodeWith("div", { innerHTML: code });
+  removeNodes(placeholder, (el) => el.textContent.length === 0);
 
   // Return clean code
   return placeholder.innerHTML
