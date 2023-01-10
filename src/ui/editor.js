@@ -28,9 +28,6 @@ function EdithEditor(ctx, options) {
 
   // Replace &nbsp; by the string we use as a visual return
   this.content = this.content.replace(/&nbsp;/g, '<span class="edith-nbsp" contenteditable="false">¶</span>');
-
-  // Trigger the editor is loaded event
-  this.ctx.trigger("edith.editor.isloaded");
 }
 
 EdithEditor.prototype.render = function () {
