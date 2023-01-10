@@ -1,5 +1,6 @@
 import { EdithEditor } from "./ui/editor.js";
 import { EdithButton, EdithButtons } from "./ui/button.js";
+import { Events } from "./core/event.js";
 
 /*
  * Represents an editor
@@ -45,7 +46,7 @@ function Edith(element, options) {
   this.element.append(this.modals);
 
   // Trigger the initialized event once its initialized
-  this.trigger("edith-initialized");
+  this.trigger(Events.initialized);
 }
 
 Edith.prototype.on = function (type, listener, options) {
