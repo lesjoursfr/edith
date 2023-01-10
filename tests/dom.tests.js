@@ -9,6 +9,7 @@ import {
   unwrapNode,
   textifyNode,
   removeNodes,
+  removeAllNodes,
   removeEmptyTextNodes,
   removeCommentNodes,
   resetAttributesTo,
@@ -74,6 +75,15 @@ test("core.dom.removeNodes", (t) => {
 
   removeNodes(dom.window.document.body, (el) => el.nodeType === Node.ELEMENT_NODE && el.tagName !== "P");
   t.is(dom.window.document.body.innerHTML, "<p>Hello world</p>");
+});
+
+test("editor.dom.removeAllNodes", (t) => {
+  const dom = new JSDOM(
+    "<!DOCTYPE html><div><span></span></div><p>This is a simple text with <i>italic text<span></span></i> and empty tags<b></b></p><span></span>"
+  );
+
+  removeAllNodes(dom.window.document.body, (el) => el.nodeType === Node.ELEMENT_NODE && el.textContent.length === 0);
+  t.is(dom.window.document.body.innerHTML, "<p>This is a simple text with <i>italic text</i> and empty tags</p>");
 });
 
 test("core.dom.removeEmptyTextNodes", (t) => {
