@@ -9,7 +9,7 @@ import {
   unwrapNode,
   textifyNode,
   removeNodes,
-  removeAllNodes,
+  removeNodesRecursively,
   removeEmptyTextNodes,
   removeCommentNodes,
   resetAttributesTo,
@@ -77,12 +77,15 @@ test("core.dom.removeNodes", (t) => {
   t.is(dom.window.document.body.innerHTML, "<p>Hello world</p>");
 });
 
-test("editor.dom.removeAllNodes", (t) => {
+test("editor.dom.removeNodesRecursively", (t) => {
   const dom = new JSDOM(
     "<!DOCTYPE html><div><span></span></div><p>This is a simple text with <i>italic text<span></span></i> and empty tags<b></b></p><span></span>"
   );
 
-  removeAllNodes(dom.window.document.body, (el) => el.nodeType === Node.ELEMENT_NODE && el.textContent.length === 0);
+  removeNodesRecursively(
+    dom.window.document.body,
+    (el) => el.nodeType === Node.ELEMENT_NODE && el.textContent.length === 0
+  );
   t.is(dom.window.document.body.innerHTML, "<p>This is a simple text with <i>italic text</i> and empty tags</p>");
 });
 

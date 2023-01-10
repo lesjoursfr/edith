@@ -106,11 +106,11 @@ export function removeNodes(node, callbackFn) {
 }
 
 /**
- * Remove all node’s child nodes that pass the test regardless of their depth.
+ * Remove recursively all node's child nodes that pass the test implemented by the provided function.
  * @param {Node} node the node to process
  * @param {Function} callbackFn the predicate
  */
-export function removeAllNodes(node, callbackFn) {
+export function removeNodesRecursively(node, callbackFn) {
   // Remove the node if it meets the condition
   if (callbackFn(node)) {
     node.remove();
@@ -119,10 +119,8 @@ export function removeAllNodes(node, callbackFn) {
 
   // Loop through the node’s children
   for (const el of [...node.childNodes]) {
-    if (el.nodeType === Node.ELEMENT_NODE) {
-      // Execute the same function if it’s an element node
-      removeAllNodes(el, callbackFn);
-    }
+    // Execute the same function if it’s an element node
+    removeNodesRecursively(el, callbackFn);
   }
 }
 
