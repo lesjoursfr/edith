@@ -35,6 +35,9 @@ function Edith(element, options) {
     }
   }
 
+  // Trigger the loaded event once the editor is loaded
+  this.on("edith.editor.isloaded", () => this.trigger("edith.isloaded"));
+
   // Create the editor
   this.editor = new EdithEditor(this, options);
   this.element.append(this.editor.render());
