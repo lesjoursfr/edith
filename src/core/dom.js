@@ -110,9 +110,9 @@ export function removeNodes(node, callbackFn) {
  * @param {Node} node the node to process
  * @param {Function} callbackFn the predicate
  */
-export function removeAllNodes(node, conditionFn) {
+export function removeAllNodes(node, callbackFn) {
   // Remove the node if it meets the condition
-  if (conditionFn(node)) {
+  if (callbackFn(node)) {
     node.remove();
     return;
   }
@@ -121,7 +121,7 @@ export function removeAllNodes(node, conditionFn) {
   for (const el of [...node.childNodes]) {
     if (el.nodeType === Node.ELEMENT_NODE) {
       // Execute the same function if it’s an element node
-      removeAllNodes(el, conditionFn);
+      removeAllNodes(el, callbackFn);
     }
   }
 }
