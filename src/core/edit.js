@@ -6,6 +6,7 @@ import {
   createNodeWith,
   unwrapNode,
   textifyNode,
+  removeNodes,
   removeEmptyTextNodes,
   removeCommentNodes,
 } from "./dom.js";
@@ -167,6 +168,11 @@ export function wrapInsideTag(tag, options = {}) {
   const node = document.createElement(tag);
   node.appendChild(range.extractContents());
   range.insertNode(node);
+
+  // Remove empty tags
+  removeNodes(parent, (el) => el.textContent.length === 0);
+
+  // Return the node
   selectNodeContents(node);
   return node;
 }

@@ -106,6 +106,25 @@ export function removeNodes(node, callbackFn) {
 }
 
 /**
+ * Remove recursively all node's child nodes that pass the test implemented by the provided function.
+ * @param {Node} node the node to process
+ * @param {Function} callbackFn the predicate
+ */
+export function removeNodesRecursively(node, callbackFn) {
+  // Remove the node if it meets the condition
+  if (callbackFn(node)) {
+    node.remove();
+    return;
+  }
+
+  // Loop through the node’s children
+  for (const el of [...node.childNodes]) {
+    // Execute the same function if it’s an element node
+    removeNodesRecursively(el, callbackFn);
+  }
+}
+
+/**
  * Remove all node's child nodes that are empty text nodes.
  * @param {Node} node the node to process
  */
