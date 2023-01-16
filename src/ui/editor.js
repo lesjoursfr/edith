@@ -1,6 +1,6 @@
 import { EditorView, basicSetup } from "codemirror";
 import { html } from "@codemirror/lang-html";
-import { hasClass, hasTagName, createNodeWith, removeNodesRecursively } from "../core/dom.js";
+import { hasClass, hasTagName, createNodeWith, isSelfClosing, removeNodesRecursively } from "../core/dom.js";
 import {
   wrapInsideTag,
   replaceSelectionByHtml,
@@ -103,7 +103,10 @@ EdithEditor.prototype.getContent = function () {
 
   // Remove empty tags
   const placeholder = createNodeWith("div", { innerHTML: code });
-  removeNodesRecursively(placeholder, (el) => el.nodeType === Node.ELEMENT_NODE && el.textContent.length === 0);
+  removeNodesRecursively(
+    placeholder,
+    (el) => el.nodeType === Node.ELEMENT_NODE && !isSelfClosing(el.tagName) && el.textContent.length === 0
+  );
 
   // Return clean code
   return placeholder.innerHTML

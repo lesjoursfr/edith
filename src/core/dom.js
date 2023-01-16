@@ -93,6 +93,31 @@ export function textifyNode(node) {
 }
 
 /**
+ * Know if a tag si a self-closing tag
+ * @param {String} tagName
+ * @returns {Boolean}
+ */
+export function isSelfClosing(tagName) {
+  return [
+    "AREA",
+    "BASE",
+    "BR",
+    "COL",
+    "EMBED",
+    "HR",
+    "IMG",
+    "INPUT",
+    "KEYGEN",
+    "LINK",
+    "META",
+    "PARAM",
+    "SOURCE",
+    "TRACK",
+    "WBR",
+  ].includes(tagName);
+}
+
+/**
  * Remove all node's child nodes that pass the test implemented by the provided function.
  * @param {Node} node the node to process
  * @param {Function} callbackFn the predicate

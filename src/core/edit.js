@@ -6,6 +6,7 @@ import {
   createNodeWith,
   unwrapNode,
   textifyNode,
+  isSelfClosing,
   removeNodes,
   removeEmptyTextNodes,
   removeCommentNodes,
@@ -170,7 +171,7 @@ export function wrapInsideTag(tag, options = {}) {
   range.insertNode(node);
 
   // Remove empty tags
-  removeNodes(parent, (el) => el.textContent.length === 0);
+  removeNodes(parent, (el) => !isSelfClosing(el.tagName) && el.textContent.length === 0);
 
   // Return the node
   selectNodeContents(node);
