@@ -356,22 +356,14 @@ EdithEditor.prototype.onPasteEvent = function (e) {
 };
 
 EdithEditor.prototype.destroy = function () {
-  // Remove the visual editor
-  this.editors.visual.remove();
-  this.editors.visual = undefined;
-
-  // Remove the code editor
-  this.editors.code.remove();
-  this.editors.code = undefined;
-
-  // Remove the wrapper
-  this.editors.wrapper.remove();
-  this.editors.wrapper = undefined;
-
   if (this.mode === EditorModes.Code) {
     this.codeMirror.destroy();
     this.codeMirror = null;
   }
+
+  // Remove editors from the DOM
+  this.editors.wrapper.remove();
+  this.editors = {};
 };
 
 export { EdithEditor };
