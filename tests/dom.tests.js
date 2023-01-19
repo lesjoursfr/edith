@@ -77,7 +77,7 @@ test("core.dom.removeNodes", (t) => {
   t.is(dom.window.document.body.innerHTML, "<p>Hello world</p>");
 });
 
-test("editor.dom.removeNodesRecursively", (t) => {
+test("core.dom.removeNodesRecursively", (t) => {
   const dom = new JSDOM(
     "<!DOCTYPE html><div><span></span></div><p>This is a simple text with <i>italic text<span></span></i> and empty tags<b></b></p><span></span>"
   );

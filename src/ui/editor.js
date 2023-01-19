@@ -32,9 +32,9 @@ function EdithEditor(ctx, options) {
 
 EdithEditor.prototype.render = function () {
   // Create a wrapper for the editor
-  const editorWrapper = document.createElement("div");
-  editorWrapper.setAttribute("class", "edith-editing-area");
-  editorWrapper.setAttribute(
+  this.editors.wrapper = document.createElement("div");
+  this.editors.wrapper.setAttribute("class", "edith-editing-area");
+  this.editors.wrapper.setAttribute(
     "style",
     this.resizable ? `min-height: ${this.height}px; resize: vertical` : `height: ${this.height}px`
   );
@@ -44,12 +44,12 @@ EdithEditor.prototype.render = function () {
   this.editors.visual.setAttribute("class", "edith-visual");
   this.editors.visual.setAttribute("contenteditable", "true");
   this.editors.visual.innerHTML = this.content;
-  editorWrapper.append(this.editors.visual);
+  this.editors.wrapper.append(this.editors.visual);
 
   // Create the code editor
   this.editors.code = document.createElement("div");
   this.editors.code.setAttribute("class", "edith-code edith-hidden");
-  editorWrapper.append(this.editors.code);
+  this.editors.wrapper.append(this.editors.code);
 
   // Bind events
   const keyEventsListener = this.onKeyEvent.bind(this);
@@ -59,7 +59,7 @@ EdithEditor.prototype.render = function () {
   this.editors.visual.addEventListener("paste", pasteEventListener);
 
   // Return the wrapper
-  return editorWrapper;
+  return this.editors.wrapper;
 };
 
 EdithEditor.prototype.getVisualEditorElement = function () {
@@ -356,16 +356,14 @@ EdithEditor.prototype.onPasteEvent = function (e) {
 };
 
 EdithEditor.prototype.destroy = function () {
-  // Check the current mode
-  if (this.mode === EditorModes.Visual) {
-    // Remove the visual editor
-    this.editors.visual.remove();
-  } else {
-    // Remove the code editor
+  if (this.mode === EditorModes.Code) {
     this.codeMirror.destroy();
     this.codeMirror = null;
-    this.editors.code.remove();
   }
+
+  // Remove editors from the DOM
+  this.editors.wrapper.remove();
+  this.editors = {};
 };
 
 export { EdithEditor };
