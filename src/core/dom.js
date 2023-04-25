@@ -317,7 +317,7 @@ export function cleanDomContent(root, style) {
     }
 
     // Remove all tag attributes for tags in the allowed list
-    if (hasTagName(el, ["b", "i", "q", "u", "s", "br"])) {
+    if (hasTagName(el, ["b", "i", "q", "u", "s", "br", "sup"])) {
       resetAttributesTo(el, {});
       continue;
     }
