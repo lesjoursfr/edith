@@ -44,8 +44,8 @@
 		"editor"
 	],
 	"devDependencies": {
-		"@babel/core": "^7.21.4",
-		"@babel/preset-env": "^7.21.4",
+		"@babel/core": "^7.21.5",
+		"@babel/preset-env": "^7.21.5",
 		"@codemirror/lang-html": "^6.4.3",
 		"@fortawesome/fontawesome-free": "^6.4.0",
 		"@popperjs/core": "^2.11.7",
@@ -62,13 +62,13 @@
 		"jsdom": "^21.1.1",
 		"mini-css-extract-plugin": "^2.7.5",
 		"postcss": "^8.4.23",
-		"prettier": "^2.8.7",
+		"prettier": "^2.8.8",
 		"sass": "^1.62.1",
 		"sass-loader": "^13.2.2",
 		"style-loader": "^3.3.2",
-		"stylelint": "^15.5.0",
+		"stylelint": "^15.6.0",
 		"stylelint-config-sass-guidelines": "^10.0.0",
-		"webpack": "^5.80.0",
+		"webpack": "^5.81.0",
 		"webpack-cli": "^5.0.2",
 		"webpack-dev-server": "^4.13.3"
 	},
