@@ -108,6 +108,11 @@ EdithEditor.prototype.getContent = function () {
     (el) => el.nodeType === Node.ELEMENT_NODE && !isSelfClosing(el.tagName) && el.textContent.length === 0
   );
 
+  // Remove any style attribute
+  for (const el of placeholder.querySelectorAll("[style]")) {
+    el.removeAttribute("style");
+  }
+
   // Return clean code
   return placeholder.innerHTML
     .replace(/\u200B/gi, "")

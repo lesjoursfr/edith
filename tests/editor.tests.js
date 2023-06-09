@@ -13,7 +13,8 @@ test("ui.editor.setContent", (t) => {
 test("ui.editor.getContent", (t) => {
   const dom = new JSDOM('<!DOCTYPE html><div id="editor"></div>');
   const edith = new Edith(dom.window.document.getElementById("editor"), {});
-  edith.editor.editors.visual.innerHTML = "<i></i><b><i>Italic</i> and Bold Text</b>";
+  edith.editor.editors.visual.innerHTML =
+    '<i></i><b style="color: white; background-color: black;"><i>Italic</i> and Bold Text</b>';
 
   t.is(edith.getContent(), "<b><i>Italic</i> and Bold Text</b>");
 });
