@@ -2,7 +2,7 @@ import { createPopper } from "@popperjs/core";
 import { Events } from "../core/event.js";
 import { EditorModes } from "../core/mode.js";
 
-function onButtonClick(context, kind, event) {
+function onButtonClick(context, kind) {
   switch (kind) {
     case "bold":
       context.editor.wrapInsideTag("b");
@@ -51,7 +51,7 @@ EdithButton.prototype.click = function (event) {
 
   // Check if the onclick attribute is a internal function ID or a custom function
   if (typeof this.onclick === "string") {
-    onButtonClick(this.ctx, this.onclick, event);
+    onButtonClick(this.ctx, this.onclick);
   } else {
     this.onclick(this.ctx, event);
   }
