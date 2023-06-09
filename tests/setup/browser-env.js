@@ -37,8 +37,11 @@ const defaultJsdomConfig = {
 
 // IIFE executed on import to return an array of global Node.js properties that
 // conflict with global browser properties.
+const forceOverrideForKeys = ["Event", "CustomEvent"]; // We need to force these overrides to use events in AVA tests
 const protectedproperties = (() =>
-  Object.getOwnPropertyNames(new Window(defaultJsdomConfig)).filter((prop) => typeof global[prop] !== "undefined"))();
+  Object.getOwnPropertyNames(new Window(defaultJsdomConfig))
+    .filter((prop) => typeof global[prop] !== "undefined")
+    .filter((prop) => forceOverrideForKeys.indexOf(prop) === -1))();
 protectedproperties.push("undefined");
 
 // Sets up global browser environment
