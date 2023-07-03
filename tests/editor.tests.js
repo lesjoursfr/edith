@@ -17,6 +17,11 @@ test("ui.editor.getContent", (t) => {
     '<i></i><b style="color: white; background-color: black;"><i>Italic</i> and Bold Text</b>';
 
   t.is(edith.getContent(), "<b><i>Italic</i> and Bold Text</b>");
+
+  edith.editor.editors.visual.innerHTML =
+    '<span style="color: white; background-color: black;"><i>Italic</i> and <span><span style="color: red;">Bold</span> Text</span></span>';
+
+  t.is(edith.getContent(), "<i>Italic</i> and Bold Text");
 });
 
 test("ui.editor.destroy", (t) => {

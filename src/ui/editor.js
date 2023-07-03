@@ -1,6 +1,13 @@
 import { EditorView, basicSetup } from "codemirror";
 import { html } from "@codemirror/lang-html";
-import { hasClass, hasTagName, createNodeWith, isSelfClosing, removeNodesRecursively } from "../core/dom.js";
+import {
+  hasClass,
+  hasTagName,
+  createNodeWith,
+  isSelfClosing,
+  removeNodesRecursively,
+  unwrapNode,
+} from "../core/dom.js";
 import {
   wrapInsideTag,
   replaceSelectionByHtml,
@@ -111,6 +118,13 @@ EdithEditor.prototype.getContent = function () {
   // Remove any style attribute
   for (const el of placeholder.querySelectorAll("[style]")) {
     el.removeAttribute("style");
+  }
+
+  // Unwrap span without attributes
+  for (const el of placeholder.querySelectorAll("span")) {
+    if (el.attributes.length === 0) {
+      unwrapNode(el);
+    }
   }
 
   // Return clean code
