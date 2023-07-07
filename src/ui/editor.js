@@ -50,6 +50,10 @@ EdithEditor.prototype.render = function () {
   this.editors.visual = document.createElement("div");
   this.editors.visual.setAttribute("class", "edith-visual");
   this.editors.visual.setAttribute("contenteditable", "true");
+  this.editors.visual.setAttribute(
+    "style",
+    this.resizable ? `min-height: ${this.height - 10}px` : `height: ${this.height - 10}px`
+  );
   this.editors.visual.innerHTML = this.content;
   this.editors.wrapper.append(this.editors.visual);
 
