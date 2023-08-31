@@ -45,8 +45,8 @@
 	],
 	"devDependencies": {
 		"@babel/core": "^7.22.11",
-		"@babel/preset-env": "^7.22.10",
-		"@codemirror/lang-html": "^6.4.5",
+		"@babel/preset-env": "^7.22.14",
+		"@codemirror/lang-html": "^6.4.6",
 		"@fortawesome/fontawesome-free": "^6.4.2",
 		"@popperjs/core": "^2.11.8",
 		"ava": "^5.3.1",
@@ -57,8 +57,8 @@
 		"eslint-config-prettier": "^9.0.0",
 		"jsdom": "^22.1.0",
 		"mini-css-extract-plugin": "^2.7.6",
-		"postcss": "^8.4.28",
-		"prettier": "^3.0.2",
+		"postcss": "^8.4.29",
+		"prettier": "^3.0.3",
 		"sass": "^1.66.1",
 		"sass-loader": "^13.3.2",
 		"style-loader": "^3.3.3",
@@ -69,7 +69,7 @@
 		"webpack-dev-server": "^4.15.1"
 	},
 	"peerDependencies": {
-		"@codemirror/lang-html": "^6.4.5",
+		"@codemirror/lang-html": "^6.4.6",
 		"@fortawesome/fontawesome-free": "^6.4.2",
 		"@popperjs/core": "^2.11.8",
 		"codemirror": "^6.0.1"
