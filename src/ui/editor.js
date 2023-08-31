@@ -338,7 +338,7 @@ EdithEditor.prototype.onPasteEvent = function (e) {
 
     // Add the content as text nodes with a <br> node between each line
     for (let i = 0; i < lines.length; i++) {
-      if (frag.length !== 0) {
+      if (i !== 0) {
         frag.append(document.createElement("br"));
       }
       frag.append(document.createTextNode(lines[i]));
