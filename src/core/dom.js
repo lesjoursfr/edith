@@ -76,7 +76,7 @@ export function replaceNodeWith(node, replacement) {
  * @returns {Array} its child nodes
  */
 export function unwrapNode(node) {
-  const newNodes = node.childNodes;
+  const newNodes = [...node.childNodes];
   node.replaceWith(...newNodes);
   return newNodes;
 }

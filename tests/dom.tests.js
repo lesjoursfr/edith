@@ -59,8 +59,12 @@ it("core.dom.replaceNodeWith", () => {
 it("core.dom.unwrapNode", () => {
   const dom = new JSDOM("<!DOCTYPE html><div><b>Hello world</b>, this is a simple text</div>");
 
-  unwrapNode(dom.window.document.querySelector("div"));
+  let newNodes = unwrapNode(dom.window.document.querySelector("div"));
   assert.strictEqual(dom.window.document.body.innerHTML, "<b>Hello world</b>, this is a simple text");
+  assert.strictEqual(newNodes.length, 2);
+  assert.strictEqual(newNodes[0], dom.window.document.querySelector("b"));
+  assert.strictEqual(newNodes[1].nodeType, Node.TEXT_NODE);
+  assert.strictEqual(newNodes[1].textContent, ", this is a simple text");
 });
 
 it("core.dom.textifyNode", () => {
