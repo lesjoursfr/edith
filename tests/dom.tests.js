@@ -15,6 +15,7 @@ import {
   resetAttributesTo,
   replaceNodeStyleByTag,
   trimTag,
+  isSelfClosing,
 } from "../src/core/dom.js";
 
 it("core.dom.hasTagName", () => {
@@ -72,6 +73,15 @@ it("core.dom.textifyNode", () => {
 
   textifyNode(dom.window.document.querySelector("div"));
   assert.strictEqual(dom.window.document.body.innerHTML, "Hello world, this is a simple text");
+});
+
+it("core.dom.isSelfClosing", () => {
+  assert.strictEqual(isSelfClosing("I"), false);
+  assert.strictEqual(isSelfClosing("B"), false);
+  assert.strictEqual(isSelfClosing("P"), false);
+  assert.strictEqual(isSelfClosing("BR"), true);
+  assert.strictEqual(isSelfClosing("HR"), true);
+  assert.strictEqual(isSelfClosing("IMG"), true);
 });
 
 it("core.dom.removeNodes", () => {
