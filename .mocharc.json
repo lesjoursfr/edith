@@ -1,0 +1,5 @@
+{
+	"extension": ["js"],
+	"spec": "tests/**/*.tests.js",
+	"require": ["./tests/setup/browser-env.js"]
+}

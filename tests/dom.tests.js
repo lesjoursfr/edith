@@ -1,4 +1,4 @@
-import test from "ava";
+import assert from "assert";
 import { JSDOM } from "jsdom";
 import {
   hasClass,
@@ -17,67 +17,67 @@ import {
   trimTag,
 } from "../src/core/dom.js";
 
-test("core.dom.hasTagName", (t) => {
+it("core.dom.hasTagName", () => {
   const dom = new JSDOM("<!DOCTYPE html><p>Hello world</p>");
 
-  t.false(hasTagName(dom.window.document.querySelector("p"), "i"));
-  t.false(hasTagName(dom.window.document.querySelector("p"), ["i", "u"]));
-  t.true(hasTagName(dom.window.document.querySelector("p"), "p"));
-  t.true(hasTagName(dom.window.document.querySelector("p"), ["i", "u", "p"]));
+  assert.strictEqual(hasTagName(dom.window.document.querySelector("p"), "i"), false);
+  assert.strictEqual(hasTagName(dom.window.document.querySelector("p"), ["i", "u"]), false);
+  assert.strictEqual(hasTagName(dom.window.document.querySelector("p"), "p"), true);
+  assert.strictEqual(hasTagName(dom.window.document.querySelector("p"), ["i", "u", "p"]), true);
 });
 
-test("core.dom.hasClass", (t) => {
+it("core.dom.hasClass", () => {
   const dom = new JSDOM('<!DOCTYPE html><p class="bar">Hello world</p>');
 
-  t.false(hasClass(dom.window.document.querySelector("p"), "foo"));
-  t.true(hasClass(dom.window.document.querySelector("p"), "bar"));
+  assert.strictEqual(hasClass(dom.window.document.querySelector("p"), "foo"), false);
+  assert.strictEqual(hasClass(dom.window.document.querySelector("p"), "bar"), true);
 });
 
-test("core.dom.createNodeWith", (t) => {
+it("core.dom.createNodeWith", () => {
   const node1 = createNodeWith("span", {
     innerHTML: "<b>Bold text</b>",
     attributes: { attr1: "value1", attr2: "value2" },
   });
-  t.is(node1.outerHTML, '<span attr1="value1" attr2="value2"><b>Bold text</b></span>');
+  assert.strictEqual(node1.outerHTML, '<span attr1="value1" attr2="value2"><b>Bold text</b></span>');
 
   const node2 = createNodeWith("span", {
     textContent: "Simple text",
     attributes: { attr1: "value1", attr2: "value2" },
   });
-  t.is(node2.outerHTML, '<span attr1="value1" attr2="value2">Simple text</span>');
+  assert.strictEqual(node2.outerHTML, '<span attr1="value1" attr2="value2">Simple text</span>');
 });
 
-test("core.dom.replaceNodeWith", (t) => {
+it("core.dom.replaceNodeWith", () => {
   const dom = new JSDOM("<!DOCTYPE html><p>Hello world</p>");
   const node = document.createElement("span");
   node.textContent = "Simple text";
 
   replaceNodeWith(dom.window.document.querySelector("p"), node);
-  t.is(dom.window.document.body.innerHTML, "<span>Simple text</span>");
+  assert.strictEqual(dom.window.document.body.innerHTML, "<span>Simple text</span>");
 });
 
-test("core.dom.unwrapNode", (t) => {
+it("core.dom.unwrapNode", () => {
   const dom = new JSDOM("<!DOCTYPE html><div><b>Hello world</b>, this is a simple text</div>");
 
   unwrapNode(dom.window.document.querySelector("div"));
-  t.is(dom.window.document.body.innerHTML, "<b>Hello world</b>, this is a simple text");
+  assert.strictEqual(dom.window.document.body.innerHTML, "<b>Hello world</b>, this is a simple text");
 });
 
-test("core.dom.textifyNode", (t) => {
+it("core.dom.textifyNode", () => {
   const dom = new JSDOM("<!DOCTYPE html><div><b>Hello world</b>, this is a simple text</div>");
 
   textifyNode(dom.window.document.querySelector("div"));
-  t.is(dom.window.document.body.innerHTML, "Hello world, this is a simple text");
+  assert.strictEqual(dom.window.document.body.innerHTML, "Hello world, this is a simple text");
 });
 
-test("core.dom.removeNodes", (t) => {
+it("core.dom.removeNodes", () => {
   const dom = new JSDOM("<!DOCTYPE html><div></div><p>Hello world</p><span></span>");
 
   removeNodes(dom.window.document.body, (el) => el.nodeType === Node.ELEMENT_NODE && el.tagName !== "P");
-  t.is(dom.window.document.body.innerHTML, "<p>Hello world</p>");
+  assert.strictEqual(dom.window.document.body.innerHTML, "<p>Hello world</p>");
 });
 
-test("core.dom.removeNodesRecursively", (t) => {
+it("core.dom.removeNodesRecursively", () => {
   const dom = new JSDOM(
     "<!DOCTYPE html><div><span></span></div><p>This is a simple text with <i>italic text<span></span></i> and empty tags<b></b></p><span></span>"
   );
@@ -86,24 +86,27 @@ test("core.dom.removeNodesRecursively", (t) => {
     dom.window.document.body,
     (el) => el.nodeType === Node.ELEMENT_NODE && el.textContent.length === 0
   );
-  t.is(dom.window.document.body.innerHTML, "<p>This is a simple text with <i>italic text</i> and empty tags</p>");
+  assert.strictEqual(
+    dom.window.document.body.innerHTML,
+    "<p>This is a simple text with <i>italic text</i> and empty tags</p>"
+  );
 });
 
-test("core.dom.removeEmptyTextNodes", (t) => {
+it("core.dom.removeEmptyTextNodes", () => {
   const dom = new JSDOM("<!DOCTYPE html><p>Hello world <b> </b></p> <!-- Comments --> <div> </div>");
 
   removeEmptyTextNodes(dom.window.document.body);
-  t.is(dom.window.document.body.innerHTML, "<p>Hello world <b> </b></p><!-- Comments --><div> </div>");
+  assert.strictEqual(dom.window.document.body.innerHTML, "<p>Hello world <b> </b></p><!-- Comments --><div> </div>");
 });
 
-test("core.dom.removeCommentNodes", (t) => {
+it("core.dom.removeCommentNodes", () => {
   const dom = new JSDOM("<!DOCTYPE html><p>Hello world <b> </b></p> <!-- Comments --> <div> </div>");
 
   removeCommentNodes(dom.window.document.body);
-  t.is(dom.window.document.body.innerHTML, "<p>Hello world <b> </b></p>  <div> </div>");
+  assert.strictEqual(dom.window.document.body.innerHTML, "<p>Hello world <b> </b></p>  <div> </div>");
 });
 
-test("core.dom.resetAttributesTo", (t) => {
+it("core.dom.resetAttributesTo", () => {
   const node = document.createElement("span");
   node.setAttribute("attr1", "value1");
   node.setAttribute("attr2", "value2");
@@ -111,58 +114,58 @@ test("core.dom.resetAttributesTo", (t) => {
   node.textContent = "Simple text";
 
   resetAttributesTo(node, { foo: "bar" });
-  t.is(node.outerHTML, '<span foo="bar">Simple text</span>');
+  assert.strictEqual(node.outerHTML, '<span foo="bar">Simple text</span>');
 
   resetAttributesTo(node, {});
-  t.is(node.outerHTML, "<span>Simple text</span>");
+  assert.strictEqual(node.outerHTML, "<span>Simple text</span>");
 });
 
-test("core.dom.replaceNodeStyleByTag", (t) => {
+it("core.dom.replaceNodeStyleByTag", () => {
   let node = document.createElement("b");
   node.setAttribute("style", "font-weight: normal;");
   node.textContent = "Simple text";
 
   node = replaceNodeStyleByTag(node);
-  t.is(node.outerHTML, '<span style="font-weight: normal;">Simple text</span>');
+  assert.strictEqual(node.outerHTML, '<span style="font-weight: normal;">Simple text</span>');
 
   node = document.createElement("span");
   node.setAttribute("style", "font-weight: 900;");
   node.textContent = "Simple text";
 
   node = replaceNodeStyleByTag(node);
-  t.is(node.outerHTML, '<b><span style="">Simple text</span></b>');
+  assert.strictEqual(node.outerHTML, '<b><span style="">Simple text</span></b>');
 
   node = document.createElement("span");
   node.setAttribute("style", "font-style: italic;");
   node.textContent = "Simple text";
 
   node = replaceNodeStyleByTag(node);
-  t.is(node.outerHTML, '<i><span style="">Simple text</span></i>');
+  assert.strictEqual(node.outerHTML, '<i><span style="">Simple text</span></i>');
 });
 
-test("core.dom.trimTag", (t) => {
+it("core.dom.trimTag", () => {
   const dom = new JSDOM(
     "<!DOCTYPE html><div></div><div></div><p>Hello world</p><div></div><span>Simple text</span><div></div>"
   );
 
   trimTag(dom.window.document.body, "div");
-  t.is(dom.window.document.body.innerHTML, "<p>Hello world</p><div></div><span>Simple text</span>");
+  assert.strictEqual(dom.window.document.body.innerHTML, "<p>Hello world</p><div></div><span>Simple text</span>");
 });
 
-test("core.dom.cleanDomContent", (t) => {
+it("core.dom.cleanDomContent", () => {
   let dom = new JSDOM(
     '<!DOCTYPE html><div><span style="color: rgb(33, 37, 41); font-weight: bold; font-style: normal;">Bold text</span>,<span style="color: rgb(33, 37, 41); font-style: normal; font-weight: 400;"> simple span</span> & <span style="color: rgb(33, 37, 41); font-weight: normal; font-style: italic; ">Italic text</span></div>'
   );
 
   cleanDomContent(dom.window.document.body, { B: true, I: false, U: false, S: false, Q: false });
-  t.is(dom.window.document.body.innerHTML, "Bold text, simple span &amp; <i>Italic text</i>");
+  assert.strictEqual(dom.window.document.body.innerHTML, "Bold text, simple span &amp; <i>Italic text</i>");
 
   dom = new JSDOM(
     '<!DOCTYPE html><div><span style="font-family: var(--bs-body-font-family); font-size: var(--bs-body-font-size); font-weight: var(--bs-body-font-weight); text-align: var(--bs-body-text-align);">Text simple <sup>exposant</sup><span class="edith-nbsp" contenteditable="false">¶</span>suite du texte simple.</span></div>'
   );
 
   cleanDomContent(dom.window.document.body, { B: false, I: false, U: false, S: false, Q: false });
-  t.is(
+  assert.strictEqual(
     dom.window.document.body.innerHTML,
     'Text simple <sup>exposant</sup><span class="edith-nbsp" contenteditable="false">¶</span>suite du texte simple.'
   );

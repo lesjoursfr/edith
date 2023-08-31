@@ -53,5 +53,5 @@ jobs:
       - name: Install
         run: npm install
 
-      - name: AVA Tests
-        run: npx ava
+      - name: Run Tests
+        run: npx mocha

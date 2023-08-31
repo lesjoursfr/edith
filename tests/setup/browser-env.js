@@ -45,7 +45,7 @@ const protectedproperties = (() =>
 protectedproperties.push("undefined");
 
 // Sets up global browser environment
-const browserEnv = function () {
+function browserEnv() {
   // Extract options from args
   const args = Array.from(arguments);
   const properties = args.filter((arg) => Array.isArray(arg))[0];
@@ -70,7 +70,15 @@ const browserEnv = function () {
 
   // Return reference to original window object
   return window;
-};
+}
 
-// Call the browserEnv function
-browserEnv();
+// Export Mocha Hooks
+export const mochaHooks = {
+  beforeAll(done) {
+    // Call the browserEnv function
+    browserEnv();
+
+    // Call the callback
+    done();
+  },
+};
