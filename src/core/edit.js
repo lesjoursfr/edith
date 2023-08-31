@@ -116,9 +116,11 @@ export function wrapInsideTag(tag, options = {}) {
   const { sel, range } = getSelection();
 
   // Check if the user has selected something
-  if (range === undefined) return false;
+  if (range === undefined) {
+    return;
+  }
 
-  // Check if the range is collapsed
+  // Check if there is a Selection
   if (range.collapsed) {
     // Check if a parent element has the same tag name
     let parent = sel.anchorNode.parentNode;
@@ -151,17 +153,17 @@ export function wrapInsideTag(tag, options = {}) {
   }
 
   // Try to replace all elements with the same tag name in the selection
-  let replaced = false;
   for (const el of [...parent.getElementsByTagName(tag)]) {
     // Check if the the Element Intersect the Selection
     if (sel.containsNode(el, true)) {
-      unwrapNode(el);
-      replaced = true;
+      // Unwrap the node
+      let innerNodes = unwrapNode(el);
+
+      // Return the node
+      selectNodes(innerNodes);
+      parent.normalize();
+      return parent;
     }
-  }
-  if (replaced) {
-    parent.normalize();
-    return parent;
   }
 
   // Nothing was replaced
