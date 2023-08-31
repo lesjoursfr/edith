@@ -1,4 +1,4 @@
-import { getSelection, moveCursorInsideNode, moveCursorAfterNode, selectNodeContents } from "./range.js";
+import { getSelection, moveCursorInsideNode, moveCursorAfterNode, selectNodeContents, selectNodes } from "./range.js";
 import {
   hasClass,
   hasTagName,
@@ -41,6 +41,48 @@ function splitNodeAtCaret(range, node) {
 
   // Return the inserted TextNode
   return textNode;
+}
+
+/**
+ * Extract the selection from the node.
+ * @param {Range} range the selection to extract
+ * @param {Node} node the node to split
+ * @param {String} tag the tag to remove
+ * @returns {Node} the created node
+ */
+function extractSelectionFromNode(range, node) {
+  // Get the node's parent
+  const parent = node.parentNode;
+
+  // Clone the current range & move the starting point to the beginning of the parent's node
+  const beforeSelection = new Range();
+  beforeSelection.selectNodeContents(parent);
+  beforeSelection.setEnd(range.startContainer, range.startOffset);
+  const afterSelection = new Range();
+  afterSelection.selectNodeContents(parent);
+  afterSelection.setStart(range.endContainer, range.endOffset);
+
+  // Extract the content of the selection
+  const fragBefore = beforeSelection.extractContents();
+  const fragAfter = afterSelection.extractContents();
+
+  // Add back the content into the node's parent
+  parent.prepend(fragBefore);
+  parent.append(fragAfter);
+
+  // Remove the parent from the selection
+  let current = range.commonAncestorContainer;
+  while (current.tagName !== node.tagName) {
+    // Take the parent
+    current = current.parentNode;
+  }
+  let innerNodes = unwrapNode(current);
+
+  // Preserve the selection
+  selectNodes(innerNodes);
+
+  // Return the inserted TextNode
+  return range.commonAncestorContainer;
 }
 
 /**
@@ -144,8 +186,9 @@ export function wrapInsideTag(tag, options = {}) {
   let parent = range.commonAncestorContainer;
   while (!hasClass(parent, "edith-visual")) {
     if (hasTagName(parent, tag)) {
-      // One of the parent has the same tag name : unwrap it
-      return unwrapNode(parent);
+      // One of the parent has the same tag name
+      // Extract the selection from the parent
+      return extractSelectionFromNode(range, parent);
     }
 
     // Take the parent
