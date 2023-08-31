@@ -1,3 +1,5 @@
+import { isSelfClosing } from "./dom.js";
+
 /**
  * @typedef {Object} CurrentSelection
  * @property {Selection} sel the current selection
@@ -59,6 +61,25 @@ export function selectNodeContents(target) {
   const sel = window.getSelection();
   range.selectNodeContents(target);
   range.collapse(false);
+  sel.removeAllRanges();
+  sel.addRange(range);
+}
+
+/**
+ * Select the given Nodes.
+ * @param {Array<Node>} nodes The list of Nodes to select.
+ */
+export function selectNodes(nodes) {
+  // Check if we just have a self-closing tag
+  if (nodes.length === 1 && isSelfClosing(nodes[0].tagName)) {
+    moveCursorAfterNode(nodes[0]); // Move the cursor after the Node
+    return;
+  }
+  // Select Nodes
+  const range = document.createRange();
+  const sel = window.getSelection();
+  range.setStartBefore(nodes[0]);
+  range.setEndAfter(nodes[nodes.length - 1]);
   sel.removeAllRanges();
   sel.addRange(range);
 }
