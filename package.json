@@ -44,7 +44,7 @@
 		"editor"
 	],
 	"devDependencies": {
-		"@babel/core": "^7.22.20",
+		"@babel/core": "^7.23.0",
 		"@babel/preset-env": "^7.22.20",
 		"@codemirror/lang-html": "^6.4.6",
 		"@fortawesome/fontawesome-free": "^6.4.2",
@@ -52,7 +52,7 @@
 		"babel-loader": "^9.1.3",
 		"codemirror": "^6.0.1",
 		"css-loader": "^6.8.1",
-		"eslint": "^8.49.0",
+		"eslint": "^8.50.0",
 		"eslint-config-prettier": "^9.0.0",
 		"jsdom": "^22.1.0",
 		"mini-css-extract-plugin": "^2.7.6",
