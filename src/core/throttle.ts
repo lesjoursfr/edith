@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Based on lodash version of throttle : https://github.com/lodash/lodash/blob/master/throttle.js
  */
@@ -22,48 +23,56 @@
  * @param {number} [options.maxWait] The maximum time `func` is allowed to be delayed before it's invoked
  * @returns {Function} Returns the new debounced function
  */
-function debounce(func, wait, options = {}) {
-  let lastArgs, lastThis, result, timerId, lastCallTime;
+function debounce<F extends (...args: any) => any>(
+  func: F,
+  wait: number,
+  options: { leading?: boolean; trailing?: boolean; maxWait?: number } = {}
+): (...args: Parameters<F>) => ReturnType<F> {
+  let lastArgs: Parameters<F> | undefined,
+    lastThis: any | undefined,
+    result: ReturnType<F> | undefined,
+    timerId: ReturnType<typeof setTimeout> | undefined,
+    lastCallTime: number | undefined;
 
-  let lastInvokeTime = 0;
+  let lastInvokeTime: number = 0;
   const leading = !!options.leading;
   const maxing = "maxWait" in options;
-  const maxWait = maxing ? Math.max(+options.maxWait || 0, wait) : undefined;
+  const maxWait = maxing ? Math.max(options.maxWait || 0, wait) : undefined;
   const trailing = "trailing" in options ? !!options.trailing : true;
 
-  function invokeFunc(time) {
+  function invokeFunc(time: number): ReturnType<F> {
     const args = lastArgs;
     const thisArg = lastThis;
 
     lastArgs = lastThis = undefined;
     lastInvokeTime = time;
-    result = func.apply(thisArg, args);
-    return result;
+    result = func.apply(thisArg!, args!);
+    return result!;
   }
 
-  function startTimer(pendingFunc, wait) {
+  function startTimer(pendingFunc: () => void, wait: number): ReturnType<typeof setTimeout> {
     return setTimeout(pendingFunc, wait);
   }
 
-  function leadingEdge(time) {
+  function leadingEdge(time: number): ReturnType<F> {
     // Reset any `maxWait` timer.
     lastInvokeTime = time;
     // Start the timer for the trailing edge.
     timerId = startTimer(timerExpired, wait);
     // Invoke the leading edge.
-    return leading ? invokeFunc(time) : result;
+    return leading ? invokeFunc(time) : result!;
   }
 
-  function remainingWait(time) {
-    const timeSinceLastCall = time - lastCallTime;
+  function remainingWait(time: number): number {
+    const timeSinceLastCall = time - lastCallTime!;
     const timeSinceLastInvoke = time - lastInvokeTime;
     const timeWaiting = wait - timeSinceLastCall;
 
-    return maxing ? Math.min(timeWaiting, maxWait - timeSinceLastInvoke) : timeWaiting;
+    return maxing ? Math.min(timeWaiting, maxWait! - timeSinceLastInvoke) : timeWaiting;
   }
 
-  function shouldInvoke(time) {
-    const timeSinceLastCall = time - lastCallTime;
+  function shouldInvoke(time: number): boolean {
+    const timeSinceLastCall = time - lastCallTime!;
     const timeSinceLastInvoke = time - lastInvokeTime;
 
     // Either this is the first call, activity has stopped and we're at the
@@ -73,11 +82,11 @@ function debounce(func, wait, options = {}) {
       lastCallTime === undefined ||
       timeSinceLastCall >= wait ||
       timeSinceLastCall < 0 ||
-      (maxing && timeSinceLastInvoke >= maxWait)
+      (maxing && timeSinceLastInvoke >= maxWait!)
     );
   }
 
-  function timerExpired() {
+  function timerExpired(): ReturnType<F> | undefined {
     const time = Date.now();
     if (shouldInvoke(time)) {
       return trailingEdge(time);
@@ -86,7 +95,7 @@ function debounce(func, wait, options = {}) {
     timerId = startTimer(timerExpired, remainingWait(time));
   }
 
-  function trailingEdge(time) {
+  function trailingEdge(time: number): ReturnType<F> {
     timerId = undefined;
 
     // Only invoke if we have `lastArgs` which means `func` has been
@@ -95,14 +104,15 @@ function debounce(func, wait, options = {}) {
       return invokeFunc(time);
     }
     lastArgs = lastThis = undefined;
-    return result;
+    return result!;
   }
 
-  function debounced(...args) {
+  function debounced(this: any, ...args: Parameters<F>): ReturnType<F> {
     const time = Date.now();
     const isInvoking = shouldInvoke(time);
 
     lastArgs = args;
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     lastThis = this;
     lastCallTime = time;
 
@@ -119,7 +129,7 @@ function debounce(func, wait, options = {}) {
     if (timerId === undefined) {
       timerId = startTimer(timerExpired, wait);
     }
-    return result;
+    return result!;
   }
 
   return debounced;
@@ -144,7 +154,11 @@ function debounce(func, wait, options = {}) {
  * @param {boolean} [options.trailing=true] Specify invoking on the trailing edge of the timeout
  * @returns {Function} Returns the new throttled function
  */
-function throttle(func, wait, options = {}) {
+function throttle<F extends (...args: any) => any>(
+  func: F,
+  wait: number,
+  options: { leading?: boolean; trailing?: boolean } = {}
+): (...args: Parameters<F>) => ReturnType<F> {
   const leading = "leading" in options ? !!options.leading : true;
   const trailing = "trailing" in options ? !!options.trailing : true;
 

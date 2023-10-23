@@ -1,5 +1,5 @@
 {
-	"extension": ["js"],
-	"spec": "tests/**/*.tests.js",
-	"require": ["./tests/setup/browser-env.js"]
+	"extension": ["ts"],
+	"spec": "tests/**/*.spec.ts",
+	"require": "./tests/setup/browser-env.ts"
 }

@@ -1,38 +1,44 @@
-import { isSelfClosing } from "./dom.js";
+import { isHTMLElement, isSelfClosing } from "./dom.js";
 
 /**
  * @typedef {Object} CurrentSelection
  * @property {Selection} sel the current selection
  * @property {(Range|undefined)} range the current range
  */
+export type CurrentSelection = {
+  sel: Selection;
+  range?: Range;
+};
 
 /**
  * Get the current selection.
  * @returns {CurrentSelection} the current selection
  */
-export function getSelection() {
-  const sel = window.getSelection();
+export function getSelection(): CurrentSelection {
+  const sel = window.getSelection()!;
 
   return { sel, range: sel.rangeCount ? sel.getRangeAt(0) : undefined };
 }
 
 /**
  * Restore the given selection.
- * @param {Selection} selection the selection to restore
+ * @param {CurrentSelection} selection the selection to restore
  */
-export function restoreSelection(selection) {
-  const sel = window.getSelection();
+export function restoreSelection(selection: CurrentSelection): void {
+  const sel = window.getSelection()!;
   sel.removeAllRanges();
-  sel.addRange(selection.range);
+  if (selection.range !== undefined) {
+    sel.addRange(selection.range);
+  }
 }
 
 /**
  * Move the cursor inside the node.
- * @param {Node} target the targeted node
+ * @param {ChildNode} target the targeted node
  */
-export function moveCursorInsideNode(target) {
+export function moveCursorInsideNode(target: ChildNode): void {
   const range = document.createRange();
-  const sel = window.getSelection();
+  const sel = window.getSelection()!;
   range.setStart(target, 1);
   range.collapse(true);
   sel.removeAllRanges();
@@ -41,11 +47,11 @@ export function moveCursorInsideNode(target) {
 
 /**
  * Move the cursor after the node.
- * @param {Node} target the targeted node
+ * @param {ChildNode} target the targeted node
  */
-export function moveCursorAfterNode(target) {
+export function moveCursorAfterNode(target: ChildNode): void {
   const range = document.createRange();
-  const sel = window.getSelection();
+  const sel = window.getSelection()!;
   range.setStartAfter(target);
   range.collapse(true);
   sel.removeAllRanges();
@@ -54,11 +60,11 @@ export function moveCursorAfterNode(target) {
 
 /**
  * Select the node's content.
- * @param {Node} target the targeted node
+ * @param {ChildNode} target the targeted node
  */
-export function selectNodeContents(target) {
+export function selectNodeContents(target: ChildNode): void {
   const range = document.createRange();
-  const sel = window.getSelection();
+  const sel = window.getSelection()!;
   range.selectNodeContents(target);
   range.collapse(false);
   sel.removeAllRanges();
@@ -67,17 +73,17 @@ export function selectNodeContents(target) {
 
 /**
  * Select the given Nodes.
- * @param {Array<Node>} nodes The list of Nodes to select.
+ * @param {Array<ChildNode>} nodes The list of Nodes to select.
  */
-export function selectNodes(nodes) {
+export function selectNodes(nodes: ChildNode[]): void {
   // Check if we just have a self-closing tag
-  if (nodes.length === 1 && isSelfClosing(nodes[0].tagName)) {
+  if (nodes.length === 1 && isHTMLElement(nodes[0]) && isSelfClosing(nodes[0].tagName)) {
     moveCursorAfterNode(nodes[0]); // Move the cursor after the Node
     return;
   }
   // Select Nodes
   const range = document.createRange();
-  const sel = window.getSelection();
+  const sel = window.getSelection()!;
   range.setStartBefore(nodes[0]);
   range.setEndAfter(nodes[nodes.length - 1]);
   sel.removeAllRanges();
@@ -86,10 +92,14 @@ export function selectNodes(nodes) {
 
 /**
  * Check if the current selection is inside the given node.
- * @param {Node} node the targeted node
+ * @param {ChildNode} node the targeted node
  * @returns {boolean} true if the selection is inside
  */
-export function isSelectionInsideNode(node) {
+export function isSelectionInsideNode(node: ChildNode): boolean {
   const { range } = getSelection();
+  if (range === undefined) {
+    return false;
+  }
+
   return node.contains(range.startContainer) && node.contains(range.endContainer);
 }

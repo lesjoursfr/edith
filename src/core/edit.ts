@@ -1,26 +1,27 @@
-import { getSelection, moveCursorInsideNode, moveCursorAfterNode, selectNodeContents, selectNodes } from "./range.js";
 import {
-  hasClass,
-  hasTagName,
   cleanDomContent,
   createNodeWith,
-  unwrapNode,
-  textifyNode,
+  hasClass,
+  hasTagName,
+  isHTMLElement,
   isSelfClosing,
-  removeNodes,
-  removeEmptyTextNodes,
   removeCommentNodes,
+  removeEmptyTextNodes,
+  removeNodes,
+  textifyNode,
+  unwrapNode,
 } from "./dom.js";
+import { getSelection, moveCursorAfterNode, moveCursorInsideNode, selectNodeContents, selectNodes } from "./range.js";
 
 /**
  * Split the node at the caret position.
  * @param {Range} range the caret position
- * @param {Node} node the node to split
+ * @param {HTMLElement} node the node to split
  * @returns {Text} the created text node with the caret inside
  */
-function splitNodeAtCaret(range, node) {
+function splitNodeAtCaret(range: Range, node: HTMLElement): Text {
   // Get the node's parent
-  const parent = node.parentNode;
+  const parent = node.parentNode as HTMLElement;
 
   // Clone the current range & move the starting point to the beginning of the parent's node
   const beforeCaret = range.cloneRange();
@@ -46,13 +47,13 @@ function splitNodeAtCaret(range, node) {
 /**
  * Extract the selection from the node.
  * @param {Range} range the selection to extract
- * @param {Node} node the node to split
- * @param {String} tag the tag to remove
- * @returns {Node} the created node
+ * @param {HTMLElement} node the node to split
+ * @param {string} tag the tag to remove
+ * @returns {HTMLElement} the created node
  */
-function extractSelectionFromNode(range, node) {
+function extractSelectionFromNode(range: Range, node: HTMLElement): HTMLElement {
   // Get the node's parent
-  const parent = node.parentNode;
+  const parent = node.parentNode as HTMLElement;
 
   // Clone the current range & move the starting point to the beginning of the parent's node
   const beforeSelection = new Range();
@@ -71,18 +72,18 @@ function extractSelectionFromNode(range, node) {
   parent.append(fragAfter);
 
   // Remove the parent from the selection
-  let current = range.commonAncestorContainer;
+  let current = range.commonAncestorContainer as HTMLElement;
   while (current.tagName !== node.tagName) {
     // Take the parent
-    current = current.parentNode;
+    current = current.parentNode as HTMLElement;
   }
-  let innerNodes = unwrapNode(current);
+  const innerNodes = unwrapNode(current);
 
   // Preserve the selection
   selectNodes(innerNodes);
 
   // Return the inserted TextNode
-  return range.commonAncestorContainer;
+  return range.commonAncestorContainer as HTMLElement;
 }
 
 /**
@@ -91,9 +92,13 @@ function extractSelectionFromNode(range, node) {
  * @param {string} tag the tag name of the node
  * @param {object} options optional parameters
  * @param {string} options.textContent the text content of the node
- * @returns {Text} the created node with the caret inside
+ * @returns {HTMLElement} the created node with the caret inside
  */
-function insertTagAtCaret(range, tag, options) {
+function insertTagAtCaret<K extends keyof HTMLElementTagNameMap>(
+  range: Range,
+  tag: K,
+  options: { textContent?: string } = {}
+): HTMLElementTagNameMap[K] {
   // Create the tag
   const node = document.createElement(tag);
 
@@ -123,12 +128,14 @@ function insertTagAtCaret(range, tag, options) {
  * Replace the current selection by the given HTML code.
  * @param {string} html the HTML code
  */
-export function replaceSelectionByHtml(html) {
+export function replaceSelectionByHtml(html: string): void {
   // Get the caret position
   const { sel, range } = getSelection();
 
   // Check if the user has selected something
-  if (range === undefined) return false;
+  if (range === undefined) {
+    return;
+  }
 
   // Create the fragment to insert
   const frag = document.createDocumentFragment();
@@ -151,9 +158,12 @@ export function replaceSelectionByHtml(html) {
  * @param {string} tag the tag name of the node
  * @param {object} options optional parameters
  * @param {string} options.textContent the text content of the node
- * @returns {Node} the created node or the root node
+ * @returns {HTMLElement|Text} the created node or the root node
  */
-export function wrapInsideTag(tag, options = {}) {
+export function wrapInsideTag<K extends keyof HTMLElementTagNameMap>(
+  tag: K,
+  options: { textContent?: string } = {}
+): HTMLElement | Text | undefined {
   // Get the caret position
   const { sel, range } = getSelection();
 
@@ -165,7 +175,7 @@ export function wrapInsideTag(tag, options = {}) {
   // Check if there is a Selection
   if (range.collapsed) {
     // Check if a parent element has the same tag name
-    let parent = sel.anchorNode.parentNode;
+    let parent = sel.anchorNode!.parentNode as HTMLElement;
     while (!hasClass(parent, "edith-visual")) {
       if (hasTagName(parent, tag)) {
         // One of the parent has the same tag name
@@ -174,7 +184,7 @@ export function wrapInsideTag(tag, options = {}) {
       }
 
       // Take the parent
-      parent = parent.parentNode;
+      parent = parent.parentNode as HTMLElement;
     }
 
     // We just have to insert a new Node at the caret position
@@ -183,7 +193,7 @@ export function wrapInsideTag(tag, options = {}) {
 
   // There is a selection
   // Check if a parent element has the same tag name
-  let parent = range.commonAncestorContainer;
+  let parent = range.commonAncestorContainer as HTMLElement;
   while (!hasClass(parent, "edith-visual")) {
     if (hasTagName(parent, tag)) {
       // One of the parent has the same tag name
@@ -192,15 +202,15 @@ export function wrapInsideTag(tag, options = {}) {
     }
 
     // Take the parent
-    parent = parent.parentNode;
+    parent = parent.parentNode as HTMLElement;
   }
 
   // Try to replace all elements with the same tag name in the selection
-  for (const el of [...parent.getElementsByTagName(tag)]) {
+  for (const el of [...parent.getElementsByTagName(tag)] as HTMLElement[]) {
     // Check if the the Element Intersect the Selection
     if (sel.containsNode(el, true)) {
       // Unwrap the node
-      let innerNodes = unwrapNode(el);
+      const innerNodes = unwrapNode(el);
 
       // Return the node
       selectNodes(innerNodes);
@@ -216,7 +226,9 @@ export function wrapInsideTag(tag, options = {}) {
   range.insertNode(node);
 
   // Remove empty tags
-  removeNodes(parent, (el) => !isSelfClosing(el.tagName) && el.textContent.length === 0);
+  removeNodes(parent, (el) => {
+    return isHTMLElement(el) && !isSelfClosing(el.tagName) && (el.textContent === null || el.textContent.length === 0);
+  });
 
   // Return the node
   selectNodeContents(node);
@@ -228,15 +240,20 @@ export function wrapInsideTag(tag, options = {}) {
  * @param {string} text the text of the link
  * @param {string} href the href of the link
  * @param {boolean} targetBlank add target="_blank" attribute or not
- * @returns the created node
+ * @returns {HTMLElement|Text} the created node
  */
-export function wrapInsideLink(text, href, targetBlank) {
+export function wrapInsideLink(text: string, href: string, targetBlank: boolean): HTMLElement | Text | undefined {
   // Wrap the selection inside a link
   const tag = wrapInsideTag("a", { textContent: text });
 
   // Check if we have a tag
   if (tag === undefined) {
     return;
+  }
+
+  // Check if it's a Text node
+  if (!isHTMLElement(tag)) {
+    return tag;
   }
 
   // Add an href Attribute
@@ -254,17 +271,17 @@ export function wrapInsideLink(text, href, targetBlank) {
 /**
  * Clear the style in the current selection.
  */
-export function clearSelectionStyle() {
+export function clearSelectionStyle(): void {
   // Get the caret position
   const { sel, range } = getSelection();
 
   // Check if there is something to do
-  if (range.commonAncestorContainer.nodeType === Node.TEXT_NODE) {
+  if (range === undefined || range.commonAncestorContainer.nodeType === Node.TEXT_NODE) {
     return;
   }
 
   // Try to replace all non-text elements by their text
-  for (const el of [...range.commonAncestorContainer.children]) {
+  for (const el of [...(range.commonAncestorContainer as HTMLElement).children] as HTMLElement[]) {
     // Check if the the Element Intersect the Selection
     if (sel.containsNode(el, true)) {
       // Replace the node by its text
@@ -277,9 +294,9 @@ export function clearSelectionStyle() {
  * Clean the given HTML code.
  * @param {string} html the HTML code to clean
  * @param {object} style active styles
- * @returns the cleaned HTML code
+ * @returns {HTMLElement} the cleaned HTML code
  */
-export function cleanPastedHtml(html, style) {
+export function cleanPastedHtml(html: string, style: { [keyof: string]: boolean }): HTMLElement {
   // Create a new div with the HTML content
   const result = document.createElement("div");
   result.innerHTML = html;

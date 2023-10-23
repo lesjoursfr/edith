@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 module.exports = {
-	env: {
-		mocha: true,
-	},
+  env: {
+    mocha: true,
+  },
 };

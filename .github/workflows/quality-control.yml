@@ -26,13 +26,13 @@ jobs:
         run: npm install
 
       - name: ESLint checks
-        run: npm run check-js
+        run: npm run eslint-check
 
       - name: Stylelint checks
-        run: npm run check-sass
+        run: npm run stylelint-check
 
       - name: Prettier checks
-        run: npm run check-style
+        run: npm run prettier-check
 
   tests:
     name: Tests Node.js ${{ matrix.node-version }}
@@ -53,5 +53,7 @@ jobs:
       - name: Install
         run: npm install
 
-      - name: Run Tests
+      - name: Run tests
+        env:
+          NODE_OPTIONS: --loader=ts-node/esm
         run: npx mocha
