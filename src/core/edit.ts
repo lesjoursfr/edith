@@ -72,7 +72,9 @@ function extractSelectionFromNode(range: Range, node: HTMLElement): HTMLElement 
   parent.append(fragAfter);
 
   // Remove the parent from the selection
-  let current = range.commonAncestorContainer as HTMLElement;
+  let current = !isHTMLElement(range.commonAncestorContainer)
+    ? (range.commonAncestorContainer.parentNode as HTMLElement)
+    : range.commonAncestorContainer;
   while (current.tagName !== node.tagName) {
     // Take the parent
     current = current.parentNode as HTMLElement;
@@ -83,7 +85,7 @@ function extractSelectionFromNode(range: Range, node: HTMLElement): HTMLElement 
   selectNodes(innerNodes);
 
   // Return the inserted TextNode
-  return range.commonAncestorContainer as HTMLElement;
+  return innerNodes[0].parentNode as HTMLElement;
 }
 
 /**
@@ -193,9 +195,9 @@ export function wrapInsideTag<K extends keyof HTMLElementTagNameMap>(
 
   // There is a selection
   // Check if a parent element has the same tag name
-  let parent = range.commonAncestorContainer as HTMLElement;
-  while (!hasClass(parent, "edith-visual")) {
-    if (hasTagName(parent, tag)) {
+  let parent = range.commonAncestorContainer;
+  while (!isHTMLElement(parent) || !hasClass(parent, "edith-visual")) {
+    if (isHTMLElement(parent) && hasTagName(parent, tag)) {
       // One of the parent has the same tag name
       // Extract the selection from the parent
       return extractSelectionFromNode(range, parent);
@@ -276,12 +278,12 @@ export function clearSelectionStyle(): void {
   const { sel, range } = getSelection();
 
   // Check if there is something to do
-  if (range === undefined || range.commonAncestorContainer.nodeType === Node.TEXT_NODE) {
+  if (range === undefined || !isHTMLElement(range.commonAncestorContainer)) {
     return;
   }
 
   // Try to replace all non-text elements by their text
-  for (const el of [...(range.commonAncestorContainer as HTMLElement).children] as HTMLElement[]) {
+  for (const el of [...range.commonAncestorContainer.children] as HTMLElement[]) {
     // Check if the the Element Intersect the Selection
     if (sel.containsNode(el, true)) {
       // Replace the node by its text

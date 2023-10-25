@@ -12,8 +12,20 @@ export default {
     port: 8084,
     static: [
       {
+        directory: resolve("./node_modules/@fortawesome/fontawesome-free"),
+        publicPath: "/fontawesome",
+        serveIndex: false,
+        watch: false,
+      },
+      {
         directory: resolve("./node_modules/@popperjs/core/dist/umd"),
         publicPath: "/popperjs",
+        serveIndex: false,
+        watch: false,
+      },
+      {
+        directory: resolve("./server/builds"),
+        publicPath: "/builds",
         serveIndex: false,
         watch: false,
       },

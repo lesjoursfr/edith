@@ -29,28 +29,28 @@ function isTagElement(node: ChildNode, tag: string): node is HTMLElement {
 
 /**
  * Check if a node is an HTML Element.
- * @param {ChildNode} node the node to test
+ * @param {Node} node the node to test
  * @returns {boolean} true if the node is an HTMLElement
  */
-export function isCommentNode(node: ChildNode): node is Comment {
+export function isCommentNode(node: Node): node is Comment {
   return node.nodeType === Node.COMMENT_NODE;
 }
 
 /**
  * Check if a node is an HTML Element.
- * @param {ChildNode} node the node to test
+ * @param {Node} node the node to test
  * @returns {boolean} true if the node is an HTMLElement
  */
-export function isTextNode(node: ChildNode): node is Text {
+export function isTextNode(node: Node): node is Text {
   return node.nodeType === Node.TEXT_NODE;
 }
 
 /**
  * Check if a node is an HTML Element.
- * @param {ChildNode} node the node to test
+ * @param {Node} node the node to test
  * @returns {boolean} true if the node is an HTMLElement
  */
-export function isHTMLElement(node: ChildNode): node is HTMLElement {
+export function isHTMLElement(node: Node): node is HTMLElement {
   return node.nodeType === Node.ELEMENT_NODE;
 }
 
