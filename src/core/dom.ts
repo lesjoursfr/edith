@@ -1,15 +1,15 @@
-const dataNamespace = "colorpickerData";
+const dataNamespace = "edithData";
 
-type ColorPickerData = {
+type EdithData = {
   [key: string]: string | null;
 };
 
 declare global {
   interface Document {
-    colorpickerData: ColorPickerData;
+    edithData: EdithData;
   }
   interface HTMLElement {
-    colorpickerData: ColorPickerData;
+    edithData: EdithData;
   }
 }
 
@@ -134,9 +134,9 @@ export function setAttribute(node: HTMLElement, attribute: string, value: string
  * If there is no key this function return all data
  * @param {HTMLElement} node
  * @param {string|undefined} key
- * @returns {ColorPickerData|string|null} the value
+ * @returns {EdithData|string|null} the value
  */
-export function getData(node: HTMLElement, key?: string): ColorPickerData | string | null {
+export function getData(node: HTMLElement, key?: string): EdithData | string | null {
   if (node[dataNamespace] === undefined) {
     node[dataNamespace] = {};
     for (const [k, v] of Object.entries(node.dataset)) {

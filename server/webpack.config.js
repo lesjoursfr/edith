@@ -1,7 +1,7 @@
+import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import { resolve } from "path";
 import * as sass from "sass";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import TerserPlugin from "terser-webpack-plugin";
 
 export default {
@@ -27,8 +27,8 @@ export default {
   },
   output: {
     path: resolve("./build"),
-    filename: "colorpicker.js",
-    library: "Colorpicker",
+    filename: "edith.js",
+    library: "Edith",
     libraryTarget: "umd",
   },
   target: "browserslist",
@@ -39,9 +39,26 @@ export default {
       commonjs2: "Popper",
       amd: "Popper",
     },
+    codemirror: {
+      root: "CodeMirror",
+      commonjs: "CodeMirror",
+      commonjs2: "CodeMirror",
+      amd: "CodeMirror",
+    },
+    "@codemirror/lang-html": {
+      root: "CodeMirror",
+      commonjs: "CodeMirror",
+      commonjs2: "CodeMirror",
+      amd: "CodeMirror",
+    },
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: [".ts", ".tsx", ".js"],
+    extensionAlias: {
+      ".js": [".js", ".ts"],
+      ".cjs": [".cjs", ".cts"],
+      ".mjs": [".mjs", ".mts"],
+    },
   },
   module: {
     rules: [
@@ -74,7 +91,7 @@ export default {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "colorpicker.css",
+      filename: "edith.css",
     }),
   ],
   optimization: {

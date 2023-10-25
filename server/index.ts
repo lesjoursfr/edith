@@ -1,3 +1,3 @@
-import "../src/css/colorpicker.scss";
+import "../src/css/edith.scss";
 
-export * from "../src/colorpicker";
+export * from "../src/edith.js";
