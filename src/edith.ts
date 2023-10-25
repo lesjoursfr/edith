@@ -1,4 +1,4 @@
-import { Events, addClass, createNodeWith, off, on, trigger } from "./core/index.js";
+import { Events, addClass, createNodeWith, off, on, removeClass, trigger } from "./core/index.js";
 import { DefaultOptions, EdithButtonsOption, EdithOptions, EdithToolbarOption } from "./edith-options.js";
 import { EdithButton, EdithButtons, EdithEditor } from "./ui/index.js";
 
@@ -89,6 +89,7 @@ export class Edith {
   }
 
   public destroy(): void {
+    removeClass(this.element, "edith");
     this.modals.remove();
     this.editor.destroy();
     this.toolbar.remove();

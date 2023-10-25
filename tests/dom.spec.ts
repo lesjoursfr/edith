@@ -35,21 +35,21 @@ it("core.dom.isCommentNode", () => {
   const template = "<div><!--Comment Node-->Text Node<p>HTML Element</p></div>";
   const node = createFromTemplate(template);
 
-  assert.strictEqual(isCommentNode(node.children[0]), true);
+  assert.strictEqual(isCommentNode(node.childNodes[0]), true);
 });
 
 it("core.dom.isTextNode", () => {
   const template = "<div><!--Comment Node-->Text Node<p>HTML Element</p></div>";
   const node = createFromTemplate(template);
 
-  assert.strictEqual(isTextNode(node.children[1]), true);
+  assert.strictEqual(isTextNode(node.childNodes[1]), true);
 });
 
 it("core.dom.isHTMLElement", () => {
   const template = "<div><!--Comment Node-->Text Node<p>HTML Element</p></div>";
   const node = createFromTemplate(template);
 
-  assert.strictEqual(isHTMLElement(node.children[2]), true);
+  assert.strictEqual(isHTMLElement(node.childNodes[2]), true);
 });
 
 it("core.dom.createFromTemplate", () => {
