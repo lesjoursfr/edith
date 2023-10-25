@@ -1,5 +1,8 @@
 # Generated files
 server/builds
+tsconfig.tsbuildinfo
+build/
+dist/
 
 # Yarn & node.js dependencies
 node_modules/

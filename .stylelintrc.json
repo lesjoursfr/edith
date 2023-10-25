@@ -1,6 +1,8 @@
 {
 	"extends": ["stylelint-config-sass-guidelines"],
 	"ignoreFiles": [
+		"server/builds/**",
+		"build/**",
 		"dist/**",
 		"package.json",
 		"node_modules/**",

@@ -1,8 +1,12 @@
-import { resolve } from "path";
+import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import { resolve } from "path";
+import * as sass from "sass";
+import TerserPlugin from "terser-webpack-plugin";
 
 export default {
-  entry: "./server/index.js",
+  mode: "development",
+  entry: resolve("./server/index.ts"),
   devServer: {
     host: "127.0.0.1",
     port: 8084,
@@ -60,17 +64,40 @@ export default {
       amd: "CodeMirror",
     },
   },
+  resolve: {
+    extensions: [".ts", ".tsx", ".js"],
+    extensionAlias: {
+      ".js": [".js", ".ts"],
+      ".cjs": [".cjs", ".cts"],
+      ".mjs": [".mjs", ".mts"],
+    },
+  },
   module: {
     rules: [
       {
-        test: /\.(js)$/,
+        test: /\.tsx?$/,
+        use: "ts-loader",
         exclude: /node_modules/,
-        use: ["babel-loader"],
       },
       {
-        test: /\.scss$/,
-        exclude: /node_modules/,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+        test: /\.s[ac]ss$/i,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 2,
+            },
+          },
+          {
+            loader: "sass-loader",
+            options: {
+              implementation: sass,
+            },
+          },
+        ],
       },
     ],
   },
@@ -79,4 +106,22 @@ export default {
       filename: "edith.css",
     }),
   ],
+  optimization: {
+    minimizer: [
+      new CssMinimizerPlugin({
+        minimizerOptions: [{ preset: "default" }],
+        minify: [CssMinimizerPlugin.cssnanoMinify],
+      }),
+      new TerserPlugin({
+        terserOptions: {
+          ecma: 6,
+          compress: true,
+          format: {
+            comments: false,
+          },
+        },
+        extractComments: false,
+      }),
+    ],
+  },
 };
