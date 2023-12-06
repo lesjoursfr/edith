@@ -23,7 +23,7 @@
 	"types": "./dist/index.d.ts",
 	"type": "module",
 	"scripts": {
-		"freshlock": "rm -rf node_modules/ && rm .yarn/install-state.gz && rm -r .yarn/cache/ && rm yarn.lock && yarn",
+		"freshlock": "rm -rf node_modules/ && rm .yarn/install-state.gz && rm yarn.lock && yarn",
 		"eslint-check": "eslint . --ext .js,.jsx,.ts,.tsx",
 		"eslint-fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
 		"stylelint-check": "stylelint **/*.scss",
