@@ -1,4 +1,14 @@
 import { html } from "@codemirror/lang-html";
+import {
+  createNodeWith,
+  hasClass,
+  hasTagName,
+  isHTMLElement,
+  isSelfClosing,
+  removeNodesRecursively,
+  throttle,
+  unwrapNode,
+} from "@lesjoursfr/browser-tools";
 import { EditorView, basicSetup } from "codemirror";
 import {
   EditorModes,
@@ -6,18 +16,10 @@ import {
   History,
   cleanPastedHtml,
   clearSelectionStyle,
-  createNodeWith,
   getSelection,
-  hasClass,
-  hasTagName,
-  isHTMLElement,
   isSelectionInsideNode,
-  isSelfClosing,
-  removeNodesRecursively,
   replaceSelectionByHtml,
   restoreSelection,
-  throttle,
-  unwrapNode,
   wrapInsideLink,
   wrapInsideTag,
 } from "../core/index.js";

@@ -46,6 +46,9 @@
 		"WYSIWYG",
 		"editor"
 	],
+	"dependencies": {
+		"@lesjoursfr/browser-tools": "^1.0.0"
+	},
 	"devDependencies": {
 		"@babel/core": "^7.23.5",
 		"@babel/preset-env": "^7.23.5",

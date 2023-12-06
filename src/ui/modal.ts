@@ -1,4 +1,4 @@
-import { createNodeWith, getAttribute, hasAttribute } from "../core/index.js";
+import { createNodeWith, getAttribute, hasAttribute } from "@lesjoursfr/browser-tools";
 import { Edith } from "../edith.js";
 
 export enum EdithModalFieldType {

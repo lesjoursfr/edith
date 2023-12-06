@@ -1,5 +1,6 @@
+import { createNodeWith } from "@lesjoursfr/browser-tools";
 import { createPopper } from "@popperjs/core";
-import { EditorModes, Events, createNodeWith } from "../core/index.js";
+import { EditorModes, Events } from "../core/index.js";
 import { EdithButtonsOption } from "../edith-options.js";
 import { Edith } from "../edith.js";
 

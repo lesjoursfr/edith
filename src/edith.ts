@@ -1,4 +1,5 @@
-import { Events, addClass, createNodeWith, off, on, removeClass, trigger } from "./core/index.js";
+import { addClass, createNodeWith, off, on, removeClass, trigger } from "@lesjoursfr/browser-tools";
+import { Events } from "./core/index.js";
 import { DefaultOptions, EdithButtonsOption, EdithOptions, EdithToolbarOption } from "./edith-options.js";
 import { EdithButton, EdithButtons, EdithEditor } from "./ui/index.js";
 

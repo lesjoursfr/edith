@@ -1,4 +1,4 @@
-import { isHTMLElement, isSelfClosing } from "./dom.js";
+import { isHTMLElement, isSelfClosing } from "@lesjoursfr/browser-tools";
 
 /**
  * @typedef {Object} CurrentSelection
