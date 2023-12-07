@@ -5,6 +5,7 @@ import {
   hasTagName,
   isHTMLElement,
   isSelfClosing,
+  isTextNode,
   removeNodesRecursively,
   throttle,
   unwrapNode,
@@ -364,7 +365,7 @@ export class EdithEditor {
       }
     } else {
       // Detect style blocs in parents
-      let dest = sel.anchorNode as HTMLElement;
+      let dest = (isTextNode(sel.anchorNode!) ? sel.anchorNode!.parentNode : sel.anchorNode) as HTMLElement;
       const style = { B: false, I: false, U: false, S: false, Q: false };
       while (dest !== null && !hasClass(dest, "edith-visual")) {
         // Check if it's a style tag
