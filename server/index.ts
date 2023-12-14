@@ -1,3 +1,8 @@
+import { Edith, EdithButton } from "../src/edith.js";
+
 import "../src/css/edith.scss";
 
-export * from "../src/edith.js";
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+(Edith as any).EdithButton = EdithButton;
+
+export default Edith;

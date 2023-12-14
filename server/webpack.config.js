@@ -40,8 +40,11 @@ export default {
   output: {
     path: resolve("./build"),
     filename: "edith.js",
-    library: "Edith",
-    libraryTarget: "umd",
+    library: {
+      name: "Edith",
+      type: "umd",
+      export: "default",
+    },
   },
   target: "browserslist",
   externals: {
