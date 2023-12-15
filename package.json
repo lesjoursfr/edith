@@ -47,7 +47,7 @@
 		"editor"
 	],
 	"dependencies": {
-		"@lesjoursfr/browser-tools": "^1.0.5"
+		"@lesjoursfr/browser-tools": "^1.0.6"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.23.6",
