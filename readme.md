@@ -23,7 +23,19 @@ import { Edith } from "@lesjoursfr/edith";
 new Edith(document.querySelector("#editor"), {
 	height: 200,
 	toolbar: [
-		["style", ["bold", "italic", "underline", "strikethrough", "subscript", "superscript", "nbsp", "clear"]],
+		[
+			"style",
+			[
+				"bold",
+				"italic",
+				"underline",
+				"strikethrough",
+				"subscript",
+				"superscript",
+				"nbsp",
+				"clear",
+			],
+		],
 		/*** Other toolbar blocs ***/
 	],
 	buttons: {
