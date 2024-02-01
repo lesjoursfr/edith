@@ -36,7 +36,13 @@
 		"source.fixAll": "explicit",
 		"source.organizeImports": "explicit"
 	},
-	"eslint.format.enable": true,
+	"eslint.enable": true,
+	"eslint.format.enable": false,
 	"prettier.configPath": ".prettierrc.cjs",
-	"prettier.ignorePath": ".prettierignore"
+	"prettier.ignorePath": ".prettierignore",
+	"css.validate": false,
+	"less.validate": false,
+	"scss.validate": false,
+	"stylelint.enable": true,
+	"stylelint.validate": ["css", "scss"]
 }
