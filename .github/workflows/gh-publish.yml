@@ -24,6 +24,8 @@ jobs:
           scope: "@lesjoursfr"
 
       - run: npm install
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - run: npm run build
 
