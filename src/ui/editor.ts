@@ -270,8 +270,8 @@ export class EdithEditor {
 
   private _processKeyEvent(e: KeyboardEvent): boolean {
     // Check the key code
-    switch (e.keyCode) {
-      case 13: // Enter : 13
+    switch (e.key) {
+      case "Enter":
         if (e.type === "keydown") {
           this.replaceByHtml("<br />"); // Insert a line break
         }
@@ -287,44 +287,44 @@ export class EdithEditor {
 
   private _processKeyEventWithMeta(e: KeyboardEvent): boolean {
     // Check the key code
-    switch (e.keyCode) {
-      case 13: // Enter : 13
+    switch (e.key) {
+      case "Enter":
         if (e.type === "keydown") {
           this.replaceByHtml("<br />"); // Insert a line break
         }
         return true;
 
-      case 32: // Space : 32
+      case " ":
         if (e.type === "keydown") {
           this.replaceByHtml('<span class="edith-nbsp" contenteditable="false">¶</span>'); // Insert a non-breaking space
         }
         return true;
 
-      case 66: // b : 66
+      case "b":
         if (e.type === "keydown") {
           this.wrapInsideTag("b"); // Toggle bold
         }
         return true;
 
-      case 73: // i : 73
+      case "i":
         if (e.type === "keydown") {
           this.wrapInsideTag("i"); // Toggle italic
         }
         return true;
 
-      case 85: // u : 85
+      case "u":
         if (e.type === "keydown") {
           this.wrapInsideTag("u"); // Toggle underline
         }
         return true;
 
-      case 83: // s : 83
+      case "s":
         if (e.type === "keydown") {
           this.wrapInsideTag("s"); // Toggle strikethrough
         }
         return true;
 
-      case 90: // z : 90
+      case "z":
         if (e.type === "keydown") {
           this.restoreSnapshot(); // Undo
         }
