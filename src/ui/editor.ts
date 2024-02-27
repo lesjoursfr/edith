@@ -312,6 +312,12 @@ export class EdithEditor {
         }
         return true;
 
+      case "k":
+        if (e.type === "keydown") {
+          this.insertLink();
+        }
+        return true;
+
       case "u":
         if (e.type === "keydown") {
           this.wrapInsideTag("u"); // Toggle underline
