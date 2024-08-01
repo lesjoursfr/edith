@@ -24,260 +24,260 @@ $color-modal-submit-color: #fff;
 $color-modal-submit-border: #0d6efd;
 
 .edith {
-	background-color: $color-toolbar;
-	border: 1px solid $color-toolbar-border;
-	border-radius: 0.25rem;
-	padding: 5px;
+  background-color: $color-toolbar;
+  border: 1px solid $color-toolbar-border;
+  border-radius: 0.25rem;
+  padding: 5px;
 }
 
 .edith-toolbar {
-	background-color: $color-toolbar;
+  background-color: $color-toolbar;
 }
 
 .edith-btn {
-	background-color: $color-button;
-	border: 1px solid $color-button-border;
-	border-radius: 0.25rem;
-	color: $color-button-text;
-	cursor: pointer;
-	display: inline-block;
-	font-size: 1rem;
-	font-weight: 900;
-	line-height: 1.5;
-	padding: 0.375rem 0.75rem;
-	text-align: center;
-	text-decoration: none;
-	user-select: none;
-	vertical-align: middle;
+  background-color: $color-button;
+  border: 1px solid $color-button-border;
+  border-radius: 0.25rem;
+  color: $color-button-text;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: 900;
+  line-height: 1.5;
+  padding: 0.375rem 0.75rem;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  vertical-align: middle;
 
-	&:disabled {
-		color: color.scale($color-button-text, $lightness: 70%);
-		cursor: not-allowed;
-	}
+  &:disabled {
+    color: color.scale($color-button-text, $lightness: 70%);
+    cursor: not-allowed;
+  }
 }
 
 .edith-btn-group {
-	display: inline-flex;
-	position: relative;
-	vertical-align: middle;
+  display: inline-flex;
+  position: relative;
+  vertical-align: middle;
 
-	&:not(:first-child) {
-		margin-left: 10px;
-	}
+  &:not(:first-child) {
+    margin-left: 10px;
+  }
 
-	:not(:first-child) {
-		margin-left: -1px;
-	}
+  :not(:first-child) {
+    margin-left: -1px;
+  }
 
-	.edith-btn:not(:last-child) {
-		border-bottom-right-radius: 0;
-		border-top-right-radius: 0;
-	}
+  .edith-btn:not(:last-child) {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+  }
 
-	.edith-btn:not(:first-child) {
-		border-bottom-left-radius: 0;
-		border-top-left-radius: 0;
-	}
+  .edith-btn:not(:first-child) {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+  }
 }
 
 .edith-btn-nbsp {
-	&::before {
-		content: "\0020";
-		display: block;
-		height: 16px;
-		width: 12px;
-	}
+  &::before {
+    content: "\0020";
+    display: block;
+    height: 16px;
+    width: 12px;
+  }
 }
 
 .edith-tooltip {
-	background: $color-tooltip;
-	border-radius: 4px;
-	color: $color-tooltip-text;
-	font-size: 13px;
-	font-weight: bold;
-	padding: 4px 8px;
-	z-index: 10;
+  background: $color-tooltip;
+  border-radius: 4px;
+  color: $color-tooltip-text;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 4px 8px;
+  z-index: 10;
 
-	.arrow,
-	.arrow::before {
-		background: inherit;
-		height: 8px;
-		position: absolute;
-		width: 8px;
-	}
+  .arrow,
+  .arrow::before {
+    background: inherit;
+    height: 8px;
+    position: absolute;
+    width: 8px;
+  }
 
-	.arrow {
-		visibility: hidden;
-	}
+  .arrow {
+    visibility: hidden;
+  }
 
-	.arrow::before {
-		content: "";
-		transform: rotate(45deg);
-		visibility: visible;
-	}
+  .arrow::before {
+    content: "";
+    transform: rotate(45deg);
+    visibility: visible;
+  }
 
-	&[data-popper-placement^="top"] > .arrow {
-		bottom: -4px;
-	}
+  &[data-popper-placement^="top"] > .arrow {
+    bottom: -4px;
+  }
 
-	&[data-popper-placement^="bottom"] > .arrow {
-		top: -4px;
-	}
+  &[data-popper-placement^="bottom"] > .arrow {
+    top: -4px;
+  }
 
-	&[data-popper-placement^="left"] > .arrow {
-		right: -4px;
-	}
+  &[data-popper-placement^="left"] > .arrow {
+    right: -4px;
+  }
 
-	&[data-popper-placement^="right"] > .arrow {
-		left: -4px;
-	}
+  &[data-popper-placement^="right"] > .arrow {
+    left: -4px;
+  }
 }
 
 .edith-editing-area {
-	background-color: $color-editor;
-	border-radius: 0.25rem;
-	margin-top: 5px;
-	padding: 5px;
+  background-color: $color-editor;
+  border-radius: 0.25rem;
+  margin-top: 5px;
+  padding: 5px;
 }
 
 .edith-visual,
 .edith-code {
-	height: 100%;
-	outline: none;
-	overflow: auto;
+  height: 100%;
+  outline: none;
+  overflow: auto;
 }
 
 .edith-hidden {
-	display: none;
+  display: none;
 }
 
 .edith-visual {
-	color: $color-editor-text;
+  color: $color-editor-text;
 
-	.edith-nbsp {
-		color: color.scale($color-button-text, $lightness: 70%);
-	}
+  .edith-nbsp {
+    color: color.scale($color-button-text, $lightness: 70%);
+  }
 }
 
 .edith-modal {
-	background: $color-modal;
-	border: 2px solid $color-modal-border;
-	border-radius: 10px;
-	left: calc(50% - 200px);
-	position: fixed;
-	top: 20%;
-	width: 400px;
-	z-index: 10;
+  background: $color-modal;
+  border: 2px solid $color-modal-border;
+  border-radius: 10px;
+  left: calc(50% - 200px);
+  position: fixed;
+  top: 20%;
+  width: 400px;
+  z-index: 10;
 
-	.edith-modal-header {
-		border-bottom: 1px solid $color-modal-border;
-		color: $color-modal-title;
-		font-size: 20px;
-		font-weight: 700;
-		line-height: 1.4;
-		padding: 5px 10px;
-	}
+  .edith-modal-header {
+    border-bottom: 1px solid $color-modal-border;
+    color: $color-modal-title;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.4;
+    padding: 5px 10px;
+  }
 
-	.edith-modal-content {
-		color: $color-modal-text;
-		margin: 10px;
-	}
+  .edith-modal-content {
+    color: $color-modal-text;
+    margin: 10px;
+  }
 
-	.edith-modal-input {
-		display: flex;
-		flex-wrap: wrap;
-		margin: 10px 0;
+  .edith-modal-input {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px 0;
 
-		label,
-		input {
-			width: 100%;
-		}
+    label,
+    input {
+      width: 100%;
+    }
 
-		input {
-			appearance: none;
-			background-clip: padding-box;
-			background-color: $color-modal;
-			border: 1px solid $color-checkbox-border;
-			border-radius: 0.25rem;
-			font-size: 1rem;
-			font-weight: 400;
-			line-height: 1.5;
-			outline: 0;
-			padding: 0.375rem 0.75rem;
-			width: 100%;
-		}
+    input {
+      appearance: none;
+      background-clip: padding-box;
+      background-color: $color-modal;
+      border: 1px solid $color-checkbox-border;
+      border-radius: 0.25rem;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.5;
+      outline: 0;
+      padding: 0.375rem 0.75rem;
+      width: 100%;
+    }
 
-		label {
-			font-size: 16px;
-			font-weight: 700;
-			margin-bottom: 5px;
-		}
-	}
+    label {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+  }
 
-	.edith-modal-checkbox {
-		margin: 10px 0;
+  .edith-modal-checkbox {
+    margin: 10px 0;
 
-		label {
-			display: flex;
-		}
+    label {
+      display: flex;
+    }
 
-		input {
-			appearance: none;
-			background-color: $color-modal;
-			background-position: 50%;
-			background-repeat: no-repeat;
-			background-size: contain;
-			border: 1px solid $color-checkbox-border;
-			border-radius: 0.25em;
-			height: 1em;
-			margin-top: 0.25em;
-			vertical-align: top;
-			width: 1em;
+    input {
+      appearance: none;
+      background-color: $color-modal;
+      background-position: 50%;
+      background-repeat: no-repeat;
+      background-size: contain;
+      border: 1px solid $color-checkbox-border;
+      border-radius: 0.25em;
+      height: 1em;
+      margin-top: 0.25em;
+      vertical-align: top;
+      width: 1em;
 
-			&:checked {
-				background-color: $color-checkbox-background;
-				background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3E%3C/svg%3E");
-				border-color: $color-checkbox-background;
-			}
-		}
-	}
+      &:checked {
+        background-color: $color-checkbox-background;
+        background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3E%3C/svg%3E");
+        border-color: $color-checkbox-background;
+      }
+    }
+  }
 
-	.edith-modal-footer {
-		border-top: 1px solid $color-modal-border;
-		display: flex;
-		justify-content: flex-end;
-		padding: 5px 10px;
+  .edith-modal-footer {
+    border-top: 1px solid $color-modal-border;
+    display: flex;
+    justify-content: flex-end;
+    padding: 5px 10px;
 
-		:not(:last-child) {
-			margin-right: 10px;
-		}
-	}
+    :not(:last-child) {
+      margin-right: 10px;
+    }
+  }
 
-	.edith-modal-cancel,
-	.edith-modal-submit {
-		border: 1px solid transparent;
-		border-radius: 0.25rem;
-		cursor: pointer;
-		display: inline-block;
-		font-size: 1rem;
-		font-weight: 400;
-		line-height: 1.5;
-		padding: 0.375rem 0.75rem;
-		text-align: center;
-		text-decoration: none;
-		user-select: none;
-		vertical-align: middle;
-	}
+  .edith-modal-cancel,
+  .edith-modal-submit {
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    padding: 0.375rem 0.75rem;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    vertical-align: middle;
+  }
 
-	.edith-modal-cancel {
-		background-color: $color-modal-cancel-background;
-		border-color: $color-modal-cancel-border;
-		color: $color-modal-cancel-color;
-	}
+  .edith-modal-cancel {
+    background-color: $color-modal-cancel-background;
+    border-color: $color-modal-cancel-border;
+    color: $color-modal-cancel-color;
+  }
 
-	.edith-modal-submit {
-		background-color: $color-modal-submit-background;
-		border-color: $color-modal-submit-border;
-		color: $color-modal-submit-color;
-	}
+  .edith-modal-submit {
+    background-color: $color-modal-submit-background;
+    border-color: $color-modal-submit-border;
+    color: $color-modal-submit-color;
+  }
 }
