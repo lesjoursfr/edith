@@ -14,7 +14,7 @@ import {
   trimTag,
   unwrapNode,
 } from "@lesjoursfr/browser-tools";
-import { sanitize } from "dompurify";
+import DOMPurify from "dompurify";
 import { getSelection, moveCursorAfterNode, moveCursorInsideNode, selectNodeContents, selectNodes } from "./range.js";
 
 /**
@@ -394,7 +394,7 @@ export function cleanDomContent(root: HTMLElement, style: { [keyof: string]: boo
 export function cleanPastedHtml(html: string, style: { [keyof: string]: boolean }): HTMLElement {
   // Create a new div with the HTML content
   const result = document.createElement("div");
-  result.innerHTML = sanitize(html, { USE_PROFILES: { html: true } });
+  result.innerHTML = DOMPurify.sanitize(html, { USE_PROFILES: { html: true } });
 
   // Clean the HTML content
   cleanDomContent(result, style);
