@@ -60,7 +60,7 @@
 		"@tsconfig/next": "^2.0.3",
 		"@types/babel__core": "^7.20.5",
 		"@types/babel__preset-env": "^7.9.7",
-		"@types/color": "^3.0.6",
+		"@types/color": "^4.2.0",
 		"@types/dompurify": "^3.0.5",
 		"@types/jsdom": "^21.1.7",
 		"@types/mocha": "^10.0.9",
