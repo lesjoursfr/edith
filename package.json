@@ -48,23 +48,23 @@
 	],
 	"dependencies": {
 		"@lesjoursfr/browser-tools": "^1.1.5",
-		"dompurify": "^3.2.0"
+		"dompurify": "^3.2.1"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.26.0",
 		"@babel/preset-env": "^7.26.0",
 		"@codemirror/lang-html": "^6.4.9",
 		"@eslint/js": "^9.15.0",
-		"@fortawesome/fontawesome-free": "^6.7.0",
+		"@fortawesome/fontawesome-free": "^6.7.1",
 		"@popperjs/core": "^2.11.8",
 		"@tsconfig/next": "^2.0.3",
 		"@types/babel__core": "^7.20.5",
 		"@types/babel__preset-env": "^7.9.7",
 		"@types/color": "^4.2.0",
-		"@types/dompurify": "^3.0.5",
+		"@types/dompurify": "^3.2.0",
 		"@types/jsdom": "^21.1.7",
-		"@types/mocha": "^10.0.9",
-		"@types/node": "^22.9.0",
+		"@types/mocha": "^10.0.10",
+		"@types/node": "^22.9.3",
 		"babel-loader": "^9.2.1",
 		"codemirror": "^6.0.1",
 		"css-loader": "^7.1.2",
@@ -85,7 +85,7 @@
 		"terser-webpack-plugin": "^5.3.10",
 		"ts-loader": "^9.5.1",
 		"ts-node": "^10.9.2",
-		"typescript": "^5.6.3",
+		"typescript": "^5.7.2",
 		"typescript-eslint": "^8.15.0",
 		"webpack": "^5.96.1",
 		"webpack-cli": "^5.1.4",
@@ -93,9 +93,9 @@
 	},
 	"peerDependencies": {
 		"@codemirror/lang-html": "^6.4.9",
-		"@fortawesome/fontawesome-free": "^6.7.0",
+		"@fortawesome/fontawesome-free": "^6.7.1",
 		"@popperjs/core": "^2.11.8",
 		"codemirror": "^6.0.1"
 	},
-	"packageManager": "yarn@4.5.1"
+	"packageManager": "yarn@4.5.2"
 }
