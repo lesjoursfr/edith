@@ -48,13 +48,13 @@
 	],
 	"dependencies": {
 		"@lesjoursfr/browser-tools": "^1.1.5",
-		"dompurify": "^3.2.1"
+		"dompurify": "^3.2.2"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.26.0",
 		"@babel/preset-env": "^7.26.0",
 		"@codemirror/lang-html": "^6.4.9",
-		"@eslint/js": "^9.15.0",
+		"@eslint/js": "^9.16.0",
 		"@fortawesome/fontawesome-free": "^6.7.1",
 		"@popperjs/core": "^2.11.8",
 		"@tsconfig/next": "^2.0.3",
@@ -68,7 +68,7 @@
 		"codemirror": "^6.0.1",
 		"css-loader": "^7.1.2",
 		"css-minimizer-webpack-plugin": "^7.0.0",
-		"eslint": "^9.15.0",
+		"eslint": "^9.16.0",
 		"eslint-config-prettier": "^9.1.0",
 		"fs-extra": "^11.2.0",
 		"globals": "^15.12.0",
@@ -79,7 +79,7 @@
 		"prettier": "^3.4.1",
 		"sass": "^1.81.0",
 		"sass-loader": "^16.0.3",
-		"stylelint": "^16.10.0",
+		"stylelint": "^16.11.0",
 		"stylelint-config-standard-scss": "^14.0.0",
 		"terser-webpack-plugin": "^5.3.10",
 		"ts-loader": "^9.5.1",
