@@ -48,7 +48,7 @@
 	],
 	"dependencies": {
 		"@lesjoursfr/browser-tools": "^1.1.6",
-		"dompurify": "^3.2.2"
+		"dompurify": "^3.2.3"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.26.0",
@@ -85,7 +85,7 @@
 		"ts-loader": "^9.5.1",
 		"ts-node": "^10.9.2",
 		"typescript": "^5.7.2",
-		"typescript-eslint": "^8.17.0",
+		"typescript-eslint": "^8.18.0",
 		"webpack": "^5.97.1",
 		"webpack-cli": "^5.1.4",
 		"webpack-dev-server": "^5.1.0"
