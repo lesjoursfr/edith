@@ -1,6 +1,6 @@
 {
 	"name": "@lesjoursfr/edith",
-	"version": "2.2.8",
+	"version": "2.2.9",
 	"description": "Simple WYSIWYG editor.",
 	"license": "MIT",
 	"repository": "lesjoursfr/edith",
@@ -47,7 +47,7 @@
 		"editor"
 	],
 	"dependencies": {
-		"@lesjoursfr/browser-tools": "^1.1.7",
+		"@lesjoursfr/browser-tools": "^1.1.8",
 		"dompurify": "^3.2.4"
 	},
 	"devDependencies": {
