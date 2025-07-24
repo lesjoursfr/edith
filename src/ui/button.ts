@@ -94,9 +94,8 @@ export class EdithButton {
 
   public render(): HTMLButtonElement {
     // Create the button
-    this.el = createNodeWith("button", {
-      attributes: { class: `edith-btn ${this.icon}`, type: "button" },
-    });
+    this.el = createNodeWith("button", { attributes: { class: "edith-btn", type: "button" } });
+    this.el.append(createNodeWith("i", { attributes: { class: this.icon } }));
 
     // Bind events
     this.el.onclick = this.click.bind(this);

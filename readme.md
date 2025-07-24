@@ -12,7 +12,7 @@ To work this library needs :
 - [codemirror](https://www.npmjs.com/package/codemirror) **6.x**
 - [@codemirror/lang-html](https://www.npmjs.com/package/@codemirror/lang-html) **6.x**
 - [@popperjs/core](https://www.npmjs.com/package/@popperjs/core) **2.x**
-- [@fortawesome/fontawesome-free](https://www.npmjs.com/package/@fortawesome/fontawesome-free) **6.x**
+- [@fortawesome/fontawesome-free](https://www.npmjs.com/package/@fortawesome/fontawesome-free) **7.x**
 
 # How to use
 
