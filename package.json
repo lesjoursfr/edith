@@ -96,5 +96,10 @@
 		"@popperjs/core": "^2.11.8",
 		"codemirror": "^6.0.2"
 	},
-	"packageManager": "yarn@4.9.4"
+	"dependenciesMeta": {
+		"@parcel/watcher": {
+			"built": true
+		}
+	},
+	"packageManager": "yarn@4.10.2"
 }
