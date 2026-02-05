@@ -13,9 +13,6 @@ class Window {
   constructor(jsdomConfig: any = {}) {
     const { userAgent } = jsdomConfig;
     // In jsdom v28, ResourceLoader is removed. Instead, pass resource options directly
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const resourceOptions: any = {};
-    if (userAgent) resourceOptions.userAgent = userAgent;
     // Note: proxy and strictSSL were previously handled via ResourceLoader in v27
     // but are no longer needed since we're not loading external resources
     // (features.FetchExternalResources: false). In v28, these would need to be
@@ -23,7 +20,7 @@ class Window {
     return new JSDOM(
       "",
       Object.assign(jsdomConfig, {
-        resources: Object.keys(resourceOptions).length > 0 ? resourceOptions : undefined,
+        resources: userAgent ? { userAgent } : undefined,
       })
     ).window;
   }
