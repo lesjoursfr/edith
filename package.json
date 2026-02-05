@@ -53,7 +53,7 @@
 	"devDependencies": {
 		"@babel/core": "7.29.0",
 		"@babel/preset-env": "7.29.0",
-		"@codemirror/lang-html": "^6.4.11",
+		"@codemirror/lang-html": "6.4.11",
 		"@eslint/js": "9.39.2",
 		"@fortawesome/fontawesome-free": "^7.1.0",
 		"@popperjs/core": "2.11.8",
