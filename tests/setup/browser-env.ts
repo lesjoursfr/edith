@@ -4,7 +4,7 @@
  * - https://github.com/lukechilds/browser-env/blob/master/src/index.js (browserEnv function)
  * - https://github.com/lukechilds/window/blob/master/src/index.js (Window class)
  */
-import { JSDOM, ResourceLoader } from "jsdom";
+import { JSDOM } from "jsdom";
 
 // Class to return a window instance.
 // Accepts a jsdom config object.
@@ -12,15 +12,16 @@ class Window {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(jsdomConfig: any = {}) {
     const { proxy, strictSSL, userAgent } = jsdomConfig;
-    const resources = new ResourceLoader({
-      proxy,
-      strictSSL,
-      userAgent,
-    });
+    // In jsdom v28, ResourceLoader is removed. Instead, pass resource options directly
+    const resourceOptions: any = {};
+    if (userAgent) resourceOptions.userAgent = userAgent;
+    // Note: proxy and strictSSL would need to be handled via dispatcher in v28
+    // but since we're not loading external resources (features.FetchExternalResources: false),
+    // we can safely omit them
     return new JSDOM(
       "",
       Object.assign(jsdomConfig, {
-        resources,
+        resources: Object.keys(resourceOptions).length > 0 ? resourceOptions : undefined,
       })
     ).window;
   }
