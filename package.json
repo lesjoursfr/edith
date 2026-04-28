@@ -3,7 +3,10 @@
 	"version": "4.0.5",
 	"description": "Simple WYSIWYG editor.",
 	"license": "MIT",
-	"repository": "lesjoursfr/edith",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/lesjoursfr/edith.git"
+	},
 	"homepage": "https://github.com/lesjoursfr/edith#readme",
 	"bugs": {
 		"url": "https://github.com/lesjoursfr/edith/issues"
@@ -37,11 +40,6 @@
 		"builddeps": "webpack --mode production --config server/deps/codemirror.webpack.js --progress",
 		"server": "webpack serve --mode development --config ./server/webpack.config.js --hot --open"
 	},
-	"files": [
-		"src/**/*",
-		"dist/**/*",
-		"build/**/*"
-	],
 	"keywords": [
 		"WYSIWYG",
 		"editor"
@@ -102,5 +100,5 @@
 			"built": true
 		}
 	},
-	"packageManager": "yarn@4.13.0"
+	"packageManager": "yarn@4.14.1"
 }
