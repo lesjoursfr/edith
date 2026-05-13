@@ -65,7 +65,7 @@ export class Edith {
     // Add the Edith instance to the DOM
     this.element.edith = this;
 
-    // Trigger the initialized event once its initialized
+    // Trigger the initialised event once its initialised
     this.trigger(Events.initialized);
   }
 

@@ -1,4 +1,5 @@
 export enum Events {
-  modeChanged = "edith-mode-changed",
+  contentChanged = "edith-content-changed",
   initialized = "edith-initialized",
+  modeChanged = "edith-mode-changed",
 }

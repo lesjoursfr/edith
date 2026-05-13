@@ -158,11 +158,15 @@ export class EdithEditor {
   }
 
   public takeSnapshot(): void {
-    this.history.push(this.visualEditor.innerHTML);
+    const innerHTML = this.visualEditor.innerHTML;
+    this.history.push(innerHTML);
+    this.ctx.trigger(Events.contentChanged, { content: innerHTML });
   }
 
   public restoreSnapshot(): void {
-    this.visualEditor.innerHTML = this.history.pop() ?? "";
+    const innerHTML = this.history.pop() ?? "";
+    this.visualEditor.innerHTML = innerHTML;
+    this.ctx.trigger(Events.contentChanged, { content: innerHTML });
   }
 
   public wrapInsideTag<K extends keyof HTMLElementTagNameMap>(tag: K): void {
