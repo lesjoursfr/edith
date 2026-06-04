@@ -46,7 +46,7 @@
 	],
 	"dependencies": {
 		"@lesjoursfr/browser-tools": "^3.1.4",
-		"dompurify": "^3.4.5"
+		"dompurify": "^3.4.7"
 	},
 	"devDependencies": {
 		"@babel/core": "7.29.7",
@@ -73,7 +73,7 @@
 		"globals": "17.6.0",
 		"jsdom": "29.1.1",
 		"mini-css-extract-plugin": "2.10.2",
-		"minimizer-webpack-plugin": "5.6.0",
+		"minimizer-webpack-plugin": "5.6.1",
 		"mocha": "11.7.6",
 		"postcss": "8.5.15",
 		"prettier": "3.8.3",
@@ -86,7 +86,7 @@
 		"typescript": "6.0.3",
 		"typescript-eslint": "8.60.0",
 		"webpack": "5.107.2",
-		"webpack-cli": "7.0.2",
+		"webpack-cli": "7.0.3",
 		"webpack-dev-server": "5.2.4"
 	},
 	"peerDependencies": {
