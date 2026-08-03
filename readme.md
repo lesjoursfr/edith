@@ -38,9 +38,7 @@ new Edith(document.querySelector("#editor"), {
 		],
 		/*** Other toolbar blocs ***/
 	],
-	buttons: {
-		/*** Extra buttons for the toolbar ***/
-	},
+	buttons: {/*** Extra buttons for the toolbar ***/},
 	initialContent: "Optional initial content",
 });
 ```
